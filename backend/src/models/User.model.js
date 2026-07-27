@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../config/db.js";
-import { encriptarContraseña } from "../helpers/bcrypt.js";
+import { sequelize } from "../config/db.js"; // Verifica que la ruta a tu db.js sea correcta
 
-const User = sequelize.define(
+// Usamos 'export const UserModel' para que coincida con tus importaciones entre llaves
+export const UserModel = sequelize.define(
   "User",
   {
     id: {
@@ -52,25 +52,9 @@ const User = sequelize.define(
       defaultValue: "pendiente",
       allowNull: false,
     },
-    /* 
-  RECORDATORIO: Descomentar y ajustar 'sector' cuando se releven los laboratorios y áreas físicas del CIT.
-  sector: {
-    type: DataTypes.STRING,
-    allowNull: true
-  } 
-  */
   },
   {
     timestamps: true,
     tableName: "usuarios",
-    hooks: {
-      beforeSave: async (user) => {
-        if (user.changed("password")) {
-          user.password = await encriptarContraseña(user.password);
-        }
-      },
-    },
   },
 );
-
-export default User;
