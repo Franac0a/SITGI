@@ -1,7 +1,6 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../config/db.js"; // Verifica que la ruta a tu db.js sea correcta
+import { sequelize } from "../config/db.js";
 
-// Usamos 'export const UserModel' para que coincida con tus importaciones entre llaves
 export const UserModel = sequelize.define(
   "User",
   {

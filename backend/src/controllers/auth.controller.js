@@ -1,4 +1,4 @@
-import { UserModel } from "../models/User.model.js"; // Asegúrate de que el export en tu modelo sea: export const UserModel
+import { UserModel } from "../models/User.model.js";
 import { generarToken } from "../helpers/jwt.helper.js";
 import {
   encriptarContraseña,
@@ -9,7 +9,6 @@ export const registrarUsuario = async (req, res) => {
   try {
     const { dni, nombre, email, password, rol } = req.body;
 
-    // Validaciones de existencia en la base de datos del CIT
     const existeEmail = await UserModel.findOne({ where: { email } });
     if (existeEmail) {
       return res
@@ -24,10 +23,8 @@ export const registrarUsuario = async (req, res) => {
         .json({ mensaje: "El DNI ingresado ya está asociado a otra cuenta." });
     }
 
-    // Encriptamos la contraseña directamente acá
     const hash = await encriptarContraseña(password);
 
-    // Creamos el usuario (nace con estado 'pendiente' según el modelo)
     const nuevoUsuario = await UserModel.create({
       dni,
       nombre,
@@ -71,7 +68,6 @@ export const loginUsuario = async (req, res) => {
       return res.status(401).json({ mensaje: "Contraseña incorrecta." });
     }
 
-    // Filtro institucional: verificamos si la Directora ya aprobó la cuenta
     if (usuario.estado === "pendiente") {
       return res.status(403).json({
         mensaje:
@@ -85,7 +81,6 @@ export const loginUsuario = async (req, res) => {
       });
     }
 
-    // Si está 'activo', generamos token y cookie
     const token = generarToken({ id: usuario.id, rol: usuario.rol });
     res.cookie("token", token, { httpOnly: true });
 

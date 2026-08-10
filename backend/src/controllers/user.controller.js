@@ -1,6 +1,5 @@
 import { UserModel } from "../models/User.model.js";
 
-// 1. Obtener lista de usuarios (con filtros por query, ej: /api/users?estado=pendiente)
 export const obtenerUsuarios = async (req, res) => {
   try {
     const { estado, rol } = req.query;
@@ -9,9 +8,9 @@ export const obtenerUsuarios = async (req, res) => {
     if (estado) filtro.estado = estado;
     if (rol) filtro.rol = rol;
 
-    const usuarios = await User.findAll({
+    const usuarios = await UserModel.findAll({
       where: filtro,
-      attributes: { exclude: ["password"] }, // Nunca enviamos contraseñas al frontend
+      attributes: { exclude: ["password"] },
       order: [["createdAt", "DESC"]],
     });
 
@@ -21,21 +20,20 @@ export const obtenerUsuarios = async (req, res) => {
       error: "Error al obtener la lista de usuarios.",
       detalle: error.message,
     });
+    console.log("Error al obtener la lista de usuarios");
   }
 };
 
-// 2. Gestionar estado y rol (Acción exclusiva de la Directora del CIT)
 export const gestionarEstadoUsuario = async (req, res) => {
   try {
     const { id } = req.params;
-    const { estado, rol } = req.body; // estado puede ser "activo", "rechazado" o "pendiente"
+    const { estado, rol } = req.body;
 
-    const usuario = await User.findByPk(id);
+    const usuario = await UserModel.findByPk(id);
     if (!usuario) {
       return res.status(404).json({ error: "Usuario no encontrado." });
     }
 
-    // La Directora puede aprobar el estado y, si quiere, corregirle el rol en el mismo paso
     if (estado) usuario.estado = estado;
     if (rol) usuario.rol = rol;
 

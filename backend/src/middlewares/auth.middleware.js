@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import { UserModel } from "../models/User.model.js";
 
-// 1. Verificar que el usuario esté autenticado
 export const verificarAuth = async (req, res, next) => {
   try {
     const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
@@ -11,10 +10,8 @@ export const verificarAuth = async (req, res, next) => {
         .json({ mensaje: "No hay token, acceso denegado." });
     }
 
-    // Verificamos el token usando process.env.JWT_SECRET
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // AQUÍ ESTABA LA FALLA: Usamos UserModel.findByPk (con la palabra Model)
     const usuario = await UserModel.findByPk(decoded.id);
     if (!usuario) {
       return res
@@ -22,7 +19,6 @@ export const verificarAuth = async (req, res, next) => {
         .json({ mensaje: "Usuario no válido en la base de datos." });
     }
 
-    // Check de seguridad: que la cuenta esté activa
     if (usuario.estado !== "activo") {
       return res.status(403).json({
         mensaje:
@@ -30,7 +26,6 @@ export const verificarAuth = async (req, res, next) => {
       });
     }
 
-    // Pasamos los datos limpios al request
     req.usuario = {
       id: usuario.id,
       rol: usuario.rol,
@@ -40,7 +35,6 @@ export const verificarAuth = async (req, res, next) => {
 
     next();
   } catch (error) {
-    // Agregamos este console.error para que si hay un error de código, lo veamos en la terminal
     console.error("Error en el middleware verificarAuth:", error.message);
     return res.status(403).json({ mensaje: "Token inválido o expirado." });
   }
@@ -48,15 +42,12 @@ export const verificarAuth = async (req, res, next) => {
 
 export const verificarUsuario = verificarAuth;
 
-// 2. Verificador de roles flexible
 export const verificarRol = (...rolesPermitidos) => {
   return (req, res, next) => {
     if (!req.usuario) {
-      return res
-        .status(500)
-        .json({
-          mensaje: "Se intentó verificar el rol sin autenticar primero.",
-        });
+      return res.status(500).json({
+        mensaje: "Se intentó verificar el rol sin autenticar primero.",
+      });
     }
 
     if (!rolesPermitidos.includes(req.usuario.rol)) {
@@ -69,15 +60,12 @@ export const verificarRol = (...rolesPermitidos) => {
   };
 };
 
-// 3. Acción exclusiva para la Dirección
 export const soloDireccion = (req, res, next) => {
   if (req.usuario.rol !== "Dirección") {
-    return res
-      .status(403)
-      .json({
-        mensaje:
-          "Acceso restringido: acción exclusiva para la Dirección del CIT.",
-      });
+    return res.status(403).json({
+      mensaje:
+        "Acceso restringido: acción exclusiva para la Dirección del CIT.",
+    });
   }
   next();
 };

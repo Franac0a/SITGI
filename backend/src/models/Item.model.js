@@ -13,7 +13,7 @@ export const Item = sequelize.define(
     },
     codigo_identificacion: {
       type: DataTypes.STRING,
-      allowNull: true, // Puede ser el código alfanumérico del droguero o número de lote
+      allowNull: true,
       unique: true,
     },
     categoria: {
@@ -31,31 +31,31 @@ export const Item = sequelize.define(
       allowNull: false,
       defaultValue: 0,
       validate: {
-        min: 0, // Evitamos stocks negativos por error de tipeo
+        min: 0,
       },
     },
     stock_minimo: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 5, // Límite por defecto para disparar alertas de reposición
+      defaultValue: 5,
     },
     ubicacion: {
       type: DataTypes.STRING,
-      allowNull: false, // Ej: "Droguero - Estante 3" o "Heladera 1 - Freezer"
+      allowNull: false,
     },
     fecha_vencimiento: {
-      type: DataTypes.DATEONLY, // Solo fecha (AAAA-MM-DD), sin hora
-      allowNull: true, // Puede ser nulo para insumos descartables de vidrio o plástico
+      type: DataTypes.DATEONLY, // (AAAA-MM-DD)
+      allowNull: true,
     },
     detalles_tecnicos: {
       type: DataTypes.JSON,
       allowNull: false,
-      defaultValue: {}, // JSON flexible: { "temperatura": "-20°C", "toxicidad": "Alta", etc. }
+      defaultValue: {},
     },
   },
   {
     timestamps: true,
-    paranoid: true, // ¡CLAVE PARA TRAZABILIDAD! Habilita el borrado lógico (deletedAt)
+    paranoid: true,
     tableName: "items",
   },
 );

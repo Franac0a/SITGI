@@ -1,7 +1,6 @@
 import { Item } from "../models/Item.model.js";
 import { Op, Sequelize } from "sequelize";
 
-// 1. GET: Obtener todos los ítems activos (Soporta filtros por categoría y por stock bajo)
 export const obtenerItems = async (req, res) => {
   try {
     const { categoria, stock_bajo, ubicacion } = req.query;
@@ -28,7 +27,6 @@ export const obtenerItems = async (req, res) => {
   }
 };
 
-// 2. GET por ID: Obtener el detalle individual de un producto
 export const obtenerItemPorId = async (req, res) => {
   try {
     const { id } = req.params;
@@ -49,7 +47,6 @@ export const obtenerItemPorId = async (req, res) => {
   }
 };
 
-// 3. POST: Crear un nuevo reactivo o insumo
 export const crearItem = async (req, res) => {
   try {
     const nuevoItem = await Item.create(req.body);
@@ -71,7 +68,6 @@ export const crearItem = async (req, res) => {
   }
 };
 
-// 4. PUT: Modificar stock, ubicación o detalles técnicos
 export const actualizarItem = async (req, res) => {
   try {
     const { id } = req.params;
@@ -91,7 +87,6 @@ export const actualizarItem = async (req, res) => {
   }
 };
 
-// 5. DELETE: Borrado lógico para mantener la trazabilidad científica
 export const eliminarItem = async (req, res) => {
   try {
     const { id } = req.params;
@@ -115,17 +110,16 @@ export const eliminarItem = async (req, res) => {
 };
 
 // =========================================================================
-// SECCIÓN DE TRAZABILIDAD (NUEVAS FUNCIONES)
+// SECCIÓN DE TRAZABILIDAD
 // =========================================================================
 
-// 6. GET: Obtener SÓLO los ítems eliminados para la vista de Trazabilidad
 export const obtenerItemsEliminados = async (req, res) => {
   try {
     const itemsBorrados = await Item.findAll({
       where: {
         deletedAt: { [Op.ne]: null },
       },
-      paranoid: false, // Obliga a Sequelize a buscar también entre los eliminados
+      paranoid: false,
       order: [["deletedAt", "DESC"]],
     });
 
@@ -139,7 +133,6 @@ export const obtenerItemsEliminados = async (req, res) => {
   }
 };
 
-// 7. PUT: Restaurar un ítem eliminado por error (Revivirlo al inventario activo)
 export const restaurarItem = async (req, res) => {
   try {
     const { id } = req.params;
@@ -157,7 +150,7 @@ export const restaurarItem = async (req, res) => {
       });
     }
 
-    await item.restore(); // Sequelize borra la fecha de deletedAt y el ítem vuelve al catálogo
+    await item.restore();
 
     res.status(200).json({
       mensaje:

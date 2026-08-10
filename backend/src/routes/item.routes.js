@@ -5,19 +5,15 @@ import {
   crearItem,
   actualizarItem,
   eliminarItem,
-  obtenerItemsEliminados, // <-- 1. Agregamos el import nuevo
-  restaurarItem, // <-- 2. Agregamos el import nuevo
+  obtenerItemsEliminados,
+  restaurarItem,
 } from "../controllers/item.controller.js";
 import { verificarAuth, verificarRol } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-// Todas las rutas del inventario requieren que el usuario haya iniciado sesión y esté "activo"
 router.use(verificarAuth);
 
-// -------------------------------------------------------------------------
-// RUTAS DE TRAZABILIDAD (Van ARRIBA para que no choquen con /:id)
-// -------------------------------------------------------------------------
 router.get("/trazabilidad/borrados", obtenerItemsEliminados);
 router.put(
   "/trazabilidad/restaurar/:id",
