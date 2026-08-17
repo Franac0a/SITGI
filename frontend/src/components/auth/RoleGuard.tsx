@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from '@/context'
 import { AccessDenied } from '@/components/layout/AccessDenied'
 
 interface RoleGuardProps {
-  children: ReactNode
+  children?: ReactNode
   allowedRoles?: string[]
   checkPermission?: (role?: string | null) => boolean
   fallback?: 'denied' | 'redirect'
@@ -39,5 +39,5 @@ export function RoleGuard({
     return <AccessDenied />
   }
 
-  return <>{children}</>
+  return children ? <>{children}</> : <Outlet />
 }

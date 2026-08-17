@@ -16,30 +16,36 @@ export function AuthLayout({
   wide = false,
 }: AuthLayoutProps) {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-4 py-10">
-        <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg border border-gray-200 bg-white">
-            <span className="text-lg font-bold text-bordo-600">CIT</span>
+    <main className="min-h-screen w-full bg-gradient-to-br from-cit-turquesa via-cit-petroleo to-cit-azul-oscuro flex items-center justify-center p-4 sm:p-6 lg:p-8">
+      <div className={`w-full ${wide ? 'max-w-xl' : 'max-w-md'}`}>
+        <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 md:p-10 border border-white/20">
+          <div
+            id="logo-auth-placeholder"
+            className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-gray-50 border border-gray-200"
+          >
+            <span className="text-xl font-bold tracking-wider text-cit-petroleo">
+              CIT
+            </span>
           </div>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-bordo-600">
-            CIT Formosa
-          </p>
-          <h1 className="mt-2 text-2xl font-bold text-black">{title}</h1>
-          <p className="mt-2 text-sm text-gray-600">{subtitle}</p>
-        </div>
 
-        <div
-          className={[
-            'mx-auto w-full rounded-xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8',
-            wide ? 'max-w-xl' : 'max-w-md',
-          ].join(' ')}
-        >
+          <div className="mb-8 text-center">
+            <h1 className="text-2xl font-bold tracking-tight text-gray-800">
+              {title}
+            </h1>
+            <p className="mt-2 text-sm text-gray-600">
+              {subtitle}
+            </p>
+          </div>
+
           {children}
-        </div>
 
-        {footer && <div className="mt-6 text-center text-sm">{footer}</div>}
+          {footer && (
+            <div className="mt-8 border-t border-gray-100 pt-6 text-center text-sm text-gray-600">
+              {footer}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </main>
   )
 }

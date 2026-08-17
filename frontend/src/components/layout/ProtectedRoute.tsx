@@ -1,9 +1,8 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from '@/context'
-import type { InstitutionalRole } from '@/types/auth.types'
 
 interface ProtectedRouteProps {
-  allowedRoles?: InstitutionalRole[]
+  allowedRoles?: string[]
 }
 
 export function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
@@ -13,7 +12,12 @@ export function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
     return <Navigate to="/login" replace />
   }
 
-  if (allowedRoles && !allowedRoles.includes(user.rol)) {
+  if (
+    allowedRoles &&
+    !allowedRoles.some(
+      (role) => role.toLowerCase() === user.rol.toLowerCase(),
+    )
+  ) {
     return <Navigate to="/dashboard" replace />
   }
 
