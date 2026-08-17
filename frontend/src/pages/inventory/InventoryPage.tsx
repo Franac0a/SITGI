@@ -1,0 +1,136 @@
+import { useState } from 'react'
+import { MainLayout } from '@/components/layout/MainLayout'
+import { Button } from '@/components/ui/Button'
+import { EmptyState } from '@/components/ui/EmptyState'
+import { Skeleton } from '@/components/ui/Skeleton'
+import type { InventoryItem } from '@/types/scientific.types'
+
+interface InventoryPageProps {
+  initialItems?: InventoryItem[]
+  isLoading?: boolean
+}
+
+export function InventoryPage({
+  initialItems = [],
+  isLoading = false,
+}: InventoryPageProps) {
+  const [items] = useState<InventoryItem[]>(initialItems)
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const filteredItems = items.filter(
+    (item) =>
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.code.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (item.casNumber && item.casNumber.includes(searchQuery)),
+  )
+
+  return (
+    <MainLayout>
+      <div className="space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-gray-200 pb-5">
+          <div>
+            <span className="text-[11px] font-bold uppercase tracking-wider text-bordo-700 bg-bordo-50 px-2 py-0.5 rounded border border-bordo-200">
+              Catálogo de Laboratorio
+            </span>
+            <h1 className="text-2xl font-bold text-black mt-2">
+              Inventario Científico
+            </h1>
+            <p className="text-sm text-gray-600 mt-1">
+              Registro y control de existencias de reactivos químicos, drogas, material biológico e insumos analíticos.
+            </p>
+          </div>
+
+          <Button variant="primary">
+            <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Nuevo Ítem
+          </Button>
+        </div>
+
+        <div className="p-4 rounded-xl border border-gray-200 bg-gray-50 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="w-full md:w-72">
+            <input
+              type="text"
+              placeholder="Buscar por código, nombre o CAS..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-3 py-2 text-xs bg-white border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-bordo-500 font-sans"
+            />
+          </div>
+        </div>
+
+        {isLoading ? (
+          <div className="space-y-3">
+            <Skeleton className="h-10 w-full" />
+            <Skeleton className="h-14 w-full" />
+            <Skeleton className="h-14 w-full" />
+          </div>
+        ) : filteredItems.length === 0 ? (
+          <EmptyState
+            title="No hay ítems en el inventario"
+            description="No se encontraron registros de reactivos o insumos en la base de datos."
+            action={
+              <Button variant="primary">
+                Registrar Primer Ítem
+              </Button>
+            }
+          />
+        ) : (
+          <div className="rounded-xl border border-gray-200 overflow-hidden shadow-2xs">
+            <table className="min-w-full divide-y divide-gray-200 text-left text-xs">
+              <thead className="bg-gray-50 font-bold uppercase tracking-wider text-gray-600">
+                <tr>
+                  <th className="px-5 py-3.5">Código / CAS</th>
+                  <th className="px-5 py-3.5">Nombre Químico / Insumo</th>
+                  <th className="px-5 py-3.5">Categoría</th>
+                  <th className="px-5 py-3.5">Ubicación</th>
+                  <th className="px-5 py-3.5 text-center">Stock Actual</th>
+                  <th className="px-5 py-3.5">Vencimiento</th>
+                  <th className="px-5 py-3.5 text-right">Acciones</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200 text-black">
+                {filteredItems.map((item) => (
+                  <tr key={item.id} className="hover:bg-gray-50/80 transition-colors">
+                    <td className="px-5 py-4 font-mono font-bold text-gray-900">{item.code}</td>
+                    <td className="px-5 py-4 font-bold">
+                      {item.name}
+                      {item.casNumber && (
+                        <span className="block text-[11px] text-gray-500 font-normal font-mono">
+                          CAS: {item.casNumber}
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-5 py-4">
+                      <span className="px-2 py-0.5 rounded bg-gray-100 border border-gray-200 text-black text-[11px] font-medium">
+                        {item.category}
+                      </span>
+                    </td>
+                    <td className="px-5 py-4 text-gray-700">{item.location}</td>
+                    <td className="px-5 py-4 text-center">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-black border border-gray-200">
+                        {item.currentStock} / Mín {item.minStock} {item.unit}
+                      </span>
+                    </td>
+                    <td className="px-5 py-4 text-gray-700 font-mono">
+                      {item.expirationDate || '---'}
+                    </td>
+                    <td className="px-5 py-4 text-right whitespace-nowrap">
+                      <button className="text-bordo-700 font-bold hover:text-bordo-800 mr-3">
+                        Registrar Retiro
+                      </button>
+                      <button className="text-gray-500 font-medium hover:text-black">
+                        Detalles
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </MainLayout>
+  )
+}
