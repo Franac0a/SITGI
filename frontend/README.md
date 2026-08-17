@@ -2,16 +2,16 @@
 
 Interfaz del Sistema Integral de Inventario, Stock y Trazabilidad Científica (SITGI).
 
-## 🚀 Stack Tecnológico
+## Stack Tecnológico
 
 - **Framework**: React 18+
 - **Lenguaje**: TypeScript
-- **Estilos**: Tailwind CSS & Lucide Icons
+- **Estilos**: Tailwind CSS
 - **Bundler & Tooling**: Vite
 - **Enrutamiento**: React Router DOM
 - **Linter**: Oxlint / ESLint
 
-## 📦 Scripts Disponibles
+## Scripts Disponibles
 
 ```bash
 npm run dev        # Inicia el servidor de desarrollo
@@ -20,7 +20,7 @@ npm run typecheck  # Ejecuta la verificación estática de tipos con TypeScript
 npm run lint       # Analiza el código en busca de problemas de linting
 ```
 
-## ⚙️ Configuración
+## Configuración
 
 1. Copiar el archivo de variables de entorno de ejemplo:
    ```bash
@@ -30,26 +30,32 @@ npm run lint       # Analiza el código en busca de problemas de linting
 
 ---
 
-## 🌳 Estructura del Proyecto (`src/`)
+## Estructura del Proyecto (`src/`)
 
 A continuación se detalla el árbol completo del directorio `src/`, con una breve descripción del propósito y contenido de cada archivo y carpeta:
 
 ```text
 src/
-├── App.tsx                              # Componente raíz; envuelve la app en el AuthProvider y monta las rutas.
+├── App.tsx                              # Componente raíz; envuelve la app en AuthProvider y monta las rutas.
 ├── main.tsx                             # Punto de entrada de React que monta la aplicación en el DOM (index.html).
-├── index.css                            # Estilos globales y directivas base de Tailwind CSS.
+├── index.css                            # Estilos globales y variables de tema (bordó, tipografía, base).
 ├── vite-env.d.ts                        # Declaraciones de tipos globales de TypeScript para Vite.
 │
 ├── components/                          # Componentes reutilizables de la interfaz gráfica.
+│   ├── auth/                            # Componentes de seguridad y autorización.
+│   │   └── RoleGuard.tsx                # Guardián de elementos y rutas basado en control de acceso por roles (RBAC).
+│   ├── inventory/                       # Componentes específicos del módulo de inventario.
+│   │   ├── InventoryItemForm.tsx        # Formulario estructurado para el alta de reactivos, insumos y equipos (CreateInventoryItemPayload).
+│   │   └── index.ts                     # Archivo barril para exportación de componentes de inventario.
 │   ├── layout/                          # Componentes estructurales de diseño y maquetación.
+│   │   ├── AccessDenied.tsx             # Vista de acceso denegado para roles no autorizados en operaciones restringidas.
 │   │   ├── AuthLayout.tsx               # Layout para vistas públicas de autenticación (Login y Registro).
-│   │   ├── DashboardLayout.tsx          # Re-export / contenedor de compatibilidad para el layout del dashboard.
+│   │   ├── DashboardLayout.tsx          # Contenedor / re-export para el layout del dashboard.
 │   │   ├── Header.tsx                   # Barra superior con búsqueda global, estado, notificaciones y menú de perfil.
-│   │   ├── MainLayout.tsx               # Layout principal que integra Sidebar colapsable, Header y contenedor de vistas.
-│   │   ├── ProtectedRoute.tsx           # Guardián de rutas que valida autenticación y control de acceso basado en roles.
+│   │   ├── MainLayout.tsx               # Layout principal que integra Sidebar colapsable, Header y Outlet.
+│   │   ├── ProtectedRoute.tsx           # Guardián de rutas que valida autenticación y roles de usuario.
 │   │   ├── Sidebar.tsx                  # Menú lateral con navegación por módulos según permisos del usuario.
-│   │   └── index.ts                     # Archivo barril para exportación centralizada de componentes de layout.
+│   │   └── index.ts                     # Archivo barril para exportación centralizada de layout.
 │   └── ui/                              # Elementos atómicos de interfaz de usuario.
 │       ├── Alert.tsx                    # Componente para alertas y mensajes informativos, de éxito, advertencia o error.
 │       ├── Button.tsx                   # Botón personalizable con variantes (primario, secundario, peligro) y estados de carga.
@@ -80,7 +86,9 @@ src/
 │   ├── documents/                       # Gestión documental científica.
 │   │   └── DocumentsPage.tsx            # Fichas de seguridad (MSDS/FDS), protocolos, manuales y certificados.
 │   ├── inventory/                       # Módulo de inventario y stock.
-│   │   └── InventoryPage.tsx            # Control de reactivos, consumibles, equipos, lotes, vencimientos y ubicación.
+│   │   ├── InventoryPage.tsx            # Control de reactivos, consumibles, equipos, lotes, vencimientos y RBAC condicional.
+│   │   ├── NewInventoryItemPage.tsx     # Pantalla protegida para el alta de nuevos elementos científicos.
+│   │   └── index.ts                     # Archivo barril para exportar páginas de inventario.
 │   ├── movements/                       # Módulo de trazabilidad física.
 │   │   └── MovementsPage.tsx            # Registro histórico de ingresos, egresos, descartes y transferencias.
 │   ├── projects/                        # Módulo de proyectos de investigación.
@@ -98,23 +106,26 @@ src/
 │   │   └── client.ts                    # Instancia con interceptores para inyección de JWT y manejo unificado de errores.
 │   ├── auth/                            # Servicios de autenticación.
 │   │   └── auth.service.ts              # Peticiones de login, registro, refresco de sesión y logout.
+│   ├── inventory/                       # Servicios de inventario.
+│   │   └── inventory.service.ts         # Peticiones para alta y consulta de elementos en el catálogo de inventario.
 │   └── users/                           # Servicios de usuarios.
 │       └── users.service.ts             # Peticiones de listado, aprobación y actualización de roles de usuarios.
 │
 ├── types/                               # Definiciones de tipos e interfaces de TypeScript.
 │   ├── api.types.ts                     # Tipos estándar para respuestas HTTP, paginación y estructuras de error.
 │   ├── auth.types.ts                    # Tipos para credenciales, tokens JWT y estado de autenticación.
-│   ├── scientific.types.ts              # Modelos de datos para reactivos, equipos, proyectos, movimientos y reservas.
+│   ├── scientific.types.ts              # Modelos de datos para reactivos, CreateInventoryItemPayload, movimientos y reservas.
 │   └── user.types.ts                    # Interfaces de usuario, perfiles, roles y estados de cuenta.
 │
 └── utils/                               # Funciones auxiliares y utilidades generales.
     ├── errors.ts                        # Parseo y formateo amigable de mensajes de error de la API.
+    ├── rbac.ts                          # Funciones de validación de permisos por rol para inventario y administración.
     └── validation.ts                    # Funciones y esquemas para validación de datos de entrada y formularios.
 ```
 
 ---
 
-## 🗺️ Mapa de Rutas del Sistema
+## Mapa de Rutas del Sistema
 
 | Ruta | Acceso | Descripción |
 | :--- | :--- | :--- |
@@ -122,10 +133,11 @@ src/
 | `/registro` | Público | Solicitud de nueva cuenta de usuario |
 | `/` | Protegido | Redirección por defecto al Dashboard |
 | `/dashboard` | Protegido | Panel principal con métricas y accesos rápidos |
-| `/inventory` | Protegido | Gestión de reactivos, equipos y consumibles |
-| `/projects` | Protegido | Gestión de proyectos y líneas de investigación |
-| `/movements` | Protegido | Registro y trazabilidad de movimientos y consumos |
-| `/reservations` | Protegido | Calendario de reserva de equipos e instrumental |
-| `/documents` | Protegido | Protocolos, manuales y fichas de seguridad (FDS) |
-| `/reports` | Protegido | Generación y exportación de reportes analíticos |
-| `/admin/users` | Solo `ADMIN` | Administración de usuarios, roles y aprobaciones |
+| `/inventario` | Protegido | Catálogo de inventario con acciones según rol |
+| `/inventario/nuevo` | Administrador / Dirección / Inventario | Alta y registro de nuevos elementos científicos |
+| `/proyectos` | Protegido | Gestión de proyectos y líneas de investigación |
+| `/movimientos` | Protegido | Registro y trazabilidad de movimientos y consumos |
+| `/reservas` | Protegido | Calendario de reserva de equipos e instrumental |
+| `/documentos` | Protegido | Protocolos, manuales y fichas de seguridad (FDS) |
+| `/reportes` | Protegido | Generación y exportación de reportes analíticos |
+| `/admin/usuarios` | Solo `Dirección` / `Administración` | Administración de usuarios, roles y aprobaciones |
