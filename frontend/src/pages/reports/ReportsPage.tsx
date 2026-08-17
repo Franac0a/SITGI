@@ -21,10 +21,10 @@ export function ReportsPage({
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-gray-200 pb-5">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-bordo-700 bg-bordo-50 px-2 py-0.5 rounded border border-bordo-200">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-cit-petroleo bg-cit-petroleo/10 px-2.5 py-0.5 rounded-full border border-cit-petroleo/20">
               Auditoría y Notificaciones
             </span>
-            <h1 className="text-2xl font-bold text-black mt-2">
+            <h1 className="text-2xl font-bold text-gray-900 mt-2">
               Alertas y Reportes
             </h1>
             <p className="text-sm text-gray-600 mt-1">
@@ -60,11 +60,11 @@ export function ReportsPage({
                 className="p-4 rounded-xl border border-gray-200 bg-white flex items-start justify-between gap-4 shadow-2xs"
               >
                 <div className="flex items-start gap-3">
-                  <div className="w-7 h-7 rounded-lg bg-bordo-600 text-white font-bold flex items-center justify-center text-xs shrink-0">
+                  <div className="w-7 h-7 rounded-lg bg-cit-petroleo text-white font-bold flex items-center justify-center text-xs shrink-0">
                     !
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-black">
+                    <h4 className="text-sm font-bold text-gray-900">
                       {alert.title}
                     </h4>
                     <p className="text-xs text-gray-600 mt-0.5">

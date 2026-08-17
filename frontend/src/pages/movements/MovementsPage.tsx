@@ -21,10 +21,10 @@ export function MovementsPage({
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-gray-200 pb-5">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-bordo-700 bg-bordo-50 px-2 py-0.5 rounded border border-bordo-200">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-cit-petroleo bg-cit-petroleo/10 px-2.5 py-0.5 rounded-full border border-cit-petroleo/20">
               Trazabilidad de Stock
             </span>
-            <h1 className="text-2xl font-bold text-black mt-2">
+            <h1 className="text-2xl font-bold text-gray-900 mt-2">
               Stock y Movimientos
             </h1>
             <p className="text-sm text-gray-600 mt-1">
@@ -69,7 +69,7 @@ export function MovementsPage({
                   <th className="px-5 py-3.5">Proyecto</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 text-black">
+              <tbody className="divide-y divide-gray-200 text-gray-900">
                 {movements.map((mov) => (
                   <tr key={mov.id} className="hover:bg-gray-50/80 transition-colors">
                     <td className="px-5 py-4 font-mono">
@@ -77,7 +77,7 @@ export function MovementsPage({
                       <span className="block text-[11px] text-gray-500">{mov.timestamp}</span>
                     </td>
                     <td className="px-5 py-4">
-                      <span className="px-2 py-0.5 rounded-full bg-gray-100 text-black border border-gray-200 text-[11px] font-bold uppercase">
+                      <span className="px-2 py-0.5 rounded-full bg-cit-petroleo/10 text-cit-petroleo border border-cit-petroleo/20 text-[11px] font-bold uppercase">
                         {mov.type}
                       </span>
                     </td>
@@ -86,7 +86,7 @@ export function MovementsPage({
                       <span className="block text-[11px] text-gray-500 font-normal font-mono">{mov.itemCode}</span>
                     </td>
                     <td className="px-5 py-4 text-center font-mono">
-                      <span className="font-bold text-bordo-700">
+                      <span className="font-bold text-cit-petroleo">
                         {mov.quantity} {mov.unit}
                       </span>
                     </td>

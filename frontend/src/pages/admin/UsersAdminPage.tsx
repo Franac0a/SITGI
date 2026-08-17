@@ -19,15 +19,14 @@ export function UsersAdminPage() {
     message: string
   } | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedRoles, setSelectedRoles] = useState<Record<number, InstitutionalRole>>({})
+  const [selectedRoles, setSelectedRoles] = useState<Record<number, InstitutionalRole | string>>({})
 
   const fetchUsers = useCallback(async () => {
     setIsLoading(true)
     try {
       const data = await usersService.getUsers()
       setUsers(data)
-      // Initialize selected roles map
-      const initialRoles: Record<number, InstitutionalRole> = {}
+      const initialRoles: Record<number, InstitutionalRole | string> = {}
       data.forEach((u) => {
         initialRoles[u.id] = u.rol
       })
@@ -46,7 +45,7 @@ export function UsersAdminPage() {
     fetchUsers()
   }, [fetchUsers])
 
-  const handleRoleChange = (userId: number, newRole: InstitutionalRole) => {
+  const handleRoleChange = (userId: number, newRole: InstitutionalRole | string) => {
     setSelectedRoles((prev) => ({
       ...prev,
       [userId]: newRole,
@@ -56,7 +55,7 @@ export function UsersAdminPage() {
   const handleUpdateStatus = async (
     userId: number,
     newStatus: UserStatus,
-    customRole?: InstitutionalRole,
+    customRole?: InstitutionalRole | string,
   ) => {
     setActionLoadingId(userId)
     setFeedback(null)
@@ -74,7 +73,6 @@ export function UsersAdminPage() {
         message: response.mensaje || `Estado del usuario actualizado a "${newStatus}".`,
       })
 
-      // Actualizar localmente la lista de usuarios
       setUsers((prev) =>
         prev.map((u) =>
           u.id === userId
@@ -122,12 +120,10 @@ export function UsersAdminPage() {
     }
   }
 
-  // Contadores
   const pendingCount = users.filter((u) => u.estado === 'pendiente').length
   const activeCount = users.filter((u) => u.estado === 'activo').length
   const rejectedCount = users.filter((u) => u.estado === 'rechazado').length
 
-  // Filtrado según la pestaña activa y búsqueda
   const filteredUsers = users
     .filter((u) => u.estado === activeTab)
     .filter((u) => {
@@ -144,7 +140,6 @@ export function UsersAdminPage() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        {/* Page Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-gray-200 pb-5">
           <div>
             <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
@@ -178,7 +173,6 @@ export function UsersAdminPage() {
           </Button>
         </div>
 
-        {/* Global Feedback Banner */}
         {feedback && (
           <Alert
             variant={feedback.type}
@@ -186,14 +180,13 @@ export function UsersAdminPage() {
           />
         )}
 
-        {/* Tabs & Metrics */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex space-x-2 border-b border-gray-200 pb-1 sm:pb-0 sm:border-0">
             <button
               onClick={() => setActiveTab('pendiente')}
               className={`px-4 py-2 text-sm font-medium rounded-lg transition-all flex items-center gap-2 ${
                 activeTab === 'pendiente'
-                  ? 'bg-bordo-600 text-white shadow-sm'
+                  ? 'bg-cit-petroleo text-white shadow-sm'
                   : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
               }`}
             >
@@ -202,7 +195,7 @@ export function UsersAdminPage() {
                 <span
                   className={`px-2 py-0.5 text-xs font-bold rounded-full ${
                     activeTab === 'pendiente'
-                      ? 'bg-white text-bordo-700'
+                      ? 'bg-white text-cit-petroleo'
                       : 'bg-amber-100 text-amber-800'
                   }`}
                 >
@@ -215,7 +208,7 @@ export function UsersAdminPage() {
               onClick={() => setActiveTab('activo')}
               className={`px-4 py-2 text-sm font-medium rounded-lg transition-all flex items-center gap-2 ${
                 activeTab === 'activo'
-                  ? 'bg-bordo-600 text-white shadow-sm'
+                  ? 'bg-cit-petroleo text-white shadow-sm'
                   : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
               }`}
             >
@@ -223,7 +216,7 @@ export function UsersAdminPage() {
               <span
                 className={`px-2 py-0.5 text-xs font-bold rounded-full ${
                   activeTab === 'activo'
-                    ? 'bg-white text-bordo-700'
+                    ? 'bg-white text-cit-petroleo'
                     : 'bg-emerald-100 text-emerald-800'
                 }`}
               >
@@ -235,7 +228,7 @@ export function UsersAdminPage() {
               onClick={() => setActiveTab('rechazado')}
               className={`px-4 py-2 text-sm font-medium rounded-lg transition-all flex items-center gap-2 ${
                 activeTab === 'rechazado'
-                  ? 'bg-bordo-600 text-white shadow-sm'
+                  ? 'bg-cit-petroleo text-white shadow-sm'
                   : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
               }`}
             >
@@ -243,7 +236,7 @@ export function UsersAdminPage() {
               <span
                 className={`px-2 py-0.5 text-xs font-bold rounded-full ${
                   activeTab === 'rechazado'
-                    ? 'bg-white text-bordo-700'
+                    ? 'bg-white text-cit-petroleo'
                     : 'bg-gray-200 text-gray-700'
                 }`}
               >
@@ -252,22 +245,20 @@ export function UsersAdminPage() {
             </button>
           </div>
 
-          {/* Search Bar */}
           <div className="w-full sm:w-72">
             <input
               type="text"
               placeholder="Buscar por nombre, DNI, email..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bordo-500 focus:border-bordo-500 bg-white"
+              className="w-full px-3.5 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cit-turquesa focus:border-cit-turquesa bg-gray-50 focus:bg-white transition-all duration-150"
             />
           </div>
         </div>
 
-        {/* Content Area */}
         {isLoading ? (
           <div className="bg-white p-12 text-center rounded-xl border border-gray-200 shadow-2xs">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-bordo-600 border-t-transparent"></div>
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-cit-petroleo border-t-transparent"></div>
             <p className="text-sm text-gray-500 mt-3 font-medium">
               Cargando usuarios del sistema...
             </p>
@@ -336,10 +327,9 @@ export function UsersAdminPage() {
                         key={u.id}
                         className="hover:bg-gray-50/80 transition-colors"
                       >
-                        {/* Nombre y DNI */}
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-full bg-gray-100 text-gray-700 font-bold flex items-center justify-center text-xs">
+                            <div className="w-9 h-9 rounded-full bg-cit-petroleo/10 text-cit-petroleo font-bold flex items-center justify-center text-xs">
                               {u.nombre.charAt(0).toUpperCase()}
                             </div>
                             <div>
@@ -353,12 +343,10 @@ export function UsersAdminPage() {
                           </div>
                         </td>
 
-                        {/* Email */}
                         <td className="px-6 py-4 text-gray-600 font-mono text-xs">
                           {u.email}
                         </td>
 
-                        {/* Rol Selector / Display */}
                         <td className="px-6 py-4">
                           {activeTab === 'pendiente' || activeTab === 'activo' ? (
                             <div className="flex items-center gap-2 max-w-xs">
@@ -379,7 +367,7 @@ export function UsersAdminPage() {
                                   type="button"
                                   onClick={() => handleSaveRoleOnly(u.id)}
                                   disabled={isProcessing}
-                                  className="px-2.5 py-2 text-xs font-semibold text-bordo-700 bg-bordo-50 border border-bordo-200 rounded-lg hover:bg-bordo-100 transition-colors shrink-0"
+                                  className="px-2.5 py-2 text-xs font-semibold text-cit-petroleo bg-cit-petroleo/10 border border-cit-petroleo/20 rounded-lg hover:bg-cit-petroleo/20 transition-colors shrink-0"
                                   title="Guardar nuevo rol"
                                 >
                                   Guardar
@@ -393,7 +381,6 @@ export function UsersAdminPage() {
                           )}
                         </td>
 
-                        {/* Estado Badge */}
                         <td className="px-6 py-4 text-center">
                           {u.estado === 'pendiente' && (
                             <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-800 border border-amber-200">
@@ -415,11 +402,10 @@ export function UsersAdminPage() {
                           )}
                         </td>
 
-                        {/* Botones de Acción */}
                         <td className="px-6 py-4 text-right whitespace-nowrap">
                           {isProcessing ? (
                             <div className="inline-flex items-center gap-1.5 text-xs text-gray-500 font-medium">
-                              <span className="inline-block animate-spin rounded-full h-3.5 w-3.5 border-2 border-bordo-600 border-t-transparent"></span>
+                              <span className="inline-block animate-spin rounded-full h-3.5 w-3.5 border-2 border-cit-petroleo border-t-transparent"></span>
                               Procesando...
                             </div>
                           ) : activeTab === 'pendiente' ? (
@@ -429,7 +415,7 @@ export function UsersAdminPage() {
                                 onClick={() =>
                                   handleUpdateStatus(u.id, 'activo', currentSelectedRole)
                                 }
-                                className="px-3 py-1.5 text-xs font-semibold text-white bg-emerald-600 rounded-lg hover:bg-emerald-700 shadow-2xs transition-colors"
+                                className="px-3 py-1.5 text-xs font-semibold text-white bg-cit-turquesa hover:bg-cit-turquesa/90 rounded-lg shadow-2xs transition-colors"
                               >
                                 Aprobar Acceso
                               </button>
@@ -455,7 +441,7 @@ export function UsersAdminPage() {
                               onClick={() =>
                                 handleUpdateStatus(u.id, 'activo', currentSelectedRole)
                               }
-                              className="px-3 py-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg hover:bg-emerald-100 transition-colors"
+                              className="px-3 py-1.5 text-xs font-semibold text-cit-turquesa bg-cit-turquesa/10 border border-cit-turquesa/20 rounded-lg hover:bg-cit-turquesa/20 transition-colors"
                             >
                               Reactivar Cuenta
                             </button>

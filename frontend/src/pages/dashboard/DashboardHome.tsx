@@ -9,15 +9,15 @@ export function DashboardHome() {
       <div className="flex-1 flex flex-col items-center justify-center text-center p-6 my-auto">
         <div
           id="logo-main-placeholder"
-          className="w-56 h-56 sm:w-72 sm:h-72 rounded-2xl bg-gray-100 border border-gray-200 flex items-center justify-center mb-8 shadow-xs"
+          className="w-56 h-56 sm:w-72 sm:h-72 rounded-2xl bg-gray-50 border border-gray-200 flex items-center justify-center mb-8 shadow-xs"
         />
 
         <div className="max-w-xl space-y-3">
-          <h1 className="text-2xl sm:text-3xl font-bold text-black tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
             Bienvenido/a, {user?.nombre || 'Usuario'}
           </h1>
 
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-bordo-50 text-bordo-700 border border-bordo-200">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cit-petroleo/10 text-cit-petroleo border border-cit-petroleo/20">
             <span className="text-xs font-bold uppercase tracking-wider">
               {user?.rol || 'Personal Científico'}
             </span>
