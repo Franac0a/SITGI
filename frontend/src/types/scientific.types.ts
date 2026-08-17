@@ -1,3 +1,19 @@
+export type InventoryItemType = 'reactivo' | 'insumo' | 'material' | 'equipo'
+
+export interface CreateInventoryItemPayload {
+  nombre: string
+  tipo: InventoryItemType
+  cantidadInicial: number
+  unidadMedida: string
+  laboratorioUbicacion: string
+  fechaVencimiento?: string
+  codigoCas?: string
+  marca?: string
+  numeroLote?: string
+  stockMinimo?: number
+  observaciones?: string
+}
+
 export interface ScientificDocument {
   id: string
   title: string
