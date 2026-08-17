@@ -47,7 +47,15 @@ export function LoginPage() {
         password: values.password,
       })
 
-      if (user.rol === 'Dirección') {
+      const role = user.rol.toLowerCase()
+      if (
+        role === 'dirección' ||
+        role === 'direccion' ||
+        role === 'administración' ||
+        role === 'administracion' ||
+        role === 'administrador general' ||
+        role === 'admin'
+      ) {
         navigate('/admin/usuarios')
       } else {
         navigate('/dashboard')
@@ -62,13 +70,13 @@ export function LoginPage() {
   return (
     <AuthLayout
       title="Iniciar sesión"
-      subtitle="Acceda al sistema de inventario, stock y trazabilidad científica."
+      subtitle="Sistema Integral de Inventario, Stock y Trazabilidad Científica"
       footer={
         <p className="text-gray-600">
           ¿No tiene una cuenta?{' '}
           <Link
             to="/registro"
-            className="font-semibold text-bordo-600 hover:text-bordo-700"
+            className="font-semibold text-cit-petroleo hover:text-cit-azul-fuerte hover:underline"
           >
             Registrarse
           </Link>
@@ -87,7 +95,7 @@ export function LoginPage() {
         <Input
           name="email"
           type="email"
-          label="Correo electrónico"
+          label="Correo electrónico institucional"
           placeholder="usuario@citformosa.gob.ar"
           autoComplete="email"
           value={values.email}
