@@ -4,7 +4,13 @@ import { useAuth } from '@/context'
 import { UsersAdminPage } from '@/pages/admin/UsersAdminPage'
 import { LoginPage } from '@/pages/auth/LoginPage'
 import { RegisterPage } from '@/pages/auth/RegisterPage'
-import { DashboardPage } from '@/pages/dashboard/DashboardPage'
+import { DashboardHome } from '@/pages/dashboard/DashboardHome'
+import { DocumentsPage } from '@/pages/documents/DocumentsPage'
+import { InventoryPage } from '@/pages/inventory/InventoryPage'
+import { MovementsPage } from '@/pages/movements/MovementsPage'
+import { ProjectsPage } from '@/pages/projects/ProjectsPage'
+import { ReportsPage } from '@/pages/reports/ReportsPage'
+import { ReservationsPage } from '@/pages/reservations/ReservationsPage'
 
 export function AppRoutes() {
   const { isAuthenticated, user } = useAuth()
@@ -14,7 +20,6 @@ export function AppRoutes() {
 
   return (
     <Routes>
-      {/* Public Routes */}
       <Route
         path="/login"
         element={
@@ -28,17 +33,20 @@ export function AppRoutes() {
         }
       />
 
-      {/* Protected Routes (All authenticated users) */}
       <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/dashboard" element={<DashboardHome />} />
+        <Route path="/inventario" element={<InventoryPage />} />
+        <Route path="/movimientos" element={<MovementsPage />} />
+        <Route path="/proyectos" element={<ProjectsPage />} />
+        <Route path="/reservas" element={<ReservationsPage />} />
+        <Route path="/documentos" element={<DocumentsPage />} />
+        <Route path="/reportes" element={<ReportsPage />} />
       </Route>
 
-      {/* Protected Routes (Exclusively Dirección) */}
-      <Route element={<ProtectedRoute allowedRoles={['Dirección']} />}>
+      <Route element={<ProtectedRoute allowedRoles={['Dirección', 'Administración']} />}>
         <Route path="/admin/usuarios" element={<UsersAdminPage />} />
       </Route>
 
-      {/* Root & Catch-all Navigation */}
       <Route
         path="/"
         element={
