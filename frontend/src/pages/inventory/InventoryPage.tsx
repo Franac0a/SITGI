@@ -1,8 +1,11 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { Button } from '@/components/ui/Button'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { Skeleton } from '@/components/ui/Skeleton'
+import { useAuth } from '@/context'
+import { canCreateInventory } from '@/utils/rbac'
 import type { InventoryItem } from '@/types/scientific.types'
 
 interface InventoryPageProps {
@@ -14,8 +17,12 @@ export function InventoryPage({
   initialItems = [],
   isLoading = false,
 }: InventoryPageProps) {
+  const navigate = useNavigate()
+  const { user } = useAuth()
   const [items] = useState<InventoryItem[]>(initialItems)
   const [searchQuery, setSearchQuery] = useState('')
+
+  const canCreate = canCreateInventory(user?.rol)
 
   const filteredItems = items.filter(
     (item) =>
@@ -40,12 +47,49 @@ export function InventoryPage({
             </p>
           </div>
 
-          <Button variant="primary">
-            <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-            </svg>
-            Nuevo Ítem
-          </Button>
+          <div className="flex items-center gap-3">
+            {canCreate ? (
+              <Button
+                variant="primary"
+                onClick={() => navigate('/inventario/nuevo')}
+              >
+                <svg
+                  className="w-4 h-4 mr-1.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 4v16m8-8H4"
+                  />
+                </svg>
+                Nuevo Elemento
+              </Button>
+            ) : (
+              <Button
+                variant="secondary"
+                onClick={() => navigate('/reservas')}
+              >
+                <svg
+                  className="w-4 h-4 mr-1.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
+                </svg>
+                Solicitar / Reservar
+              </Button>
+            )}
+          </div>
         </div>
 
         <div className="p-4 rounded-xl border border-gray-200 bg-gray-50 flex flex-col md:flex-row items-center justify-between gap-4">
@@ -68,12 +112,28 @@ export function InventoryPage({
           </div>
         ) : filteredItems.length === 0 ? (
           <EmptyState
-            title="No hay ítems en el inventario"
-            description="No se encontraron registros de reactivos o insumos en la base de datos."
+            title="No hay elementos en el inventario"
+            description={
+              canCreate
+                ? 'No se encontraron registros de reactivos o insumos en la base de datos. Puede registrar el primer elemento ahora.'
+                : 'No se encontraron registros de reactivos o insumos en la base de datos.'
+            }
             action={
-              <Button variant="primary">
-                Registrar Primer Ítem
-              </Button>
+              canCreate ? (
+                <Button
+                  variant="primary"
+                  onClick={() => navigate('/inventario/nuevo')}
+                >
+                  Registrar Primer Elemento
+                </Button>
+              ) : (
+                <Button
+                  variant="secondary"
+                  onClick={() => navigate('/reservas')}
+                >
+                  Ir a Solicitudes y Reservas
+                </Button>
+              )
             }
           />
         ) : (
@@ -117,12 +177,30 @@ export function InventoryPage({
                       {item.expirationDate || '---'}
                     </td>
                     <td className="px-5 py-4 text-right whitespace-nowrap">
-                      <button className="text-bordo-700 font-bold hover:text-bordo-800 mr-3">
-                        Registrar Retiro
-                      </button>
-                      <button className="text-gray-500 font-medium hover:text-black">
-                        Detalles
-                      </button>
+                      {canCreate ? (
+                        <>
+                          <button
+                            type="button"
+                            className="text-bordo-700 font-bold hover:text-bordo-800 mr-3"
+                          >
+                            Registrar Retiro
+                          </button>
+                          <button
+                            type="button"
+                            className="text-gray-500 font-medium hover:text-black"
+                          >
+                            Detalles
+                          </button>
+                        </>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => navigate('/reservas')}
+                          className="text-bordo-700 font-bold hover:text-bordo-800"
+                        >
+                          Solicitar Uso
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}

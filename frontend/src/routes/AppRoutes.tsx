@@ -1,16 +1,18 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { ProtectedRoute } from '@/components/layout/ProtectedRoute'
+import { RoleGuard } from '@/components/auth/RoleGuard'
 import { useAuth } from '@/context'
 import { UsersAdminPage } from '@/pages/admin/UsersAdminPage'
 import { LoginPage } from '@/pages/auth/LoginPage'
 import { RegisterPage } from '@/pages/auth/RegisterPage'
 import { DashboardHome } from '@/pages/dashboard/DashboardHome'
 import { DocumentsPage } from '@/pages/documents/DocumentsPage'
-import { InventoryPage } from '@/pages/inventory/InventoryPage'
+import { InventoryPage, NewInventoryItemPage } from '@/pages/inventory'
 import { MovementsPage } from '@/pages/movements/MovementsPage'
 import { ProjectsPage } from '@/pages/projects/ProjectsPage'
 import { ReportsPage } from '@/pages/reports/ReportsPage'
 import { ReservationsPage } from '@/pages/reservations/ReservationsPage'
+import { canCreateInventory } from '@/utils/rbac'
 
 export function AppRoutes() {
   const { isAuthenticated, user } = useAuth()
@@ -36,6 +38,14 @@ export function AppRoutes() {
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<DashboardHome />} />
         <Route path="/inventario" element={<InventoryPage />} />
+        <Route
+          path="/inventario/nuevo"
+          element={
+            <RoleGuard checkPermission={canCreateInventory} fallback="denied">
+              <NewInventoryItemPage />
+            </RoleGuard>
+          }
+        />
         <Route path="/movimientos" element={<MovementsPage />} />
         <Route path="/proyectos" element={<ProjectsPage />} />
         <Route path="/reservas" element={<ReservationsPage />} />
