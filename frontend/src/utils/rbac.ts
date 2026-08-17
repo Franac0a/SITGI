@@ -9,6 +9,8 @@ export function canCreateInventory(role?: string | null): boolean {
     normalized === 'administrador general' ||
     normalized === 'administrador' ||
     normalized === 'admin' ||
+    normalized === 'responsable de laboratorio' ||
+    normalized === 'investigador o director de proyecto' ||
     normalized === 'inventario' ||
     normalized === 'gestión de inventario' ||
     normalized === 'gestion de inventario'

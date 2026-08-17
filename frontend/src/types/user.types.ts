@@ -4,12 +4,12 @@ export type UserStatus = 'pendiente' | 'activo' | 'rechazado'
 
 export interface UserFilterParams {
   estado?: UserStatus
-  rol?: InstitutionalRole
+  rol?: InstitutionalRole | string
 }
 
 export interface UpdateUserStatusPayload {
   estado?: UserStatus
-  rol?: InstitutionalRole
+  rol?: InstitutionalRole | string
 }
 
 export interface UpdateUserResponse {

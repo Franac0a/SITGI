@@ -1,19 +1,22 @@
 export const INSTITUTIONAL_ROLES = [
   {
-    value: 'Investigador',
-    label: 'Investigador / Becario / Técnico',
+    value: 'Administrador general',
+    label: 'Administrador general',
   },
   {
-    value: 'Inventario',
-    label: 'Gestión de Inventario y Laboratorio',
+    value: 'Responsable de laboratorio',
+    label: 'Responsable de laboratorio',
   },
   {
-    value: 'Administración',
-    label: 'Administración Institucional',
+    value: 'Investigador o director de proyecto',
+    label: 'Investigador o director de proyecto',
   },
   {
-    value: 'Dirección',
-    label: 'Dirección del CIT',
+    value: 'Técnico o becario',
+    label: 'Técnico o becario',
+  },
+  {
+    value: 'Consulta o auditor interno',
+    label: 'Consulta o auditor interno',
   },
 ] as const
-
