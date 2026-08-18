@@ -185,10 +185,17 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         }`}
       >
         <div className="h-16 px-4 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
-          <div
-            id="logo-header-placeholder"
-            className="w-36 h-9 rounded bg-gray-100 border border-gray-200 shrink-0"
-          />
+          <Link
+            to="/dashboard"
+            onClick={onClose}
+            className="flex items-center hover:opacity-90 transition-opacity"
+          >
+            <img
+              src="/logo.png"
+              alt="CIT Formosa"
+              className="h-8 w-auto max-w-44 object-contain"
+            />
+          </Link>
 
           <button
             type="button"

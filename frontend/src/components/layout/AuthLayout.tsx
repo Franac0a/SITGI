@@ -19,8 +19,12 @@ export function AuthLayout({
     <div className="min-h-screen bg-gray-50">
       <div className="mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-4 py-10">
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg border border-gray-200 bg-white">
-            <span className="text-lg font-bold text-bordo-600">CIT</span>
+          <div className="mx-auto mb-4 flex max-w-xs items-center justify-center">
+            <img
+              src="/logo.png"
+              alt="Centro de Investigación y Transferencia - CIT Formosa"
+              className="h-14 sm:h-16 w-auto object-contain"
+            />
           </div>
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-bordo-600">
             CIT Formosa

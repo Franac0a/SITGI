@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '@/context'
 
 interface NotificationItem {
@@ -69,10 +69,13 @@ export function Header({ onToggleSidebar, notifications: initialNotifications = 
           </svg>
         </button>
 
-        <div
-          id="logo-header-placeholder"
-          className="w-36 sm:w-44 h-9 rounded bg-gray-100 border border-gray-200 shrink-0"
-        />
+        <Link to="/dashboard" className="flex items-center gap-2 shrink-0 hover:opacity-90 transition-opacity">
+          <img
+            src="/logo.png"
+            alt="Centro de Investigación y Transferencia - CIT Formosa"
+            className="h-9 sm:h-10 w-auto max-w-44 sm:max-w-64 object-contain"
+          />
+        </Link>
       </div>
 
       <div className="flex items-center gap-3 sm:gap-4">
