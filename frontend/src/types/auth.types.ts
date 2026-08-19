@@ -7,7 +7,7 @@ export interface User {
   dni: string
   nombre: string
   email: string
-  rol: InstitutionalRole | string
+  rol: InstitutionalRole
   estado: 'pendiente' | 'activo' | 'rechazado'
 }
 

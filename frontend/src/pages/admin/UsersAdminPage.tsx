@@ -19,14 +19,14 @@ export function UsersAdminPage() {
     message: string
   } | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedRoles, setSelectedRoles] = useState<Record<number, InstitutionalRole | string>>({})
+  const [selectedRoles, setSelectedRoles] = useState<Record<number, InstitutionalRole>>({})
 
   const fetchUsers = useCallback(async () => {
     setIsLoading(true)
     try {
       const data = await usersService.getUsers()
       setUsers(data)
-      const initialRoles: Record<number, InstitutionalRole | string> = {}
+      const initialRoles: Record<number, InstitutionalRole> = {}
       data.forEach((u) => {
         initialRoles[u.id] = u.rol
       })
@@ -45,7 +45,7 @@ export function UsersAdminPage() {
     fetchUsers()
   }, [fetchUsers])
 
-  const handleRoleChange = (userId: number, newRole: InstitutionalRole | string) => {
+  const handleRoleChange = (userId: number, newRole: InstitutionalRole) => {
     setSelectedRoles((prev) => ({
       ...prev,
       [userId]: newRole,
@@ -55,7 +55,7 @@ export function UsersAdminPage() {
   const handleUpdateStatus = async (
     userId: number,
     newStatus: UserStatus,
-    customRole?: InstitutionalRole | string,
+    customRole?: InstitutionalRole,
   ) => {
     setActionLoadingId(userId)
     setFeedback(null)

@@ -6,14 +6,7 @@ export function canCreateInventory(role?: string | null): boolean {
     normalized === 'direccion' ||
     normalized === 'administración' ||
     normalized === 'administracion' ||
-    normalized === 'administrador general' ||
-    normalized === 'administrador' ||
-    normalized === 'admin' ||
-    normalized === 'responsable de laboratorio' ||
-    normalized === 'investigador o director de proyecto' ||
-    normalized === 'inventario' ||
-    normalized === 'gestión de inventario' ||
-    normalized === 'gestion de inventario'
+    normalized === 'inventario'
   )
 }
 
@@ -24,8 +17,6 @@ export function canManageUsers(role?: string | null): boolean {
     normalized === 'dirección' ||
     normalized === 'direccion' ||
     normalized === 'administración' ||
-    normalized === 'administracion' ||
-    normalized === 'administrador general' ||
-    normalized === 'admin'
+    normalized === 'administracion'
   )
 }
