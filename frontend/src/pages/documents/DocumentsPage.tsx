@@ -21,10 +21,10 @@ export function DocumentsPage({
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-gray-200 pb-5">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-bordo-700 bg-bordo-50 px-2 py-0.5 rounded border border-bordo-200">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-cit-petroleo bg-cit-petroleo/10 px-2.5 py-0.5 rounded-full border border-cit-petroleo/20">
               Control Documental
             </span>
-            <h1 className="text-2xl font-bold text-black mt-2">
+            <h1 className="text-2xl font-bold text-gray-900 mt-2">
               Documentos Asociados
             </h1>
             <p className="text-sm text-gray-600 mt-1">
@@ -64,10 +64,10 @@ export function DocumentsPage({
                 className="p-5 rounded-xl border border-gray-200 bg-white flex flex-col justify-between shadow-2xs"
               >
                 <div>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-gray-100 text-black border border-gray-200 uppercase">
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-cit-petroleo/10 text-cit-petroleo border border-cit-petroleo/20 uppercase">
                     {doc.category}
                   </span>
-                  <h3 className="font-bold text-black text-base mt-2">
+                  <h3 className="font-bold text-gray-900 text-base mt-2">
                     {doc.title}
                   </h3>
                   {doc.description && (
@@ -82,7 +82,7 @@ export function DocumentsPage({
                     href={doc.fileUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-bordo-700 font-bold hover:underline"
+                    className="text-cit-petroleo font-bold hover:text-cit-azul-fuerte hover:underline"
                   >
                     Descargar
                   </a>

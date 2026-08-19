@@ -16,4 +16,3 @@ export const INSTITUTIONAL_ROLES = [
     label: 'Dirección del CIT',
   },
 ] as const
-

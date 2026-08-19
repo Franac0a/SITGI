@@ -51,7 +51,7 @@ export function Header({ onToggleSidebar, notifications: initialNotifications = 
         <button
           type="button"
           onClick={onToggleSidebar}
-          className="p-2 rounded-lg text-black hover:bg-gray-100 focus:outline-none transition-colors"
+          className="p-2 rounded-lg text-gray-700 hover:text-cit-petroleo hover:bg-gray-100 focus:outline-none transition-colors"
           aria-label="Alternar menú de navegación"
         >
           <svg
@@ -85,8 +85,8 @@ export function Header({ onToggleSidebar, notifications: initialNotifications = 
             onClick={() => setIsNotifOpen((prev) => !prev)}
             className={`relative p-2 rounded-lg transition-colors focus:outline-none ${
               isNotifOpen
-                ? 'bg-bordo-50 text-bordo-700'
-                : 'text-gray-700 hover:text-black hover:bg-gray-100'
+                ? 'bg-cit-petroleo/10 text-cit-petroleo'
+                : 'text-gray-700 hover:text-cit-petroleo hover:bg-gray-100'
             }`}
             aria-label="Notificaciones"
           >
@@ -105,7 +105,7 @@ export function Header({ onToggleSidebar, notifications: initialNotifications = 
             </svg>
 
             {unreadCount > 0 && (
-              <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-bordo-600 text-[10px] font-bold text-white shadow-xs">
+              <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-cit-petroleo text-[10px] font-bold text-white shadow-xs">
                 {unreadCount}
               </span>
             )}
@@ -115,11 +115,11 @@ export function Header({ onToggleSidebar, notifications: initialNotifications = 
             <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-xl bg-white border border-gray-200 shadow-xl z-50 overflow-hidden font-sans">
               <div className="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-xs uppercase tracking-wider text-black">
+                  <span className="font-bold text-xs uppercase tracking-wider text-gray-900">
                     Notificaciones
                   </span>
                   {unreadCount > 0 && (
-                    <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-bordo-600 text-white">
+                    <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-cit-petroleo text-white">
                       {unreadCount}
                     </span>
                   )}
@@ -129,7 +129,7 @@ export function Header({ onToggleSidebar, notifications: initialNotifications = 
                   <button
                     type="button"
                     onClick={handleMarkAllAsRead}
-                    className="text-[11px] font-semibold text-bordo-700 hover:underline"
+                    className="text-[11px] font-semibold text-cit-petroleo hover:underline"
                   >
                     Marcar leídas
                   </button>
@@ -146,20 +146,20 @@ export function Header({ onToggleSidebar, notifications: initialNotifications = 
                     <div
                       key={n.id}
                       className={`p-3.5 hover:bg-gray-50 transition-colors flex gap-3 ${
-                        !n.read ? 'bg-bordo-50/30' : ''
+                        !n.read ? 'bg-cit-petroleo/5' : ''
                       }`}
                     >
                       <div className="shrink-0 mt-0.5">
                         {n.type === 'critical' ? (
-                          <div className="w-5 h-5 rounded-full bg-bordo-100 text-bordo-700 flex items-center justify-center font-bold text-xs">
+                          <div className="w-5 h-5 rounded-full bg-cit-azul-fuerte/15 text-cit-azul-fuerte flex items-center justify-center font-bold text-xs">
                             !
                           </div>
                         ) : n.type === 'warning' ? (
-                          <div className="w-5 h-5 rounded-full bg-gray-200 text-black flex items-center justify-center font-bold text-xs">
+                          <div className="w-5 h-5 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs">
                             *
                           </div>
                         ) : (
-                          <div className="w-5 h-5 rounded-full bg-gray-100 text-gray-700 flex items-center justify-center font-bold text-xs">
+                          <div className="w-5 h-5 rounded-full bg-cit-petroleo/10 text-cit-petroleo flex items-center justify-center font-bold text-xs">
                             i
                           </div>
                         )}
@@ -167,7 +167,7 @@ export function Header({ onToggleSidebar, notifications: initialNotifications = 
 
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between">
-                          <p className="text-xs font-bold text-black truncate">
+                          <p className="text-xs font-bold text-gray-900 truncate">
                             {n.title}
                           </p>
                           <span className="text-[10px] text-gray-400 font-medium whitespace-nowrap">
@@ -190,7 +190,7 @@ export function Header({ onToggleSidebar, notifications: initialNotifications = 
                     setIsNotifOpen(false)
                     navigate('/reportes')
                   }}
-                  className="text-xs font-bold text-bordo-700 hover:underline transition-colors"
+                  className="text-xs font-bold text-cit-petroleo hover:underline transition-colors"
                 >
                   Ver todas las alertas
                 </button>
@@ -202,16 +202,16 @@ export function Header({ onToggleSidebar, notifications: initialNotifications = 
         <div className="h-6 w-px bg-gray-200" aria-hidden="true" />
 
         <div className="text-right hidden sm:block">
-          <p className="text-xs font-bold text-black leading-tight truncate max-w-44">
+          <p className="text-xs font-bold text-gray-900 leading-tight truncate max-w-44">
             {user?.nombre || 'Usuario'}
           </p>
-          <span className="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-bordo-50 text-bordo-700 border border-bordo-200 mt-0.5 uppercase tracking-tight">
+          <span className="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-cit-petroleo/10 text-cit-petroleo border border-cit-petroleo/20 mt-0.5 uppercase tracking-tight">
             {user?.rol || 'Personal Científico'}
           </span>
         </div>
 
         <div
-          className="w-8 h-8 rounded-full bg-bordo-600 text-white font-bold flex items-center justify-center text-xs shrink-0"
+          className="w-8 h-8 rounded-full bg-cit-petroleo text-white font-bold flex items-center justify-center text-xs shrink-0"
           title={user?.nombre || 'Usuario'}
         >
           {user?.nombre?.charAt(0).toUpperCase() || 'U'}
@@ -220,7 +220,7 @@ export function Header({ onToggleSidebar, notifications: initialNotifications = 
         <button
           type="button"
           onClick={handleLogout}
-          className="p-2 rounded-lg text-gray-500 hover:text-bordo-700 hover:bg-gray-100 transition-colors focus:outline-none"
+          className="p-2 rounded-lg text-gray-500 hover:text-cit-petroleo hover:bg-gray-100 transition-colors focus:outline-none"
           title="Cerrar sesión"
           aria-label="Cerrar sesión"
         >

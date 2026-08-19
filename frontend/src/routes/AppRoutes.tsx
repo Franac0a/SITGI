@@ -12,13 +12,13 @@ import { MovementsPage } from '@/pages/movements/MovementsPage'
 import { ProjectsPage } from '@/pages/projects/ProjectsPage'
 import { ReportsPage } from '@/pages/reports/ReportsPage'
 import { ReservationsPage } from '@/pages/reservations/ReservationsPage'
-import { canCreateInventory } from '@/utils/rbac'
+import { canCreateInventory, canManageUsers } from '@/utils/rbac'
 
 export function AppRoutes() {
   const { isAuthenticated, user } = useAuth()
 
-  const defaultAuthRedirect =
-    user?.rol === 'Dirección' ? '/admin/usuarios' : '/dashboard'
+  const isUserAdmin = canManageUsers(user?.rol)
+  const defaultAuthRedirect = isUserAdmin ? '/admin/usuarios' : '/dashboard'
 
   return (
     <Routes>
@@ -53,7 +53,11 @@ export function AppRoutes() {
         <Route path="/reportes" element={<ReportsPage />} />
       </Route>
 
-      <Route element={<ProtectedRoute allowedRoles={['Dirección', 'Administración']} />}>
+      <Route
+        element={
+          <RoleGuard checkPermission={canManageUsers} fallback="redirect" redirectTo="/dashboard" />
+        }
+      >
         <Route path="/admin/usuarios" element={<UsersAdminPage />} />
       </Route>
 

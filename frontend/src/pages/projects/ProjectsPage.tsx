@@ -21,10 +21,10 @@ export function ProjectsPage({
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-gray-200 pb-5">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-bordo-700 bg-bordo-50 px-2 py-0.5 rounded border border-bordo-200">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-cit-petroleo bg-cit-petroleo/10 px-2.5 py-0.5 rounded-full border border-cit-petroleo/20">
               Líneas de Investigación
             </span>
-            <h1 className="text-2xl font-bold text-black mt-2">
+            <h1 className="text-2xl font-bold text-gray-900 mt-2">
               Proyectos de Investigación
             </h1>
             <p className="text-sm text-gray-600 mt-1">
@@ -60,18 +60,18 @@ export function ProjectsPage({
             {projects.map((proj) => (
               <div
                 key={proj.id}
-                className="p-5 rounded-xl border border-gray-200 bg-white hover:border-gray-300 transition-colors shadow-2xs"
+                className="p-5 rounded-xl border border-gray-200 bg-white hover:border-cit-petroleo/40 transition-colors shadow-2xs"
               >
                 <div className="flex items-start justify-between">
                   <div>
-                    <span className="text-[10px] font-bold font-mono uppercase px-2 py-0.5 rounded bg-gray-100 text-black border border-gray-200">
+                    <span className="text-[10px] font-bold font-mono uppercase px-2 py-0.5 rounded bg-cit-petroleo/10 text-cit-petroleo border border-cit-petroleo/20">
                       {proj.code}
                     </span>
-                    <h3 className="text-base font-bold text-black mt-2">
+                    <h3 className="text-base font-bold text-gray-900 mt-2">
                       {proj.title}
                     </h3>
                   </div>
-                  <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-black border border-gray-200 uppercase">
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-800 border border-gray-200 uppercase">
                     {proj.status.replace('_', ' ')}
                   </span>
                 </div>
@@ -81,8 +81,8 @@ export function ProjectsPage({
                   </p>
                 )}
                 <div className="mt-4 pt-3 border-t border-gray-200 flex items-center justify-between text-xs text-gray-500">
-                  <span>Director: <strong className="text-black">{proj.director}</strong></span>
-                  <span className="font-semibold text-bordo-700">{proj.reagentsCount} Insumos Vinculados</span>
+                  <span>Director: <strong className="text-gray-900">{proj.director}</strong></span>
+                  <span className="font-semibold text-cit-petroleo">{proj.reagentsCount} Insumos Vinculados</span>
                 </div>
               </div>
             ))}

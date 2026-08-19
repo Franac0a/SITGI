@@ -21,10 +21,10 @@ export function ReservationsPage({
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-gray-200 pb-5">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-bordo-700 bg-bordo-50 px-2 py-0.5 rounded border border-bordo-200">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-cit-petroleo bg-cit-petroleo/10 px-2.5 py-0.5 rounded-full border border-cit-petroleo/20">
               Uso de Instalaciones
             </span>
-            <h1 className="text-2xl font-bold text-black mt-2">
+            <h1 className="text-2xl font-bold text-gray-900 mt-2">
               Reservas y Solicitudes
             </h1>
             <p className="text-sm text-gray-600 mt-1">
@@ -69,23 +69,23 @@ export function ReservationsPage({
                   <th className="px-5 py-3.5 text-right">Acciones</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 text-black">
+              <tbody className="divide-y divide-gray-200 text-gray-900">
                 {reservations.map((res) => (
                   <tr key={res.id} className="hover:bg-gray-50/80 transition-colors">
                     <td className="px-5 py-4">
-                      <span className="font-bold text-black">{res.equipmentOrItemName}</span>
+                      <span className="font-bold text-gray-900">{res.equipmentOrItemName}</span>
                       <span className="block text-[11px] text-gray-500 font-mono">{res.equipmentOrItemCode}</span>
                     </td>
                     <td className="px-5 py-4 font-medium">{res.researcherName}</td>
                     <td className="px-5 py-4 font-mono text-gray-700">{res.date} ({res.shift})</td>
                     <td className="px-5 py-4 text-gray-700">{res.laboratory}</td>
                     <td className="px-5 py-4 text-center">
-                      <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-black border border-gray-200 uppercase">
+                      <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-800 border border-gray-200 uppercase">
                         {res.status}
                       </span>
                     </td>
                     <td className="px-5 py-4 text-right">
-                      <button className="text-bordo-700 font-bold hover:text-bordo-800">
+                      <button className="text-cit-petroleo font-bold hover:text-cit-azul-fuerte hover:underline">
                         Ver Ficha
                       </button>
                     </td>
