@@ -36,10 +36,10 @@ export function InventoryPage({
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-gray-200 pb-5">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-bordo-700 bg-bordo-50 px-2 py-0.5 rounded border border-bordo-200">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-cit-petroleo bg-cit-petroleo/10 px-2.5 py-0.5 rounded-full border border-cit-petroleo/20">
               Catálogo de Laboratorio
             </span>
-            <h1 className="text-2xl font-bold text-black mt-2">
+            <h1 className="text-2xl font-bold text-gray-900 mt-2">
               Inventario Científico
             </h1>
             <p className="text-sm text-gray-600 mt-1">
@@ -99,7 +99,7 @@ export function InventoryPage({
               placeholder="Buscar por código, nombre o CAS..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-3 py-2 text-xs bg-white border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-bordo-500 font-sans"
+              className="w-full px-3 py-2 text-xs bg-white border border-gray-300 rounded-lg text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cit-turquesa focus:border-cit-turquesa font-sans"
             />
           </div>
         </div>
@@ -150,7 +150,7 @@ export function InventoryPage({
                   <th className="px-5 py-3.5 text-right">Acciones</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 text-black">
+              <tbody className="divide-y divide-gray-200 text-gray-900">
                 {filteredItems.map((item) => (
                   <tr key={item.id} className="hover:bg-gray-50/80 transition-colors">
                     <td className="px-5 py-4 font-mono font-bold text-gray-900">{item.code}</td>
@@ -163,13 +163,13 @@ export function InventoryPage({
                       )}
                     </td>
                     <td className="px-5 py-4">
-                      <span className="px-2 py-0.5 rounded bg-gray-100 border border-gray-200 text-black text-[11px] font-medium">
+                      <span className="px-2 py-0.5 rounded bg-cit-petroleo/10 border border-cit-petroleo/20 text-cit-petroleo text-[11px] font-semibold">
                         {item.category}
                       </span>
                     </td>
                     <td className="px-5 py-4 text-gray-700">{item.location}</td>
                     <td className="px-5 py-4 text-center">
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-black border border-gray-200">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-800 border border-gray-200">
                         {item.currentStock} / Mín {item.minStock} {item.unit}
                       </span>
                     </td>
@@ -181,13 +181,13 @@ export function InventoryPage({
                         <>
                           <button
                             type="button"
-                            className="text-bordo-700 font-bold hover:text-bordo-800 mr-3"
+                            className="text-cit-petroleo font-bold hover:text-cit-azul-fuerte hover:underline mr-3"
                           >
                             Registrar Retiro
                           </button>
                           <button
                             type="button"
-                            className="text-gray-500 font-medium hover:text-black"
+                            className="text-gray-500 font-medium hover:text-cit-petroleo"
                           >
                             Detalles
                           </button>
@@ -196,7 +196,7 @@ export function InventoryPage({
                         <button
                           type="button"
                           onClick={() => navigate('/reservas')}
-                          className="text-bordo-700 font-bold hover:text-bordo-800"
+                          className="text-cit-petroleo font-bold hover:text-cit-azul-fuerte hover:underline"
                         >
                           Solicitar Uso
                         </button>

@@ -10,13 +10,13 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    'bg-bordo-600 text-white hover:bg-bordo-700 focus-visible:ring-bordo-500 disabled:bg-bordo-200 disabled:text-gray-500',
+    'bg-cit-petroleo text-white hover:bg-cit-azul-fuerte active:bg-cit-azul-oscuro focus-visible:ring-cit-turquesa disabled:opacity-50 disabled:cursor-not-allowed shadow-sm',
   secondary:
-    'border border-gray-300 bg-white text-black hover:border-gray-400 hover:bg-gray-50 focus-visible:ring-gray-400 disabled:text-gray-400',
+    'border border-gray-300 bg-white text-gray-800 hover:bg-gray-50 hover:border-cit-petroleo hover:text-cit-petroleo focus-visible:ring-cit-turquesa disabled:text-gray-400',
   ghost:
-    'bg-transparent text-bordo-600 hover:bg-bordo-50 focus-visible:ring-bordo-500 disabled:text-gray-400',
+    'bg-transparent text-cit-petroleo hover:bg-cit-petroleo/10 focus-visible:ring-cit-turquesa disabled:text-gray-400',
   outline:
-    'border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 hover:text-gray-900 focus-visible:ring-gray-400 disabled:text-gray-400',
+    'border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 hover:text-cit-petroleo hover:border-cit-petroleo focus-visible:ring-cit-turquesa disabled:text-gray-400',
 }
 
 export function Button({
@@ -33,8 +33,8 @@ export function Button({
       type="button"
       disabled={disabled || isLoading}
       className={[
-        'inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-semibold transition-colors',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+        'inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition-all duration-150',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 cursor-pointer',
         'disabled:cursor-not-allowed',
         fullWidth ? 'w-full' : '',
         variantStyles[variant],

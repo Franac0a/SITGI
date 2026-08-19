@@ -65,7 +65,7 @@ export function RegisterPage() {
       })
 
       setSuccessMessage(
-        'Su solicitud de registro fue enviada correctamente. Un administrador revisará su cuenta.',
+        'Su solicitud de registro fue enviada correctamente. Un administrador revisará su cuenta institucional para su posterior habilitación.',
       )
       setValues(initialValues)
     } catch (error) {
@@ -79,13 +79,13 @@ export function RegisterPage() {
     <AuthLayout
       wide
       title="Registro de usuario"
-      subtitle="Complete el formulario para solicitar acceso al sistema institucional."
+      subtitle="Sistema Integral de Inventario, Stock y Trazabilidad Científica"
       footer={
         <p className="text-gray-600">
           ¿Ya tiene una cuenta?{' '}
           <Link
             to="/login"
-            className="font-semibold text-bordo-600 hover:text-bordo-700"
+            className="font-semibold text-cit-petroleo hover:text-cit-azul-fuerte hover:underline"
           >
             Iniciar sesión
           </Link>
@@ -133,7 +133,7 @@ export function RegisterPage() {
         <Input
           name="email"
           type="email"
-          label="Correo electrónico"
+          label="Correo electrónico institucional"
           placeholder="usuario@citformosa.gob.ar"
           autoComplete="email"
           value={values.email}
@@ -144,7 +144,7 @@ export function RegisterPage() {
         <Select
           name="rol"
           label="Rol institucional"
-          placeholder="Seleccione un rol"
+          placeholder="Seleccione un rol institucional"
           options={INSTITUTIONAL_ROLES}
           value={values.rol}
           onChange={(event) =>
@@ -180,7 +180,7 @@ export function RegisterPage() {
         </div>
 
         <Button type="submit" fullWidth isLoading={isLoading}>
-          Solicitar acceso
+          Registrarse
         </Button>
       </form>
     </AuthLayout>

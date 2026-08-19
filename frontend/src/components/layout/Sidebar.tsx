@@ -200,7 +200,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-lg text-black hover:bg-gray-200 transition-colors focus:outline-none"
+            className="p-2 rounded-lg text-gray-600 hover:text-cit-petroleo hover:bg-gray-200 transition-colors focus:outline-none"
             aria-label="Cerrar menú"
           >
             <svg
@@ -230,7 +230,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
             return (
               <div key={group.title} className="space-y-1">
-                <p className="px-3 text-[11px] font-bold uppercase tracking-wider text-gray-500">
+                <p className="px-3 text-[11px] font-bold uppercase tracking-wider text-cit-petroleo">
                   {group.title}
                 </p>
 
@@ -249,16 +249,16 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                         onClick={onClose}
                         className={`group flex items-center justify-between px-3 py-2.5 rounded-lg text-sm transition-all ${
                           isActive
-                            ? 'bg-bordo-50 text-bordo-800 font-semibold border-l-4 border-bordo-600'
-                            : 'text-black hover:bg-gray-100 font-medium'
+                            ? 'bg-cit-petroleo/10 text-cit-petroleo font-semibold border-l-4 border-cit-petroleo'
+                            : 'text-gray-800 hover:bg-gray-200/60 font-medium'
                         }`}
                       >
                         <div className="flex items-center gap-3 min-w-0">
                           <Icon
                             className={`w-5 h-5 shrink-0 transition-colors ${
                               isActive
-                                ? 'text-bordo-600'
-                                : 'text-gray-600 group-hover:text-black'
+                                ? 'text-cit-petroleo'
+                                : 'text-cit-azul-fuerte/70 group-hover:text-cit-petroleo'
                             }`}
                           />
                           <span className="truncate">{item.label}</span>

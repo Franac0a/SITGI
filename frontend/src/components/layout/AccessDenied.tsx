@@ -19,7 +19,7 @@ export function AccessDenied({
   return (
     <div className="min-h-[60vh] flex items-center justify-center p-6">
       <div className="max-w-md w-full bg-white border border-gray-200 rounded-xl p-8 shadow-xs text-center">
-        <div className="mx-auto w-12 h-12 rounded-full bg-gray-100 border border-gray-300 flex items-center justify-center text-gray-700 mb-4">
+        <div className="mx-auto w-12 h-12 rounded-full bg-cit-petroleo/10 border border-cit-petroleo/20 flex items-center justify-center text-cit-petroleo mb-4">
           <svg
             className="w-6 h-6"
             fill="none"
@@ -36,11 +36,11 @@ export function AccessDenied({
           </svg>
         </div>
 
-        <span className="text-[11px] font-bold uppercase tracking-wider text-bordo-700 bg-bordo-50 px-2 py-0.5 rounded border border-bordo-200">
+        <span className="text-[11px] font-bold uppercase tracking-wider text-cit-petroleo bg-cit-petroleo/10 px-2.5 py-0.5 rounded-full border border-cit-petroleo/20">
           Control de Acceso
         </span>
 
-        <h2 className="text-xl font-bold text-black mt-3 mb-2">{title}</h2>
+        <h2 className="text-xl font-bold text-gray-900 mt-3 mb-2">{title}</h2>
 
         <p className="text-sm text-gray-600 mb-6 leading-relaxed">{message}</p>
 

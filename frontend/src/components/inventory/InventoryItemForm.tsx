@@ -218,10 +218,10 @@ export function InventoryItemForm({
 
       <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-xs space-y-6">
         <div>
-          <span className="text-[11px] font-bold uppercase tracking-wider text-bordo-700 bg-bordo-50 px-2 py-0.5 rounded border border-bordo-200">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-cit-petroleo bg-cit-petroleo/10 px-2.5 py-0.5 rounded-full border border-cit-petroleo/20">
             Identificación Principal
           </span>
-          <h2 className="text-lg font-bold text-black mt-2">
+          <h2 className="text-lg font-bold text-gray-900 mt-2">
             Datos Básicos del Elemento
           </h2>
           <p className="text-xs text-gray-600 mt-0.5">
@@ -301,10 +301,10 @@ export function InventoryItemForm({
 
       <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-xs space-y-6">
         <div>
-          <span className="text-[11px] font-bold uppercase tracking-wider text-bordo-700 bg-bordo-50 px-2 py-0.5 rounded border border-bordo-200">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-cit-petroleo bg-cit-petroleo/10 px-2.5 py-0.5 rounded-full border border-cit-petroleo/20">
             Stock y Ubicación
           </span>
-          <h2 className="text-lg font-bold text-black mt-2">
+          <h2 className="text-lg font-bold text-gray-900 mt-2">
             Existencias Iniciales y Destino
           </h2>
           <p className="text-xs text-gray-600 mt-0.5">
@@ -391,7 +391,7 @@ export function InventoryItemForm({
         <div>
           <label
             htmlFor="observaciones"
-            className="block text-sm font-medium text-black mb-1.5"
+            className="block text-sm font-medium text-gray-800 mb-1.5"
           >
             Observaciones o Condiciones Especiales (Opcional)
           </label>
@@ -403,7 +403,7 @@ export function InventoryItemForm({
             onChange={handleChange}
             placeholder="Especificar si requiere refrigeración (-20°C / 4°C), si es fotosensible, precauciones de seguridad, etc."
             disabled={isSubmitting}
-            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2.5 text-sm text-black placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-bordo-500 focus:border-bordo-500 transition-colors"
+            className="w-full rounded-lg border border-gray-300 bg-gray-50 px-3.5 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cit-turquesa focus:border-cit-turquesa transition-all duration-150"
           />
         </div>
       </div>
