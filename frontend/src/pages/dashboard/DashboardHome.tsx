@@ -9,7 +9,7 @@ export function DashboardHome() {
       <div className="flex-1 flex flex-col items-center justify-center text-center p-6 my-auto">
         <div className="w-full max-w-md bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-xs flex items-center justify-center mb-8">
           <img
-            src="/logo.png"
+            src="/logo2.png"
             alt="Centro de Investigación y Transferencia - CIT Formosa"
             className="w-full max-h-32 sm:max-h-40 object-contain"
           />

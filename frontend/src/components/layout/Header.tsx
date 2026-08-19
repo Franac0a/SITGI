@@ -71,7 +71,7 @@ export function Header({ onToggleSidebar, notifications: initialNotifications = 
 
         <Link to="/dashboard" className="flex items-center gap-2 shrink-0 hover:opacity-90 transition-opacity">
           <img
-            src="/logo.png"
+            src="/logo2.png"
             alt="Centro de Investigación y Transferencia - CIT Formosa"
             className="h-9 sm:h-10 w-auto max-w-44 sm:max-w-64 object-contain"
           />

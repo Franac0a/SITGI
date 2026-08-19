@@ -21,7 +21,7 @@ export function AuthLayout({
         <div className="mb-8 text-center">
           <div className="mx-auto mb-4 flex max-w-xs items-center justify-center">
             <img
-              src="/logo.png"
+              src="/logo2.png"
               alt="Centro de Investigación y Transferencia - CIT Formosa"
               className="h-14 sm:h-16 w-auto object-contain"
             />

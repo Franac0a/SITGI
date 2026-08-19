@@ -191,7 +191,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             className="flex items-center hover:opacity-90 transition-opacity"
           >
             <img
-              src="/logo.png"
+              src="/logo2.png"
               alt="CIT Formosa"
               className="h-8 w-auto max-w-44 object-contain"
             />
