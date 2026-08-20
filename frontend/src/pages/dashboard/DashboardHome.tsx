@@ -7,11 +7,11 @@ export function DashboardHome() {
   return (
     <MainLayout>
       <div className="flex-1 flex flex-col items-center justify-center text-center p-6 my-auto">
-        <div className="w-full max-w-md bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-xs flex items-center justify-center mb-8">
+        <div className="w-full max-w-lg bg-white p-6 sm:p-10 rounded-2xl border border-gray-200 shadow-xs flex items-center justify-center mb-8">
           <img
             src="/logo2.png"
             alt="Centro de Investigación y Transferencia - CIT Formosa"
-            className="w-full max-h-32 sm:max-h-40 object-contain"
+            className="w-full max-h-36 sm:max-h-48 md:max-h-56 object-contain select-none"
           />
         </div>
 

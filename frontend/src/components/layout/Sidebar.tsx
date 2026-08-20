@@ -193,7 +193,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             <img
               src="/logo2.png"
               alt="CIT Formosa"
-              className="h-8 w-auto max-w-44 object-contain"
+              className="h-9 sm:h-10 w-auto max-w-[190px] object-contain select-none"
             />
           </Link>
 
