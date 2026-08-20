@@ -1,2 +1,1 @@
-export { MainLayout as DashboardLayout } from './MainLayout'
-export { MainLayout } from './MainLayout'
+export { MainLayout as DashboardLayout, MainLayout } from './MainLayout'

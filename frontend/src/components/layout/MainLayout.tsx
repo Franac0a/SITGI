@@ -10,7 +10,7 @@ export function MainLayout({ children }: MainLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false)
 
   return (
-    <div className="min-h-screen w-full flex flex-col bg-white text-black font-sans antialiased">
+    <div className="min-h-screen w-full flex flex-col bg-white text-gray-900 font-sans antialiased">
       <Sidebar
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}

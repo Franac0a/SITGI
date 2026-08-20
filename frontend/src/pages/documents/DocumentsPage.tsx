@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { MainLayout } from '@/components/layout/MainLayout'
-import { Button } from '@/components/ui/Button'
-import { EmptyState } from '@/components/ui/EmptyState'
-import { Skeleton } from '@/components/ui/Skeleton'
+import { Button } from '@/components/ui/button'
+import { EmptyState } from '@/components/ui/empty-state'
+import { Skeleton } from '@/components/ui/skeleton'
 import type { ScientificDocument } from '@/types/scientific.types'
 
 interface DocumentsPageProps {
