@@ -128,7 +128,7 @@ export function InventoryPage({
           <div className="w-full md:w-72">
             <input
               type="text"
-              placeholder="Buscar por código, nombre o CAS..."
+              placeholder="Buscar por nombre, CAS o ubicación..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full px-3 py-2 text-xs bg-white border border-gray-300 rounded-lg text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cit-turquesa focus:border-cit-turquesa font-sans"
@@ -181,7 +181,7 @@ export function InventoryPage({
             <table className="min-w-full divide-y divide-gray-200 text-left text-xs">
               <thead className="bg-gray-50 font-bold uppercase tracking-wider text-gray-600">
                 <tr>
-                  <th className="px-5 py-3.5">Código / CAS</th>
+                  <th className="px-5 py-3.5">N° CAS</th>
                   <th className="px-5 py-3.5">Nombre Químico / Insumo</th>
                   <th className="px-5 py-3.5">Tipo / Categoría</th>
                   <th className="px-5 py-3.5">Ubicación</th>
@@ -193,10 +193,6 @@ export function InventoryPage({
               </thead>
               <tbody className="divide-y divide-gray-200 text-gray-900">
                 {filteredItems.map((item) => {
-                  const itemCode =
-                    item.codigo_identificacion ||
-                    item.code ||
-                    `CIT-${item.id}`
                   const itemName = item.nombre || item.name || 'Sin nombre'
                   const itemCas = item.numeroCAS || item.casNumber
                   const itemCategory =
@@ -234,16 +230,19 @@ export function InventoryPage({
                       key={item.id}
                       className="hover:bg-gray-50/80 transition-colors"
                     >
-                      <td className="px-5 py-4 font-mono font-bold text-gray-900">
-                        {itemCode}
-                      </td>
-                      <td className="px-5 py-4 font-bold">
-                        {itemName}
-                        {itemCas && (
-                          <span className="block text-[11px] text-gray-500 font-normal font-mono">
-                            CAS: {itemCas}
+                      <td className="px-5 py-4 font-mono">
+                        {itemCas ? (
+                          <span className="font-bold text-gray-900">
+                            {itemCas}
+                          </span>
+                        ) : (
+                          <span className="text-gray-400 font-sans font-normal text-[11px] italic">
+                            Sin CAS
                           </span>
                         )}
+                      </td>
+                      <td className="px-5 py-4 font-bold text-gray-900">
+                        {itemName}
                       </td>
                       <td className="px-5 py-4">
                         <span className="px-2 py-0.5 rounded bg-cit-petroleo/10 border border-cit-petroleo/20 text-cit-petroleo text-[11px] font-semibold capitalize">
