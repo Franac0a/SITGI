@@ -1,61 +1,80 @@
+import { z } from 'zod'
 import type { LoginFormValues, RegisterFormValues } from '@/types/auth.types'
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const DNI_PATTERN = /^\d{7,8}$/
 
+export const loginSchema = z.object({
+  email: z
+    .string()
+    .trim()
+    .min(1, { message: 'El correo electrónico es obligatorio.' })
+    .regex(EMAIL_PATTERN, { message: 'Ingrese un correo electrónico válido.' }),
+  password: z
+    .string()
+    .min(1, { message: 'La contraseña es obligatoria.' }),
+})
+
+export type LoginSchemaType = z.infer<typeof loginSchema>
+
+export const registerSchema = z
+  .object({
+    dni: z
+      .string()
+      .trim()
+      .min(1, { message: 'El DNI es obligatorio.' })
+      .regex(DNI_PATTERN, { message: 'El DNI debe contener entre 7 y 8 dígitos.' }),
+    nombre: z
+      .string()
+      .trim()
+      .min(1, { message: 'El nombre completo es obligatorio.' })
+      .min(3, { message: 'El nombre debe tener al menos 3 caracteres.' }),
+    email: z
+      .string()
+      .trim()
+      .min(1, { message: 'El correo electrónico es obligatorio.' })
+      .regex(EMAIL_PATTERN, { message: 'Ingrese un correo electrónico válido.' }),
+    rol: z
+      .string()
+      .min(1, { message: 'Debe seleccionar un rol institucional.' }),
+    password: z
+      .string()
+      .min(1, { message: 'La contraseña es obligatoria.' })
+      .min(8, { message: 'La contraseña debe tener al menos 8 caracteres.' }),
+    confirmPassword: z
+      .string()
+      .min(1, { message: 'Debe confirmar la contraseña.' }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Las contraseñas no coinciden.',
+    path: ['confirmPassword'],
+  })
+
+export type RegisterSchemaType = z.infer<typeof registerSchema>
+
 export function validateLoginForm(values: LoginFormValues) {
+  const result = loginSchema.safeParse(values)
+  if (result.success) return {}
   const errors: Partial<Record<keyof LoginFormValues, string>> = {}
-
-  if (!values.email.trim()) {
-    errors.email = 'El correo electrónico es obligatorio.'
-  } else if (!EMAIL_PATTERN.test(values.email.trim())) {
-    errors.email = 'Ingrese un correo electrónico válido.'
+  for (const issue of result.error.issues) {
+    const field = issue.path[0] as keyof LoginFormValues
+    if (field && !errors[field]) {
+      errors[field] = issue.message
+    }
   }
-
-  if (!values.password) {
-    errors.password = 'La contraseña es obligatoria.'
-  }
-
   return errors
 }
 
 export function validateRegisterForm(values: RegisterFormValues) {
+  const result = registerSchema.safeParse(values)
+  if (result.success) return {}
   const errors: Partial<Record<keyof RegisterFormValues, string>> = {}
-
-  if (!values.dni.trim()) {
-    errors.dni = 'El DNI es obligatorio.'
-  } else if (!DNI_PATTERN.test(values.dni.trim())) {
-    errors.dni = 'El DNI debe contener entre 7 y 8 dígitos.'
+  for (const issue of result.error.issues) {
+    const field = issue.path[0] as keyof RegisterFormValues
+    if (field && !errors[field]) {
+      errors[field] = issue.message
+    }
   }
-
-  if (!values.nombre.trim()) {
-    errors.nombre = 'El nombre completo es obligatorio.'
-  } else if (values.nombre.trim().length < 3) {
-    errors.nombre = 'El nombre debe tener al menos 3 caracteres.'
-  }
-
-  if (!values.email.trim()) {
-    errors.email = 'El correo electrónico es obligatorio.'
-  } else if (!EMAIL_PATTERN.test(values.email.trim())) {
-    errors.email = 'Ingrese un correo electrónico válido.'
-  }
-
-  if (!values.password) {
-    errors.password = 'La contraseña es obligatoria.'
-  } else if (values.password.length < 8) {
-    errors.password = 'La contraseña debe tener al menos 8 caracteres.'
-  }
-
-  if (!values.confirmPassword) {
-    errors.confirmPassword = 'Debe confirmar la contraseña.'
-  } else if (values.confirmPassword !== values.password) {
-    errors.confirmPassword = 'Las contraseñas no coinciden.'
-  }
-
-  if (!values.rol) {
-    errors.rol = 'Debe seleccionar un rol institucional.'
-  }
-
   return errors
 }
 

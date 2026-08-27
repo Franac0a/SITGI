@@ -1,11 +1,11 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react'
 
 interface AuthLayoutProps {
-  title: string;
-  subtitle: string;
-  children: ReactNode;
-  footer?: ReactNode;
-  wide?: boolean;
+  title: string
+  subtitle: string
+  children: ReactNode
+  footer?: ReactNode
+  wide?: boolean
 }
 
 export function AuthLayout({
@@ -17,9 +17,12 @@ export function AuthLayout({
 }: AuthLayoutProps) {
   return (
     <main className="min-h-screen w-full bg-gradient-to-br from-cit-turquesa via-cit-petroleo to-cit-azul-oscuro flex items-center justify-center p-4 sm:p-6 lg:p-8">
-      <div className={`w-full ${wide ? "max-w-xl" : "max-w-md"}`}>
+      <div className={`w-full ${wide ? 'max-w-xl' : 'max-w-md'}`}>
         <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 md:p-10 border border-white/20">
-          <div className="mx-auto mb-6 sm:mb-8 flex items-center justify-center">
+          <div
+            id="logo-auth-placeholder"
+            className="mx-auto mb-6 sm:mb-8 flex items-center justify-center"
+          >
             <img
               src="/logo2.png"
               alt="Centro de Investigación y Transferencia - CIT Formosa"
@@ -45,5 +48,5 @@ export function AuthLayout({
         </div>
       </div>
     </main>
-  );
+  )
 }

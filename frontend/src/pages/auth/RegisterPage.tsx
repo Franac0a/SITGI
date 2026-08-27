@@ -1,56 +1,50 @@
-import { useState, type FormEvent } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { AuthLayout } from '@/components/layout/AuthLayout'
-import { Alert } from '@/components/ui/Alert'
-import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
-import { Select } from '@/components/ui/Select'
+import { Alert } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { INSTITUTIONAL_ROLES } from '@/constants/roles'
 import { authService } from '@/services/auth/auth.service'
-import type {
-  InstitutionalRole,
-  RegisterFormErrors,
-  RegisterFormValues,
-} from '@/types/auth.types'
+import type { InstitutionalRole } from '@/types/auth.types'
 import { formatApiError } from '@/utils/errors'
-import { hasValidationErrors, validateRegisterForm } from '@/utils/validation'
-
-const initialValues: RegisterFormValues = {
-  dni: '',
-  nombre: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-  rol: '',
-}
+import { registerSchema, type RegisterSchemaType } from '@/utils/validation'
 
 export function RegisterPage() {
-  const [values, setValues] = useState<RegisterFormValues>(initialValues)
-  const [fieldErrors, setFieldErrors] = useState<RegisterFormErrors>({})
   const [apiError, setApiError] = useState<string | null>(null)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleChange = <K extends keyof RegisterFormValues>(
-    field: K,
-    value: RegisterFormValues[K],
-  ) => {
-    setValues((current) => ({ ...current, [field]: value }))
-    setFieldErrors((current) => ({ ...current, [field]: undefined }))
-    setApiError(null)
-    setSuccessMessage(null)
-  }
+  const form = useForm<RegisterSchemaType>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      dni: '',
+      nombre: '',
+      email: '',
+      rol: '',
+      password: '',
+      confirmPassword: '',
+    },
+  })
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-
-    const validationErrors = validateRegisterForm(values)
-    setFieldErrors(validationErrors)
-
-    if (hasValidationErrors(validationErrors)) {
-      return
-    }
-
+  const onSubmit = async (values: RegisterSchemaType) => {
     setIsLoading(true)
     setApiError(null)
     setSuccessMessage(null)
@@ -65,9 +59,9 @@ export function RegisterPage() {
       })
 
       setSuccessMessage(
-        'Su solicitud de registro fue enviada correctamente. Un administrador revisará su cuenta institucional para su posterior habilitación.',
+        'Su solicitud de registro fue enviada correctamente. Un administrador revisará su cuenta institucional para su posterior habilitación.'
       )
-      setValues(initialValues)
+      form.reset()
     } catch (error) {
       setApiError(formatApiError(error))
     } finally {
@@ -92,97 +86,163 @@ export function RegisterPage() {
         </p>
       }
     >
-      <form className="space-y-5" onSubmit={handleSubmit} noValidate>
-        {apiError && (
-          <Alert
-            variant="error"
-            title="No se pudo completar el registro"
-            message={apiError}
+      <Form {...form}>
+        <form
+          className="space-y-5"
+          onSubmit={form.handleSubmit(onSubmit)}
+          noValidate
+        >
+          {apiError && (
+            <Alert
+              variant="error"
+              title="No se pudo completar el registro"
+              message={apiError}
+            />
+          )}
+
+          {successMessage && (
+            <Alert variant="success" message={successMessage} />
+          )}
+
+          <div className="grid gap-5 sm:grid-cols-2">
+            <FormField
+              control={form.control}
+              name="dni"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>DNI</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      inputMode="numeric"
+                      placeholder="12345678"
+                      autoComplete="off"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="nombre"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nombre completo</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Apellido y nombre"
+                      autoComplete="name"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Correo electrónico institucional</FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder="usuario@citformosa.gob.ar"
+                    autoComplete="email"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        )}
 
-        {successMessage && (
-          <Alert variant="success" message={successMessage} />
-        )}
-
-        <div className="grid gap-5 sm:grid-cols-2">
-          <Input
-            name="dni"
-            type="text"
-            inputMode="numeric"
-            label="DNI"
-            placeholder="12345678"
-            autoComplete="off"
-            value={values.dni}
-            onChange={(event) => handleChange('dni', event.target.value)}
-            error={fieldErrors.dni}
+          <FormField
+            control={form.control}
+            name="rol"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Rol institucional</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Seleccione un rol institucional" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {INSTITUTIONAL_ROLES.map((role) => (
+                      <SelectItem key={role.value} value={role.value}>
+                        {role.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
           />
 
-          <Input
-            name="nombre"
-            type="text"
-            label="Nombre completo"
-            placeholder="Apellido y nombre"
-            autoComplete="name"
-            value={values.nombre}
-            onChange={(event) => handleChange('nombre', event.target.value)}
-            error={fieldErrors.nombre}
-          />
-        </div>
+          <div className="grid gap-5 sm:grid-cols-2">
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Contraseña</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Mínimo 8 caracteres"
+                      autoComplete="new-password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-        <Input
-          name="email"
-          type="email"
-          label="Correo electrónico institucional"
-          placeholder="usuario@citformosa.gob.ar"
-          autoComplete="email"
-          value={values.email}
-          onChange={(event) => handleChange('email', event.target.value)}
-          error={fieldErrors.email}
-        />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirmar contraseña</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Repita la contraseña"
+                      autoComplete="new-password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
-        <Select
-          name="rol"
-          label="Rol institucional"
-          placeholder="Seleccione un rol institucional"
-          options={INSTITUTIONAL_ROLES}
-          value={values.rol}
-          onChange={(event) =>
-            handleChange('rol', event.target.value as RegisterFormValues['rol'])
-          }
-          error={fieldErrors.rol}
-        />
-
-        <div className="grid gap-5 sm:grid-cols-2">
-          <Input
-            name="password"
-            type="password"
-            label="Contraseña"
-            placeholder="Mínimo 8 caracteres"
-            autoComplete="new-password"
-            value={values.password}
-            onChange={(event) => handleChange('password', event.target.value)}
-            error={fieldErrors.password}
-          />
-
-          <Input
-            name="confirmPassword"
-            type="password"
-            label="Confirmar contraseña"
-            placeholder="Repita la contraseña"
-            autoComplete="new-password"
-            value={values.confirmPassword}
-            onChange={(event) =>
-              handleChange('confirmPassword', event.target.value)
-            }
-            error={fieldErrors.confirmPassword}
-          />
-        </div>
-
-        <Button type="submit" fullWidth isLoading={isLoading}>
-          Registrarse
-        </Button>
-      </form>
+          <Button
+            type="submit"
+            fullWidth
+            isLoading={isLoading}
+            className="bg-cit-petroleo hover:bg-cit-azul-fuerte text-white font-semibold shadow-md transition-colors"
+          >
+            Registrarse
+          </Button>
+        </form>
+      </Form>
     </AuthLayout>
   )
 }

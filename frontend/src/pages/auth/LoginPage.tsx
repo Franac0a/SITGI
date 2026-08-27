@@ -1,43 +1,38 @@
-import { useState, type FormEvent } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { AuthLayout } from '@/components/layout/AuthLayout'
-import { Alert } from '@/components/ui/Alert'
-import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
+import { Alert } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import { useAuth } from '@/context'
-import type { LoginFormErrors, LoginFormValues } from '@/types/auth.types'
 import { formatApiError } from '@/utils/errors'
-import { hasValidationErrors, validateLoginForm } from '@/utils/validation'
-
-const initialValues: LoginFormValues = {
-  email: '',
-  password: '',
-}
+import { loginSchema, type LoginSchemaType } from '@/utils/validation'
 
 export function LoginPage() {
   const navigate = useNavigate()
   const { login } = useAuth()
-  const [values, setValues] = useState<LoginFormValues>(initialValues)
-  const [fieldErrors, setFieldErrors] = useState<LoginFormErrors>({})
   const [apiError, setApiError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleChange = (field: keyof LoginFormValues, value: string) => {
-    setValues((current) => ({ ...current, [field]: value }))
-    setFieldErrors((current) => ({ ...current, [field]: undefined }))
-    setApiError(null)
-  }
+  const form = useForm<LoginSchemaType>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  })
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-
-    const validationErrors = validateLoginForm(values)
-    setFieldErrors(validationErrors)
-
-    if (hasValidationErrors(validationErrors)) {
-      return
-    }
-
+  const onSubmit = async (values: LoginSchemaType) => {
     setIsLoading(true)
     setApiError(null)
 
@@ -83,41 +78,68 @@ export function LoginPage() {
         </p>
       }
     >
-      <form className="space-y-5" onSubmit={handleSubmit} noValidate>
-        {apiError && (
-          <Alert
-            variant="error"
-            title="No se pudo iniciar sesión"
-            message={apiError}
+      <Form {...form}>
+        <form
+          className="space-y-5"
+          onSubmit={form.handleSubmit(onSubmit)}
+          noValidate
+        >
+          {apiError && (
+            <Alert
+              variant="error"
+              title="No se pudo iniciar sesión"
+              message={apiError}
+            />
+          )}
+
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Correo electrónico institucional</FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder="usuario@citformosa.gob.ar"
+                    autoComplete="email"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        )}
 
-        <Input
-          name="email"
-          type="email"
-          label="Correo electrónico institucional"
-          placeholder="usuario@citformosa.gob.ar"
-          autoComplete="email"
-          value={values.email}
-          onChange={(event) => handleChange('email', event.target.value)}
-          error={fieldErrors.email}
-        />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Contraseña</FormLabel>
+                <FormControl>
+                  <Input
+                    type="password"
+                    placeholder="Ingrese su contraseña"
+                    autoComplete="current-password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <Input
-          name="password"
-          type="password"
-          label="Contraseña"
-          placeholder="Ingrese su contraseña"
-          autoComplete="current-password"
-          value={values.password}
-          onChange={(event) => handleChange('password', event.target.value)}
-          error={fieldErrors.password}
-        />
-
-        <Button type="submit" fullWidth isLoading={isLoading}>
-          Ingresar
-        </Button>
-      </form>
+          <Button
+            type="submit"
+            fullWidth
+            isLoading={isLoading}
+            className="bg-cit-petroleo hover:bg-cit-azul-fuerte text-white font-semibold shadow-md transition-colors"
+          >
+            Ingresar
+          </Button>
+        </form>
+      </Form>
     </AuthLayout>
   )
 }
