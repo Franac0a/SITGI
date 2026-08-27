@@ -46,7 +46,7 @@ export function Header({ onToggleSidebar, notifications: initialNotifications = 
   }
 
   return (
-    <header className="sticky top-0 z-30 h-16 w-full border-b border-gray-200 bg-white px-4 sm:px-6 flex items-center justify-between shrink-0">
+    <header className="sticky top-0 z-30 h-16 sm:h-18 w-full border-b border-gray-200 bg-white px-4 sm:px-6 flex items-center justify-between shrink-0 transition-all">
       <div className="flex items-center gap-3">
         <button
           type="button"
@@ -71,9 +71,9 @@ export function Header({ onToggleSidebar, notifications: initialNotifications = 
 
         <Link to="/dashboard" className="flex items-center gap-2 shrink-0 hover:opacity-90 transition-opacity">
           <img
-            src="/logo.png"
+            src="/logo2.png"
             alt="Centro de Investigación y Transferencia - CIT Formosa"
-            className="h-9 sm:h-10 w-auto max-w-44 sm:max-w-64 object-contain"
+            className="h-10 sm:h-11 md:h-12 w-auto max-w-[200px] sm:max-w-[280px] md:max-w-[320px] object-contain select-none"
           />
         </Link>
       </div>

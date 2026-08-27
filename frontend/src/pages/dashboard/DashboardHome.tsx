@@ -1,29 +1,30 @@
-import { MainLayout } from '@/components/layout/MainLayout'
-import { useAuth } from '@/context'
+import { MainLayout } from "@/components/layout/MainLayout";
+import { useAuth } from "@/context";
 
 export function DashboardHome() {
-  const { user } = useAuth()
+  const { user } = useAuth();
 
   return (
     <MainLayout>
       <div className="flex-1 flex flex-col items-center justify-center text-center p-6 my-auto">
-        <div className="w-full max-w-md bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-xs flex items-center justify-center mb-8">
+        <div className="w-full max-w-lg bg-white p-6 sm:p-10 rounded-2xl border border-gray-200 shadow-xs flex items-center justify-center mb-8">
           <img
-            src="/logo.png"
+            src="/logo2.png"
             alt="Centro de Investigación y Transferencia - CIT Formosa"
-            className="w-full max-h-32 sm:max-h-40 object-contain"
+            className="w-full max-h-36 sm:max-h-48 md:max-h-56 object-contain select-none"
           />
         </div>
 
         <div className="max-w-xl space-y-3">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
-            Bienvenido/a, {user?.nombre || 'Usuario'}
+            Bienvenido/a, {user?.nombre || "Usuario"}
           </h1>
 
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cit-petroleo/10 text-cit-petroleo border border-cit-petroleo/20">
             <span className="text-xs font-bold uppercase tracking-wider">
-              {user?.rol || 'Personal Científico'}
+              {user?.rol || "Personal Científico"}
             </span>
+
             {user?.dni && (
               <span className="text-xs text-gray-500 font-mono">
                 &bull; DNI: {user.dni}
@@ -32,10 +33,12 @@ export function DashboardHome() {
           </div>
 
           <p className="text-sm text-gray-600 leading-relaxed pt-2">
-            Sistema Integral de Inventario, Stock y Trazabilidad Científica (CIT Formosa). Utilice el menú superior para acceder a los módulos de trabajo.
+            Sistema Integral de Inventario, Stock y Trazabilidad Científica (CIT
+            Formosa). Utilice el menú superior para acceder a los módulos de
+            trabajo.
           </p>
         </div>
       </div>
     </MainLayout>
-  )
+  );
 }
