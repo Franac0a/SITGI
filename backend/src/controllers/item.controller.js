@@ -3,13 +3,36 @@ import { Op, Sequelize } from "sequelize";
 
 export const obtenerItems = async (req, res) => {
   try {
-    const { categoria, stock_bajo, ubicacion } = req.query;
+    const { categoria, tipoElemento, stock_bajo, ubicacion, busqueda } =
+      req.query;
     const filtro = {};
 
-    if (categoria) filtro.categoria = categoria;
-    if (ubicacion) filtro.ubicacion = { [Op.like]: `%${ubicacion}%` };
+    if (categoria) {
+      filtro[Op.or] = [{ categoria }, { tipoElemento: categoria }];
+    } else if (tipoElemento) {
+      filtro.tipoElemento = tipoElemento;
+    }
+
+    if (ubicacion) {
+      filtro[Op.or] = [
+        { laboratorioUbicacion: { [Op.like]: `%${ubicacion}%` } },
+        { ubicacion: { [Op.like]: `%${ubicacion}%` } },
+      ];
+    }
+
     if (stock_bajo === "true") {
-      filtro.stock_actual = { [Op.lte]: Sequelize.col("stock_minimo") };
+      filtro[Op.or] = [
+        { stockActual: { [Op.lte]: Sequelize.col("stockMinimo") } },
+        { stock_actual: { [Op.lte]: Sequelize.col("stock_minimo") } },
+      ];
+    }
+
+    if (busqueda) {
+      filtro[Op.or] = [
+        { nombre: { [Op.like]: `%${busqueda}%` } },
+        { codigo_identificacion: { [Op.like]: `%${busqueda}%` } },
+        { numeroCAS: { [Op.like]: `%${busqueda}%` } },
+      ];
     }
 
     const items = await Item.findAll({
@@ -49,22 +72,168 @@ export const obtenerItemPorId = async (req, res) => {
 
 export const crearItem = async (req, res) => {
   try {
-    const nuevoItem = await Item.create(req.body);
+    const {
+      nombre,
+      tipo,
+      tipoElemento,
+      codigoCas,
+      numeroCAS,
+      marca,
+      marcaFabricante,
+      numeroLote,
+      cantidadInicial,
+      unidadMedida,
+      stockMinimo,
+      laboratorioUbicacion,
+      ubicacion,
+      fechaVencimiento,
+      observaciones,
+      codigo_identificacion,
+    } = req.body;
+
+    const errores = {};
+
+    // 1. Validaciones de campos obligatorios
+    const finalNombre = (nombre || "").trim();
+    if (!finalNombre) {
+      errores.nombre = "El nombre del elemento es obligatorio.";
+    }
+
+    const finalTipo = (tipoElemento || tipo || "").trim();
+    if (!finalTipo) {
+      errores.tipo = "Debe seleccionar un tipo de elemento.";
+    }
+
+    if (
+      cantidadInicial === undefined ||
+      cantidadInicial === null ||
+      cantidadInicial === "" ||
+      isNaN(Number(cantidadInicial)) ||
+      Number(cantidadInicial) < 0
+    ) {
+      errores.cantidadInicial =
+        "La cantidad inicial debe ser un número válido mayor o igual a 0.";
+    }
+
+    const finalUnidad = (unidadMedida || "").trim();
+    if (!finalUnidad) {
+      errores.unidadMedida = "Debe seleccionar la unidad de medida.";
+    }
+
+    const finalUbicacion = (laboratorioUbicacion || ubicacion || "").trim();
+    if (!finalUbicacion) {
+      errores.laboratorioUbicacion =
+        "Debe seleccionar el laboratorio o ubicación física.";
+    }
+
+    // 2. Validaciones de campos opcionales
+    let finalStockMinimo = 0;
+    if (
+      stockMinimo !== undefined &&
+      stockMinimo !== null &&
+      stockMinimo !== ""
+    ) {
+      if (isNaN(Number(stockMinimo)) || Number(stockMinimo) < 0) {
+        errores.stockMinimo = "El stock mínimo no puede ser negativo.";
+      } else {
+        finalStockMinimo = Number(stockMinimo);
+      }
+    }
+
+    let finalFechaVencimiento = null;
+    if (fechaVencimiento && String(fechaVencimiento).trim() !== "") {
+      const parsedDate = new Date(fechaVencimiento);
+      if (isNaN(parsedDate.getTime())) {
+        errores.fechaVencimiento =
+          "La fecha de vencimiento debe tener un formato válido (AAAA-MM-DD).";
+      } else {
+        finalFechaVencimiento = String(fechaVencimiento).trim();
+      }
+    }
+
+    if (Object.keys(errores).length > 0) {
+      return res.status(400).json({
+        mensaje: "Existen errores de validación en el formulario.",
+        errores,
+      });
+    }
+
+    const finalCantidadInicial = Number(cantidadInicial);
+    const finalStockActual = finalCantidadInicial; // Regla de negocio: stockActual inicia con cantidadInicial
+
+    // Determinar estado según stock (stockMinimo > cantidadInicial es válido y genera alerta de stock bajo)
+    let estado = "disponible";
+    let alertaStockBajo = false;
+    if (finalStockActual === 0) {
+      estado = "agotado";
+      alertaStockBajo = true;
+    } else if (finalStockMinimo > 0 && finalStockActual <= finalStockMinimo) {
+      estado = "bajo_stock";
+      alertaStockBajo = true;
+    }
+
+    // Generar código de identificación único si no se proporciona
+    let codigo = (codigo_identificacion || "").trim();
+    if (!codigo) {
+      const prefijoTipo = finalTipo.slice(0, 3).toUpperCase();
+      const sufijoRandom = Math.floor(1000 + Math.random() * 9000);
+      codigo = `CIT-${prefijoTipo}-${sufijoRandom}`;
+    }
+
+    const nuevoItem = await Item.create({
+      nombre: finalNombre,
+      tipoElemento: finalTipo,
+      categoria: finalTipo,
+      codigo_identificacion: codigo,
+      numeroCAS: (numeroCAS || codigoCas || "").trim() || null,
+      marcaFabricante: (marcaFabricante || marca || "").trim() || null,
+      numeroLote: (numeroLote || "").trim() || null,
+      cantidadInicial: finalCantidadInicial,
+      stockActual: finalStockActual,
+      stock_actual: finalStockActual,
+      unidadMedida: finalUnidad,
+      stockMinimo: finalStockMinimo,
+      stock_minimo: finalStockMinimo,
+      laboratorioUbicacion: finalUbicacion,
+      ubicacion: finalUbicacion,
+      fechaVencimiento: finalFechaVencimiento,
+      fecha_vencimiento: finalFechaVencimiento,
+      observaciones: (observaciones || "").trim() || null,
+      estado,
+      creadoPor: req.usuario?.id || null,
+    });
+
     res.status(201).json({
-      mensaje: "Ítem agregado al inventario con éxito.",
+      mensaje: `Elemento científico "${nuevoItem.nombre}" registrado con éxito.`,
       item: nuevoItem,
+      alertaStockBajo,
     });
   } catch (error) {
-    console.error("Error al crear ítem:", error.message);
+    console.error("Error al crear ítem:", error);
     if (error.name === "SequelizeUniqueConstraintError") {
       return res.status(400).json({
         mensaje:
           "El código de identificación ingresado ya existe en el sistema.",
+        error: error.message,
       });
     }
-    res
-      .status(500)
-      .json({ mensaje: "Error al guardar el ítem.", error: error.message });
+    if (error.name === "SequelizeValidationError") {
+      const errores = {};
+      if (Array.isArray(error.errors)) {
+        error.errors.forEach((err) => {
+          errores[err.path] = err.message;
+        });
+      }
+      return res.status(400).json({
+        mensaje: "Error de validación al guardar el elemento.",
+        errores,
+        error: error.message,
+      });
+    }
+    res.status(500).json({
+      mensaje: error.message || "Error al guardar el ítem.",
+      error: error.message,
+    });
   }
 };
 

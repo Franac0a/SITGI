@@ -28,7 +28,7 @@ const inicializarBaseDeDatos = async () => {
   try {
     await startDB();
 
-    await sequelize.sync();
+    await sequelize.sync({ alter: true });
     console.log(
       "Modelos y tablas sincronizados correctamente en la base de datos.",
     );

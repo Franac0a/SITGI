@@ -1,12 +1,14 @@
 import { BrowserRouter } from 'react-router-dom'
-import { AuthProvider } from '@/context'
+import { AuthProvider, NotificationProvider } from '@/context'
 import { AppRoutes } from '@/routes/AppRoutes'
 
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <AppRoutes />
+        <NotificationProvider>
+          <AppRoutes />
+        </NotificationProvider>
       </AuthProvider>
     </BrowserRouter>
   )

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { NativeSelect as Select } from "@/components/ui/native-select";
 import { Alert } from "@/components/ui/alert";
+import { ApiClientError } from "@/services/api/client";
 import type {
   CreateInventoryItemPayload,
   InventoryItemType,
@@ -121,7 +122,7 @@ export function InventoryItemForm({
     const nextErrors: FormErrors = {};
 
     if (!formData.nombre.trim()) {
-      nextErrors.nombre = "El nombre del elemento es requerido.";
+      nextErrors.nombre = "El nombre del elemento es obligatorio.";
     }
 
     if (!formData.tipo) {
@@ -130,23 +131,43 @@ export function InventoryItemForm({
 
     if (
       formData.cantidadInicial === "" ||
+      isNaN(Number(formData.cantidadInicial)) ||
       Number(formData.cantidadInicial) < 0
     ) {
       nextErrors.cantidadInicial =
-        "Ingrese una cantidad válida mayor o igual a 0.";
+        "Ingrese una cantidad inicial válida mayor o igual a 0.";
     }
 
     if (!formData.unidadMedida.trim()) {
-      nextErrors.unidadMedida = "Debe especificar la unidad de medida.";
+      nextErrors.unidadMedida = "Debe seleccionar la unidad de medida.";
     }
 
     if (!formData.laboratorioUbicacion.trim()) {
       nextErrors.laboratorioUbicacion =
-        "Debe especificar el laboratorio o ubicación física.";
+        "Debe seleccionar el laboratorio o ubicación física.";
     }
 
-    if (formData.stockMinimo !== "" && Number(formData.stockMinimo) < 0) {
+    if (
+      formData.stockMinimo !== "" &&
+      (isNaN(Number(formData.stockMinimo)) || Number(formData.stockMinimo) < 0)
+    ) {
       nextErrors.stockMinimo = "El stock mínimo no puede ser negativo.";
+    }
+
+    if (formData.codigoCas.trim()) {
+      const casPattern = /^\d{2,7}-\d{2}-\d$/;
+      if (!casPattern.test(formData.codigoCas.trim())) {
+        nextErrors.codigoCas =
+          "El formato CAS debe ser válido (ej. 7647-01-0 o 50-00-0).";
+      }
+    }
+
+    if (formData.fechaVencimiento) {
+      const parsedDate = new Date(formData.fechaVencimiento);
+      if (isNaN(parsedDate.getTime())) {
+        nextErrors.fechaVencimiento =
+          "La fecha de vencimiento debe tener un formato válido (AAAA-MM-DD).";
+      }
     }
 
     setErrors(nextErrors);
@@ -190,8 +211,26 @@ export function InventoryItemForm({
         onSuccess();
       }
     } catch (err: unknown) {
+      if (err instanceof ApiClientError && err.errors) {
+        const mappedErrors: FormErrors = {};
+        Object.entries(err.errors).forEach(([field, msg]) => {
+          const errorText = Array.isArray(msg) ? msg[0] : msg;
+          if (field in formData) {
+            mappedErrors[field as keyof FormState] = errorText;
+          } else if (field === "tipoElemento") {
+            mappedErrors.tipo = errorText;
+          } else if (field === "numeroCAS") {
+            mappedErrors.codigoCas = errorText;
+          } else if (field === "marcaFabricante") {
+            mappedErrors.marca = errorText;
+          }
+        });
+        setErrors((prev) => ({ ...prev, ...mappedErrors }));
+      }
       const message =
-        err instanceof Error ? err.message : "Error al registrar el elemento.";
+        err instanceof Error
+          ? err.message
+          : "Error al guardar el ítem en el inventario.";
       setServerError(message);
     } finally {
       setInternalSubmitting(false);

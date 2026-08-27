@@ -2,3 +2,9 @@ export { AuthProvider } from './AuthProvider'
 export { useAuth } from './useAuth'
 export { AuthContext } from './auth-context'
 export type { AuthContextType } from './auth-context'
+export { NotificationProvider, useNotifications } from './NotificationProvider'
+export type {
+  NotificationItem,
+  NotificationContextType,
+  NewNotificationInput,
+} from './NotificationProvider'

@@ -1,38 +1,29 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { Bell, LogOut, Menu, AlertTriangle, Info, AlertCircle } from 'lucide-react'
-import { useAuth } from '@/context'
+import {
+  Bell,
+  LogOut,
+  Menu,
+  AlertTriangle,
+  Info,
+  AlertCircle,
+  CheckCircle2,
+} from 'lucide-react'
+import { useAuth, useNotifications } from '@/context'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 
-interface NotificationItem {
-  id: string
-  title: string
-  description: string
-  time: string
-  type: 'critical' | 'warning' | 'info'
-  read: boolean
-}
-
 interface HeaderProps {
   onToggleSidebar: () => void
-  notifications?: NotificationItem[]
 }
 
-export function Header({
-  onToggleSidebar,
-  notifications: initialNotifications = [],
-}: HeaderProps) {
+export function Header({ onToggleSidebar }: HeaderProps) {
   const { user, logout } = useAuth()
+  const { notifications, unreadCount, markAllAsRead } = useNotifications()
   const navigate = useNavigate()
 
-  const [notifications, setNotifications] = useState<NotificationItem[]>(
-    initialNotifications
-  )
   const [isNotifOpen, setIsNotifOpen] = useState<boolean>(false)
   const notifRef = useRef<HTMLDivElement>(null)
-
-  const unreadCount = notifications.filter((n) => !n.read).length
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -48,7 +39,7 @@ export function Header({
   }, [])
 
   const handleMarkAllAsRead = () => {
-    setNotifications((prev) => prev.map((n) => ({ ...n, read: true })))
+    markAllAsRead()
   }
 
   const handleLogout = () => {
@@ -147,12 +138,16 @@ export function Header({
                     >
                       <div className="shrink-0 mt-0.5">
                         {n.type === 'critical' ? (
-                          <div className="w-5 h-5 rounded-full bg-cit-azul-fuerte/15 text-cit-azul-fuerte flex items-center justify-center font-bold text-xs">
+                          <div className="w-5 h-5 rounded-full bg-red-100 text-red-700 flex items-center justify-center font-bold text-xs">
                             <AlertCircle className="w-3.5 h-3.5" />
                           </div>
                         ) : n.type === 'warning' ? (
                           <div className="w-5 h-5 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs">
                             <AlertTriangle className="w-3.5 h-3.5" />
+                          </div>
+                        ) : n.type === 'success' || n.type === 'inventario' ? (
+                          <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
+                            <CheckCircle2 className="w-3.5 h-3.5" />
                           </div>
                         ) : (
                           <div className="w-5 h-5 rounded-full bg-cit-petroleo/10 text-cit-petroleo flex items-center justify-center font-bold text-xs">

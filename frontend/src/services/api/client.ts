@@ -4,7 +4,7 @@ const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:4000/api'
 
 export class ApiClientError extends Error {
   statusCode: number
-  errors?: Record<string, string[]>
+  errors?: Record<string, string | string[]>
 
   constructor(error: ApiError) {
     super(error.message)
@@ -19,7 +19,8 @@ interface RawBackendError {
   message?: string
   error?: string
   detalle?: string
-  errors?: Record<string, string[]>
+  errors?: Record<string, string | string[]>
+  errores?: Record<string, string | string[]>
 }
 
 async function parseResponse<T>(response: Response): Promise<T> {
@@ -35,12 +36,12 @@ async function parseResponse<T>(response: Response): Promise<T> {
       errorPayload?.message ||
       errorPayload?.error ||
       errorPayload?.detalle ||
-      'Ocurrió un error inesperado.'
+      'Ocurrió un error inesperado al procesar la solicitud.'
 
     throw new ApiClientError({
       message: errorMessage,
       statusCode: response.status,
-      errors: errorPayload?.errors,
+      errors: errorPayload?.errors || errorPayload?.errores,
     })
   }
 

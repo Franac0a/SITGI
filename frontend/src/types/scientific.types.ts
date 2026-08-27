@@ -1,14 +1,17 @@
-export type InventoryItemType = 'reactivo' | 'insumo' | 'material' | 'equipo'
+export type InventoryItemType = 'reactivo' | 'insumo' | 'material' | 'equipo' | string
 
 export interface CreateInventoryItemPayload {
   nombre: string
   tipo: InventoryItemType
+  tipoElemento?: string
   cantidadInicial: number
   unidadMedida: string
   laboratorioUbicacion: string
   fechaVencimiento?: string
   codigoCas?: string
+  numeroCAS?: string
   marca?: string
+  marcaFabricante?: string
   numeroLote?: string
   stockMinimo?: number
   observaciones?: string
@@ -27,18 +30,40 @@ export interface ScientificDocument {
 }
 
 export interface InventoryItem {
-  id: string
-  code: string
-  name: string
+  id: string | number
+  codigo_identificacion?: string
+  code?: string
+  nombre?: string
+  name?: string
+  numeroCAS?: string
   casNumber?: string
+  marcaFabricante?: string
   brand?: string
+  numeroLote?: string
   batchNumber?: string
-  category: string
-  location: string
-  currentStock: number
-  minStock: number
-  unit: string
+  tipoElemento?: string
+  categoria?: string
+  category?: string
+  laboratorioUbicacion?: string
+  ubicacion?: string
+  location?: string
+  cantidadInicial?: number
+  stockActual?: number
+  stock_actual?: number
+  currentStock?: number
+  stockMinimo?: number
+  stock_minimo?: number
+  minStock?: number
+  unidadMedida?: string
+  unit?: string
+  fechaVencimiento?: string
+  fecha_vencimiento?: string
   expirationDate?: string
+  observaciones?: string
+  estado?: 'disponible' | 'bajo_stock' | 'agotado' | 'vencido' | 'activo' | string
+  creadoPor?: number | null
+  createdAt?: string
+  updatedAt?: string
   isRefrigerated?: boolean
   isSensitive?: boolean
 }

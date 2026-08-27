@@ -1,11 +1,13 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { Button } from '@/components/ui/button'
 import { EmptyState } from '@/components/ui/empty-state'
 import { Skeleton } from '@/components/ui/skeleton'
+import { Alert } from '@/components/ui/alert'
 import { useAuth } from '@/context'
 import { canCreateInventory } from '@/utils/rbac'
+import { getInventoryItems } from '@/services/inventory/inventory.service'
 import type { InventoryItem } from '@/types/scientific.types'
 
 interface InventoryPageProps {
@@ -15,21 +17,51 @@ interface InventoryPageProps {
 
 export function InventoryPage({
   initialItems = [],
-  isLoading = false,
+  isLoading: initialLoading = false,
 }: InventoryPageProps) {
   const navigate = useNavigate()
   const { user } = useAuth()
-  const [items] = useState<InventoryItem[]>(initialItems)
+  const [items, setItems] = useState<InventoryItem[]>(initialItems)
+  const [loading, setLoading] = useState<boolean>(initialItems.length === 0 && !initialLoading)
+  const [error, setError] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
 
   const canCreate = canCreateInventory(user?.rol)
 
-  const filteredItems = items.filter(
-    (item) =>
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.code.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (item.casNumber && item.casNumber.includes(searchQuery)),
-  )
+  const fetchItems = useCallback(async () => {
+    try {
+      setLoading(true)
+      setError(null)
+      const data = await getInventoryItems()
+      setItems(data)
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Error al cargar el inventario.'
+      setError(msg)
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchItems()
+  }, [fetchItems])
+
+  const filteredItems = items.filter((item) => {
+    const name = (item.nombre || item.name || '').toLowerCase()
+    const code = (item.codigo_identificacion || item.code || '').toLowerCase()
+    const cas = (item.numeroCAS || item.casNumber || '').toLowerCase()
+    const location = (item.laboratorioUbicacion || item.ubicacion || item.location || '').toLowerCase()
+    const category = (item.tipoElemento || item.categoria || item.category || '').toLowerCase()
+    const q = searchQuery.toLowerCase().trim()
+
+    return (
+      name.includes(q) ||
+      code.includes(q) ||
+      cas.includes(q) ||
+      location.includes(q) ||
+      category.includes(q)
+    )
+  })
 
   return (
     <MainLayout>
@@ -104,7 +136,15 @@ export function InventoryPage({
           </div>
         </div>
 
-        {isLoading ? (
+        {error && (
+          <Alert
+            variant="error"
+            title="Error al cargar inventario"
+            message={error}
+          />
+        )}
+
+        {loading ? (
           <div className="space-y-3">
             <Skeleton className="h-10 w-full" />
             <Skeleton className="h-14 w-full" />
@@ -143,67 +183,128 @@ export function InventoryPage({
                 <tr>
                   <th className="px-5 py-3.5">Código / CAS</th>
                   <th className="px-5 py-3.5">Nombre Químico / Insumo</th>
-                  <th className="px-5 py-3.5">Categoría</th>
+                  <th className="px-5 py-3.5">Tipo / Categoría</th>
                   <th className="px-5 py-3.5">Ubicación</th>
                   <th className="px-5 py-3.5 text-center">Stock Actual</th>
+                  <th className="px-5 py-3.5 text-center">Estado</th>
                   <th className="px-5 py-3.5">Vencimiento</th>
                   <th className="px-5 py-3.5 text-right">Acciones</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 text-gray-900">
-                {filteredItems.map((item) => (
-                  <tr key={item.id} className="hover:bg-gray-50/80 transition-colors">
-                    <td className="px-5 py-4 font-mono font-bold text-gray-900">{item.code}</td>
-                    <td className="px-5 py-4 font-bold">
-                      {item.name}
-                      {item.casNumber && (
-                        <span className="block text-[11px] text-gray-500 font-normal font-mono">
-                          CAS: {item.casNumber}
+                {filteredItems.map((item) => {
+                  const itemCode =
+                    item.codigo_identificacion ||
+                    item.code ||
+                    `CIT-${item.id}`
+                  const itemName = item.nombre || item.name || 'Sin nombre'
+                  const itemCas = item.numeroCAS || item.casNumber
+                  const itemCategory =
+                    item.tipoElemento ||
+                    item.categoria ||
+                    item.category ||
+                    'Reactivo'
+                  const itemLocation =
+                    item.laboratorioUbicacion ||
+                    item.ubicacion ||
+                    item.location ||
+                    'Laboratorio'
+                  const currentStock =
+                    item.stockActual ??
+                    item.stock_actual ??
+                    item.currentStock ??
+                    0
+                  const minStock =
+                    item.stockMinimo ??
+                    item.stock_minimo ??
+                    item.minStock ??
+                    0
+                  const unit = item.unidadMedida || item.unit || 'u'
+                  const expDate =
+                    item.fechaVencimiento ||
+                    item.fecha_vencimiento ||
+                    item.expirationDate
+
+                  const isAgotado = currentStock <= 0
+                  const isBajoStock =
+                    !isAgotado && minStock > 0 && currentStock <= minStock
+
+                  return (
+                    <tr
+                      key={item.id}
+                      className="hover:bg-gray-50/80 transition-colors"
+                    >
+                      <td className="px-5 py-4 font-mono font-bold text-gray-900">
+                        {itemCode}
+                      </td>
+                      <td className="px-5 py-4 font-bold">
+                        {itemName}
+                        {itemCas && (
+                          <span className="block text-[11px] text-gray-500 font-normal font-mono">
+                            CAS: {itemCas}
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-5 py-4">
+                        <span className="px-2 py-0.5 rounded bg-cit-petroleo/10 border border-cit-petroleo/20 text-cit-petroleo text-[11px] font-semibold capitalize">
+                          {itemCategory}
                         </span>
-                      )}
-                    </td>
-                    <td className="px-5 py-4">
-                      <span className="px-2 py-0.5 rounded bg-cit-petroleo/10 border border-cit-petroleo/20 text-cit-petroleo text-[11px] font-semibold">
-                        {item.category}
-                      </span>
-                    </td>
-                    <td className="px-5 py-4 text-gray-700">{item.location}</td>
-                    <td className="px-5 py-4 text-center">
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-800 border border-gray-200">
-                        {item.currentStock} / Mín {item.minStock} {item.unit}
-                      </span>
-                    </td>
-                    <td className="px-5 py-4 text-gray-700 font-mono">
-                      {item.expirationDate || '---'}
-                    </td>
-                    <td className="px-5 py-4 text-right whitespace-nowrap">
-                      {canCreate ? (
-                        <>
+                      </td>
+                      <td className="px-5 py-4 text-gray-700">
+                        {itemLocation}
+                      </td>
+                      <td className="px-5 py-4 text-center">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-800 border border-gray-200">
+                          {currentStock} / Mín {minStock} {unit}
+                        </span>
+                      </td>
+                      <td className="px-5 py-4 text-center">
+                        {isAgotado ? (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-red-100 text-red-700 border border-red-200">
+                            Agotado
+                          </span>
+                        ) : isBajoStock ? (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200">
+                            Stock Bajo
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                            Disponible
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-5 py-4 text-gray-700 font-mono">
+                        {expDate || '---'}
+                      </td>
+                      <td className="px-5 py-4 text-right whitespace-nowrap">
+                        {canCreate ? (
+                          <>
+                            <button
+                              type="button"
+                              className="text-cit-petroleo font-bold hover:text-cit-azul-fuerte hover:underline mr-3"
+                            >
+                              Registrar Retiro
+                            </button>
+                            <button
+                              type="button"
+                              className="text-gray-500 font-medium hover:text-cit-petroleo"
+                            >
+                              Detalles
+                            </button>
+                          </>
+                        ) : (
                           <button
                             type="button"
-                            className="text-cit-petroleo font-bold hover:text-cit-azul-fuerte hover:underline mr-3"
+                            onClick={() => navigate('/reservas')}
+                            className="text-cit-petroleo font-bold hover:text-cit-azul-fuerte hover:underline"
                           >
-                            Registrar Retiro
+                            Solicitar Uso
                           </button>
-                          <button
-                            type="button"
-                            className="text-gray-500 font-medium hover:text-cit-petroleo"
-                          >
-                            Detalles
-                          </button>
-                        </>
-                      ) : (
-                        <button
-                          type="button"
-                          onClick={() => navigate('/reservas')}
-                          className="text-cit-petroleo font-bold hover:text-cit-azul-fuerte hover:underline"
-                        >
-                          Solicitar Uso
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
+                        )}
+                      </td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           </div>

@@ -4,19 +4,31 @@ import { RoleGuard } from '@/components/auth/RoleGuard'
 import { InventoryItemForm } from '@/components/inventory/InventoryItemForm'
 import { canCreateInventory } from '@/utils/rbac'
 import { createInventoryItem } from '@/services/inventory/inventory.service'
+import { useNotifications } from '@/context'
 import type { CreateInventoryItemPayload } from '@/types/scientific.types'
 
 export function NewInventoryItemPage() {
   const navigate = useNavigate()
+  const { addNotification } = useNotifications()
 
   const handleCreate = async (payload: CreateInventoryItemPayload) => {
-    try {
-      await createInventoryItem(payload)
-      navigate('/inventario')
-    } catch {
-      console.log('Payload de registro:', payload)
-      navigate('/inventario')
-    }
+    await createInventoryItem(payload)
+    const isLowStock =
+      payload.stockMinimo !== undefined &&
+      payload.cantidadInicial <= payload.stockMinimo
+
+    addNotification({
+      title: isLowStock
+        ? 'Elemento registrado (Stock Bajo)'
+        : 'Elemento registrado',
+      description: `Se agregó correctamente ${payload.nombre} al inventario científico.${
+        isLowStock
+          ? ' Aviso: La cantidad ingresada está en o por debajo del stock mínimo de alerta.'
+          : ''
+      }`,
+      type: isLowStock ? 'warning' : 'success',
+    })
+    navigate('/inventario')
   }
 
   return (

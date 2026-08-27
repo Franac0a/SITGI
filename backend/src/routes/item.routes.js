@@ -17,7 +17,7 @@ router.use(verificarAuth);
 router.get("/trazabilidad/borrados", obtenerItemsEliminados);
 router.put(
   "/trazabilidad/restaurar/:id",
-  verificarRol("Administración", "Inventario"),
+  verificarRol("Administración", "Inventario", "Dirección"),
   restaurarItem,
 );
 
@@ -26,15 +26,19 @@ router.put(
 // -------------------------------------------------------------------------
 router.get("/", obtenerItems);
 router.get("/:id", obtenerItemPorId);
-router.post("/", verificarRol("Administración", "Inventario"), crearItem);
+router.post(
+  "/",
+  verificarRol("Administración", "Inventario", "Dirección"),
+  crearItem,
+);
 router.put(
   "/:id",
-  verificarRol("Administración", "Inventario"),
+  verificarRol("Administración", "Inventario", "Dirección"),
   actualizarItem,
 );
 router.delete(
   "/:id",
-  verificarRol("Administración", "Inventario"),
+  verificarRol("Administración", "Inventario", "Dirección"),
   eliminarItem,
 );
 
