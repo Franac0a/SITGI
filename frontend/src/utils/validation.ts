@@ -52,6 +52,49 @@ export const registerSchema = z
 
 export type RegisterSchemaType = z.infer<typeof registerSchema>
 
+export const inventoryItemSchema = z.object({
+  nombre: z
+    .string()
+    .trim()
+    .min(1, { message: 'El nombre del elemento es requerido.' }),
+  tipo: z
+    .enum(['reactivo', 'insumo', 'material', 'equipo'], {
+      message: 'Debe seleccionar un tipo de elemento.',
+    }),
+  codigoCas: z
+    .string()
+    .trim()
+    .min(1, { message: 'El número CAS es obligatorio.' })
+    .regex(/^\d+$/, { message: 'El número CAS solo debe contener números.' }),
+  marca: z.string().optional(),
+  numeroLote: z.string().optional(),
+  cantidadInicial: z
+    .string()
+    .trim()
+    .min(1, { message: 'La cantidad inicial es requerida.' })
+    .refine((val) => !isNaN(Number(val)) && Number(val) >= 0, {
+      message: 'Ingrese una cantidad válida mayor o igual a 0.',
+    }),
+  unidadMedida: z
+    .string()
+    .trim()
+    .min(1, { message: 'Debe especificar la unidad de medida.' }),
+  stockMinimo: z
+    .string()
+    .optional()
+    .refine((val) => !val || (!isNaN(Number(val)) && Number(val) >= 0), {
+      message: 'El stock mínimo no puede ser negativo.',
+    }),
+  laboratorioUbicacion: z
+    .string()
+    .trim()
+    .min(1, { message: 'Debe especificar el laboratorio o ubicación física.' }),
+  fechaVencimiento: z.string().optional(),
+  observaciones: z.string().optional(),
+})
+
+export type InventoryItemSchemaType = z.infer<typeof inventoryItemSchema>
+
 export function validateLoginForm(values: LoginFormValues) {
   const result = loginSchema.safeParse(values)
   if (result.success) return {}

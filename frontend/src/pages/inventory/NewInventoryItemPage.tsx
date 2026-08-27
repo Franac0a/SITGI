@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom'
+import { ArrowLeft } from 'lucide-react'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { RoleGuard } from '@/components/auth/RoleGuard'
 import { InventoryItemForm } from '@/components/inventory/InventoryItemForm'
+import { Button } from '@/components/ui/button'
 import { canCreateInventory } from '@/utils/rbac'
 import { createInventoryItem } from '@/services/inventory/inventory.service'
 import type { CreateInventoryItemPayload } from '@/types/scientific.types'
@@ -14,7 +16,6 @@ export function NewInventoryItemPage() {
       await createInventoryItem(payload)
       navigate('/inventario')
     } catch {
-      console.log('Payload de registro:', payload)
       navigate('/inventario')
     }
   }
@@ -49,26 +50,16 @@ export function NewInventoryItemPage() {
                 </p>
               </div>
 
-              <button
+              <Button
                 type="button"
+                variant="outline"
+                size="sm"
                 onClick={() => navigate('/inventario')}
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-cit-petroleo hover:border-cit-petroleo transition-colors"
+                className="gap-1.5 text-xs text-gray-700"
               >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                  />
-                </svg>
+                <ArrowLeft className="h-4 w-4" />
                 Volver al listado
-              </button>
+              </Button>
             </div>
           </div>
 
