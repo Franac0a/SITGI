@@ -1,98 +1,104 @@
-import { MovimientoModel } from "../models/Movimiento.model.js";
+import { Movimiento } from "../models/Movimiento.model.js";
 import { Item } from "../models/Item.model.js";
-import { UserModel } from "../models/User.model.js";
+import { sequelize } from "../config/db.js";
 
 export const registrarMovimiento = async (req, res) => {
-  try {
-    const { item_id, tipo, cantidad, motivo_proyecto } = req.body;
-    const usuario_id = req.usuario.id;
+  // Iniciamos una transacción: o se guarda todo junto, o se cancela todo
+  const t = await sequelize.transaction();
 
-    // Buscamos el ítem en la base de datos
-    const item = await Item.findByPk(item_id);
+  try {
+    const {
+      itemId,
+      tipo_movimiento,
+      cantidad,
+      origen_destino,
+      costo_unitario,
+      responsable,
+      observaciones,
+    } = req.body;
+
+    // 1. Buscamos el ítem afectado en el catálogo maestro
+    const item = await Item.findByPk(itemId, { transaction: t });
+
     if (!item) {
+      await t.rollback();
       return res
         .status(404)
-        .json({ mensaje: "El ítem seleccionado no existe en el inventario." });
+        .json({ mensaje: "El ítem especificado no existe en el catálogo." });
     }
 
-    const stock_anterior = item.stock_actual;
-    let stock_posterior = stock_anterior;
+    // 2. Guardamos el registro en el libro diario/auditoría
+    const nuevoMovimiento = await Movimiento.create(
+      {
+        itemId,
+        tipo_movimiento,
+        cantidad,
+        origen_destino,
+        costo_unitario,
+        responsable,
+        observaciones,
+      },
+      { transaction: t },
+    );
 
-    // Calculamos el nuevo stock según el tipo de movimiento
-    if (tipo === "ingreso" || tipo === "devolucion") {
-      stock_posterior = stock_anterior + Number(cantidad);
-    } else if (tipo === "retiro" || tipo === "descarte") {
-      if (stock_anterior < cantidad) {
+    // 3. Modificamos el stock según la operación
+    const cantFloat = parseFloat(cantidad);
+
+    if (tipo_movimiento === "Ingreso" || tipo_movimiento === "Ajuste") {
+      item.stock_actual += cantFloat;
+    } else if (
+      tipo_movimiento === "Egreso" ||
+      tipo_movimiento === "Reparación"
+    ) {
+      if (item.stock_actual < cantFloat) {
+        await t.rollback();
         return res.status(400).json({
-          mensaje: `Stock insuficiente para realizar el retiro. Stock actual: ${stock_anterior} unidades.`,
+          mensaje: `Stock insuficiente. Tenés ${item.stock_actual} en inventario y querés descontar ${cantFloat}.`,
         });
       }
-      stock_posterior = stock_anterior - Number(cantidad);
+      item.stock_actual -= cantFloat;
     }
 
-    // Guardamos el recibo auditable en el historial
-    const nuevoMovimiento = await MovimientoModel.create({
-      item_id,
-      usuario_id,
-      tipo,
-      cantidad,
-      motivo_proyecto,
-      stock_anterior,
-      stock_posterior,
-    });
+    // 4. Guardamos el nuevo stock en la tabla Items
+    await item.save({ transaction: t });
 
-    // Actualizamos la tabla principal de ítems con el nuevo número de stock
-    await item.update({ stock_actual: stock_posterior });
+    // Si pasamos todos los pasos sin errores, confirmamos los cambios en MySQL
+    await t.commit();
 
     res.status(201).json({
-      mensaje: `Movimiento de ${tipo} registrado con éxito. Stock actualizado de ${stock_anterior} a ${stock_posterior}.`,
+      mensaje: "Movimiento registrado y stock actualizado con éxito.",
       movimiento: nuevoMovimiento,
+      nuevo_stock: item.stock_actual,
     });
   } catch (error) {
-    console.error("Error al registrar movimiento:", error.message);
-    res.status(500).json({
-      mensaje: "Error interno al procesar el movimiento del inventario.",
-      error: error.message,
-    });
+    // Si algo explota en el medio, deshacemos los cambios
+    await t.rollback();
+    console.error("Error al registrar el movimiento:", error);
+    res
+      .status(500)
+      .json({
+        mensaje: "Error interno al procesar el stock.",
+        error: error.message,
+      });
   }
 };
 
-export const obtenerHistorial = async (req, res) => {
+export const obtenerHistorialPorItem = async (req, res) => {
   try {
-    const { item_id, tipo, proyecto } = req.query;
-    const filtro = {};
-
-    if (item_id) filtro.item_id = item_id;
-    if (tipo) filtro.tipo = tipo;
-
-    if (proyecto) filtro.motivo_proyecto = { [Op.like]: `%${proyecto}%` };
-
-    const historial = await MovimientoModel.findAll({
-      where: filtro,
-      order: [["createdAt", "DESC"]],
-      include: [
-        {
-          model: UserModel,
-          as: "usuario",
-          attributes: ["nombre", "rol", "email"],
-        },
-        {
-          model: Item,
-          as: "item",
-          attributes: ["nombre", "codigo_identificacion", "categoria"],
-          paranoid: false,
-        },
-      ],
+    const { itemId } = req.params;
+    const historial = await Movimiento.findAll({
+      where: { itemId },
+      order: [["fecha_movimiento", "DESC"]],
     });
 
-    res.status(200).json({
-      total: historial.length,
-      movimientos: historial,
-    });
+    res.status(200).json(historial);
   } catch (error) {
-    console.error("Error al obtener historial de movimientos:", error.message);
+    console.error("Error al obtener historial:", error);
     res
       .status(500)
-      .json({ mensaje: "Error al cargar la auditoría.", error: error.message });
+      .json({
+        mensaje: "Error al cargar la trazabilidad.",
+        error: error.message,
+      });
   }
 };
