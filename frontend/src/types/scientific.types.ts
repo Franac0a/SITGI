@@ -38,6 +38,7 @@ export interface InventoryItem {
   numeroCAS?: string
   casNumber?: string
   marcaFabricante?: string
+  marca?: string
   brand?: string
   numeroLote?: string
   batchNumber?: string
@@ -55,11 +56,14 @@ export interface InventoryItem {
   stock_minimo?: number
   minStock?: number
   unidadMedida?: string
+  unidad_medida?: string
   unit?: string
   fechaVencimiento?: string
   fecha_vencimiento?: string
   expirationDate?: string
+  codigoCas?: string
   observaciones?: string
+  detalles_tecnicos?: Record<string, any>
   estado?: 'disponible' | 'bajo_stock' | 'agotado' | 'vencido' | 'activo' | string
   creadoPor?: number | null
   createdAt?: string

@@ -49,7 +49,7 @@ export function InventoryPage({
   const filteredItems = items.filter((item) => {
     const name = (item.nombre || item.name || '').toLowerCase()
     const code = (item.codigo_identificacion || item.code || '').toLowerCase()
-    const cas = (item.numeroCAS || item.casNumber || '').toLowerCase()
+    const cas = (item.numeroCAS || item.casNumber || item.codigoCas || item.detalles_tecnicos?.codigoCas || '').toLowerCase()
     const location = (item.laboratorioUbicacion || item.ubicacion || item.location || '').toLowerCase()
     const category = (item.tipoElemento || item.categoria || item.category || '').toLowerCase()
     const q = searchQuery.toLowerCase().trim()
@@ -198,7 +198,11 @@ export function InventoryPage({
                     item.code ||
                     `CIT-${item.id}`
                   const itemName = item.nombre || item.name || 'Sin nombre'
-                  const itemCas = item.numeroCAS || item.casNumber
+                  const itemCas =
+                    item.numeroCAS ||
+                    item.casNumber ||
+                    item.codigoCas ||
+                    item.detalles_tecnicos?.codigoCas
                   const itemCategory =
                     item.tipoElemento ||
                     item.categoria ||
@@ -219,11 +223,16 @@ export function InventoryPage({
                     item.stock_minimo ??
                     item.minStock ??
                     0
-                  const unit = item.unidadMedida || item.unit || 'u'
+                  const unit =
+                    item.unidadMedida ||
+                    item.unidad_medida ||
+                    item.unit ||
+                    'u'
                   const expDate =
                     item.fechaVencimiento ||
                     item.fecha_vencimiento ||
-                    item.expirationDate
+                    item.expirationDate ||
+                    item.detalles_tecnicos?.fechaVencimiento
 
                   const isAgotado = currentStock <= 0
                   const isBajoStock =
