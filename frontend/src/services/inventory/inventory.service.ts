@@ -9,9 +9,18 @@ interface ItemsResponse {
 export async function createInventoryItem(
   payload: CreateInventoryItemPayload,
 ): Promise<{ mensaje?: string; item?: InventoryItem }> {
+  const body = {
+    ...payload,
+    categoria: payload.tipo,
+    stock_actual: payload.cantidadInicial,
+    stock_minimo: payload.stockMinimo ?? 5,
+    unidad_medida: payload.unidadMedida,
+    ubicacion: payload.laboratorioUbicacion,
+  }
+
   return apiClient<{ mensaje?: string; item?: InventoryItem }>('/items', {
     method: 'POST',
-    body: payload,
+    body,
   })
 }
 
