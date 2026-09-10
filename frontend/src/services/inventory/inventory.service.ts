@@ -52,3 +52,85 @@ export async function getInventoryItemById(
     method: 'GET',
   })
 }
+
+// -------------------------------------------------------------------------
+// RUTAS DE ACTUALIZACIÓN Y BAJA
+// -------------------------------------------------------------------------
+
+export async function updateInventoryItem(
+  id: string | number,
+  payload: Partial<CreateInventoryItemPayload>,
+): Promise<{ mensaje?: string; item?: InventoryItem }> {
+  return apiClient<{ mensaje?: string; item?: InventoryItem }>(`/items/${id}`, {
+    method: 'PUT',
+    body: payload,
+  })
+}
+
+export async function deleteInventoryItem(
+  id: string | number,
+): Promise<{ mensaje?: string }> {
+  return apiClient<{ mensaje?: string }>(`/items/${id}`, {
+    method: 'DELETE',
+  })
+}
+
+// -------------------------------------------------------------------------
+// SECCIÓN DE TRAZABILIDAD (Papelera)
+// -------------------------------------------------------------------------
+
+export async function getDeletedItems(): Promise<InventoryItem[]> {
+  const response = await apiClient<InventoryItem[] | ItemsResponse>('/items/trazabilidad/borrados', {
+    method: 'GET',
+  })
+
+  if (Array.isArray(response)) {
+    return response
+  }
+
+  if (response && Array.isArray(response.items)) {
+    return response.items
+  }
+
+  return []
+}
+
+export async function restoreInventoryItem(
+  id: string | number,
+): Promise<{ mensaje?: string; item?: InventoryItem }> {
+  return apiClient<{ mensaje?: string; item?: InventoryItem }>(`/items/trazabilidad/restaurar/${id}`, {
+    method: 'PUT',
+  })
+}
+
+// -------------------------------------------------------------------------
+// SECCIÓN DE MOVIMIENTOS (Historial y Stock)
+// -------------------------------------------------------------------------
+
+// Define los tipos rápidos para los movimientos (podés moverlos a scientific.types después)
+export interface MovimientoPayload {
+  itemId: number | string;
+  tipo_movimiento: 'Ingreso' | 'Egreso' | 'Ajuste' | 'Reparación';
+  cantidad: number;
+  origen_destino?: string;
+  costo_unitario?: number;
+  responsable: string;
+  observaciones?: string;
+}
+
+export async function registrarMovimiento(
+  payload: MovimientoPayload
+): Promise<any> {
+  return apiClient<any>('/movimientos', {
+    method: 'POST',
+    body: payload,
+  })
+}
+
+export async function getHistorialMovimientos(
+  itemId: string | number
+): Promise<any[]> {
+  return apiClient<any[]>(`/movimientos/historial/${itemId}`, {
+    method: 'GET',
+  })
+}
