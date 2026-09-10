@@ -8,7 +8,8 @@ import authRoutes from "./src/routes/auth.routes.js";
 import itemRoutes from "./src/routes/item.routes.js";
 import userRoutes from "./src/routes/user.routes.js";
 import movimientoRoutes from "./src/routes/movimiento.routes.js";
-import { MovimientoModel } from "./src/models/Movimiento.model.js";
+import "./src/models/Item.model.js";
+import "./src/models/Movimiento.model.js";
 
 dotenv.config();
 

@@ -1,15 +1,9 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/db.js";
-import { UserModel } from "./User.model.js";
 
 export const Item = sequelize.define(
   "Item",
   {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
     nombre: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -17,162 +11,57 @@ export const Item = sequelize.define(
         notEmpty: { msg: "El nombre del elemento es obligatorio" },
       },
     },
-    tipoElemento: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: "reactivo",
-    },
     codigo_identificacion: {
       type: DataTypes.STRING,
       allowNull: true,
-      unique: true,
+      unique: true, // T 01, CIT-Fsa 01, o autogenerado
     },
-    numeroCAS: {
+    categoria: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false, // "Herramientas", "Droguero", "Brucelosis", etc.
     },
-    marcaFabricante: {
+    marca: {
       type: DataTypes.STRING,
-      allowNull: true,
-    },
-    numeroLote: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    cantidadInicial: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-      defaultValue: 0,
-      validate: {
-        min: {
-          args: [0],
-          msg: "La cantidad inicial debe ser mayor o igual a 0",
-        },
-      },
-    },
-    stockActual: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-      defaultValue: 0,
-      validate: {
-        min: {
-          args: [0],
-          msg: "El stock actual no puede ser negativo",
-        },
-      },
+      allowNull: true, // Absorbe las marcas de Brucelosis y Droguero
     },
     stock_actual: {
-      type: DataTypes.FLOAT,
-      allowNull: true,
-      defaultValue: 0,
-    },
-    unidadMedida: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: "u",
-    },
-    stockMinimo: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.FLOAT, // Soporta fracciones si en el futuro fraccionan drogas
       allowNull: false,
       defaultValue: 0,
       validate: {
-        min: {
-          args: [0],
-          msg: "El stock mínimo no puede ser negativo",
-        },
+        min: 0,
       },
     },
     stock_minimo: {
       type: DataTypes.FLOAT,
-      allowNull: true,
-      defaultValue: 0,
+      allowNull: false,
+      defaultValue: 5,
     },
-    laboratorioUbicacion: {
+    unidad_medida: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "Laboratorio Central",
+      defaultValue: "Unidad",
     },
     ubicacion: {
       type: DataTypes.STRING,
       allowNull: true,
-    },
-    categoria: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    fechaVencimiento: {
-      type: DataTypes.DATEONLY,
-      allowNull: true,
-    },
-    fecha_vencimiento: {
-      type: DataTypes.DATEONLY,
-      allowNull: true,
-    },
-    observaciones: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    estado: {
-      type: DataTypes.ENUM(
-        "disponible",
-        "bajo_stock",
-        "agotado",
-        "vencido",
-        "activo",
-      ),
-      defaultValue: "disponible",
-      allowNull: false,
-    },
-    creadoPor: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: { model: "usuarios", key: "id" },
+      defaultValue: "Sin asignar",
     },
     detalles_tecnicos: {
       type: DataTypes.JSON,
-      allowNull: true,
+      allowNull: false,
       defaultValue: {},
+      // Acá guardamos dinámicamente:
+      // - Brucelosis: { "n_inventario": "...", "n_serie": "...", "criticidad": "x" }
+      // - Vidrio: { "material": "Borosilicato", "capacidad": "1 Lt" }
+      // - Droguero: { "presentacion": "500 GR", "letra": "A" }
     },
   },
   {
     timestamps: true,
-    paranoid: true,
+    paranoid: true, // Mantiene el historial si alguien borra un registro por error
     tableName: "items",
-    hooks: {
-      beforeSave: (item) => {
-        // Sincronizar campos legacy / alias
-        if (item.stockActual !== undefined) {
-          item.stock_actual = item.stockActual;
-        } else if (item.stock_actual !== undefined) {
-          item.stockActual = item.stock_actual;
-        }
-
-        if (item.stockMinimo !== undefined) {
-          item.stock_minimo = item.stockMinimo;
-        } else if (item.stock_minimo !== undefined) {
-          item.stockMinimo = item.stock_minimo;
-        }
-
-        if (item.laboratorioUbicacion !== undefined) {
-          item.ubicacion = item.laboratorioUbicacion;
-        } else if (item.ubicacion !== undefined) {
-          item.laboratorioUbicacion = item.ubicacion;
-        }
-
-        if (item.fechaVencimiento !== undefined) {
-          item.fecha_vencimiento = item.fechaVencimiento;
-        } else if (item.fecha_vencimiento !== undefined) {
-          item.fechaVencimiento = item.fecha_vencimiento;
-        }
-
-        if (!item.categoria && item.tipoElemento) {
-          item.categoria = item.tipoElemento;
-        }
-      },
-    },
   },
 );
-
-Item.belongsTo(UserModel, { foreignKey: "creadoPor", as: "creador" });
 
 export default Item;
