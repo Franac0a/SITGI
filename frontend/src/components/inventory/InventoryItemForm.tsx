@@ -1,0 +1,543 @@
+import { useState, useEffect, type ChangeEvent, type FormEvent } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { NativeSelect as Select } from "@/components/ui/native-select";
+import { Alert } from "@/components/ui/alert";
+import { ApiClientError } from "@/services/api/client";
+import { getSectores } from "@/services/sectores/sectores.service";
+import type {
+  CreateInventoryItemPayload,
+  InventoryItemType,
+} from "@/types/scientific.types";
+
+const ITEM_TYPES = [
+  { value: "Reactivo", label: "Reactivo Químico" },
+  { value: "Insumo", label: "Insumo / Consumible" },
+  { value: "Material", label: "Material de Laboratorio" },
+  { value: "Equipo", label: "Equipo / Instrumental" },
+] as const;
+
+const COMMON_UNITS = [
+  { value: "mg", label: "Miligramos (mg)" },
+  { value: "g", label: "Gramos (g)" },
+  { value: "kg", label: "Kilogramos (kg)" },
+  { value: "mL", label: "Mililitros (mL)" },
+  { value: "L", label: "Litros (L)" },
+  { value: "u", label: "Unidades (u)" },
+  { value: "frasco", label: "Frasco" },
+  { value: "caja", label: "Caja" },
+  { value: "kit", label: "Kit" },
+] as const;
+
+const LAB_LOCATIONS = [
+  { value: "Laboratorio de Biología Molecular", label: "Lab 1" },
+  {
+    value: "Laboratorio de Química Analítica",
+    label: "lab 2",
+  },
+  {
+    value: "Laboratorio de Microbiología",
+    label: "lab 3",
+  },
+  {
+    value: "Área de Instrumental Pesado",
+    label: "lab 4",
+  },
+  { value: "Cámara Fría / Ultrafreezer", label: "Cámara Fría / Ultrafreezer" },
+  {
+    value: "Depósito Central de Reactivos",
+    label: "Deposito gnral",
+  },
+] as const;
+
+const CONDICIONES = [
+  { value: "Ambiente", label: "Temperatura ambiente" },
+  { value: "Refrigerado (2-8°C)", label: "Refrigerado (2-8°C)" },
+  { value: "Congelado (-20°C)", label: "Congelado (-20°C)" },
+  { value: "Ultracongelado (-80°C)", label: "Ultracongelado (-80°C)" },
+  { value: "Fotosensible", label: "Fotosensible (proteger de la luz)" },
+  { value: "Otro", label: "Otro / Condiciones especiales" },
+] as const;
+
+function withCurrentOption<T extends { value: string; label: string }>(
+  options: readonly T[],
+  value: string,
+): { value: string; label: string }[] {
+  const result: { value: string; label: string }[] = [...options];
+  if (value && !options.some((o) => o.value === value)) {
+    result.push({ value, label: value });
+  }
+  return result;
+}
+
+interface FormState {
+  nombre: string;
+  tipo: InventoryItemType | "";
+  cantidadInicial: string;
+  unidadMedida: string;
+  laboratorioUbicacion: string;
+  condicion_almacenamiento: string;
+  fechaVencimiento: string;
+  codigoCas: string;
+  marca: string;
+  numeroLote: string;
+  stockMinimo: string;
+  observaciones: string;
+}
+
+type FormErrors = Partial<Record<keyof FormState, string>>;
+
+interface InventoryItemFormProps {
+  onSubmit?: (payload: CreateInventoryItemPayload) => Promise<void>;
+  onCancel?: () => void;
+  onSuccess?: () => void;
+  isLoading?: boolean;
+  defaultValues?: Partial<CreateInventoryItemPayload>;
+}
+
+export function InventoryItemForm({
+  onSubmit,
+  onCancel,
+  onSuccess,
+  isLoading = false,
+  defaultValues,
+}: InventoryItemFormProps) {
+  const [formData, setFormData] = useState<FormState>({
+    nombre: defaultValues?.nombre ?? "",
+    tipo: defaultValues?.tipo ?? "Reactivo",
+    cantidadInicial:
+      defaultValues?.cantidadInicial !== undefined
+        ? String(defaultValues.cantidadInicial)
+        : "",
+    unidadMedida: defaultValues?.unidadMedida ?? "",
+    laboratorioUbicacion: defaultValues?.laboratorioUbicacion ?? "",
+    condicion_almacenamiento: defaultValues?.condicion_almacenamiento ?? "",
+    fechaVencimiento: defaultValues?.fechaVencimiento ?? "",
+    codigoCas: defaultValues?.codigoCas ?? "",
+    marca: defaultValues?.marca ?? "",
+    numeroLote: defaultValues?.numeroLote ?? "",
+    stockMinimo:
+      defaultValues?.stockMinimo !== undefined
+        ? String(defaultValues.stockMinimo)
+        : "",
+    observaciones: defaultValues?.observaciones ?? "",
+  });
+
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [internalSubmitting, setInternalSubmitting] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [serverSuccess, setServerSuccess] = useState<string | null>(null);
+
+  const [locationOptions, setLocationOptions] = useState<
+    { value: string; label: string }[]
+  >([...LAB_LOCATIONS]);
+
+  useEffect(() => {
+    let mounted = true;
+    getSectores()
+      .then((sectores) => {
+        if (mounted && sectores.length > 0) {
+          setLocationOptions(
+            sectores.map((s) => ({
+              value: s.nombre,
+              label: `${s.nombre} (${s.tipo})`,
+            })),
+          );
+        }
+      })
+      .catch(() => {});
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const isSubmitting = isLoading || internalSubmitting;
+
+  const tipoOptions = withCurrentOption(ITEM_TYPES, formData.tipo as string);
+  const unidadOptions = withCurrentOption(COMMON_UNITS, formData.unidadMedida);
+  const ubicacionOptions = withCurrentOption(
+    locationOptions,
+    formData.laboratorioUbicacion,
+  );
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (errors[name as keyof FormState]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
+  };
+
+  const validate = (): boolean => {
+    const nextErrors: FormErrors = {};
+
+    if (!formData.nombre.trim()) {
+      nextErrors.nombre = "El nombre del elemento es obligatorio.";
+    }
+
+    if (!formData.tipo) {
+      nextErrors.tipo = "Debe seleccionar un tipo de elemento.";
+    }
+
+    if (
+      formData.cantidadInicial === "" ||
+      isNaN(Number(formData.cantidadInicial)) ||
+      Number(formData.cantidadInicial) < 0
+    ) {
+      nextErrors.cantidadInicial =
+        "Ingrese una cantidad inicial válida mayor o igual a 0.";
+    }
+
+    if (!formData.unidadMedida.trim()) {
+      nextErrors.unidadMedida = "Debe seleccionar la unidad de medida.";
+    }
+
+    if (!formData.laboratorioUbicacion.trim()) {
+      nextErrors.laboratorioUbicacion =
+        "Debe seleccionar el laboratorio o ubicación física.";
+    }
+
+    if (
+      formData.stockMinimo !== "" &&
+      (isNaN(Number(formData.stockMinimo)) || Number(formData.stockMinimo) < 0)
+    ) {
+      nextErrors.stockMinimo = "El stock mínimo no puede ser negativo.";
+    }
+
+    if (formData.codigoCas.trim()) {
+      const casPattern = /^\d{2,10}-\d{2}-\d$/;
+      if (!casPattern.test(formData.codigoCas.trim())) {
+        nextErrors.codigoCas =
+          "El formato CAS debe ser válido (ej. 7647-01-0 o 50-00-0).";
+      }
+    }
+
+    if (formData.fechaVencimiento) {
+      const parsedDate = new Date(formData.fechaVencimiento);
+      if (isNaN(parsedDate.getTime())) {
+        nextErrors.fechaVencimiento =
+          "La fecha de vencimiento debe tener un formato válido (AAAA-MM-DD).";
+      }
+    }
+
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setServerError(null);
+    setServerSuccess(null);
+
+    if (!validate()) return;
+
+    const payload: CreateInventoryItemPayload = {
+      nombre: formData.nombre.trim(),
+      tipo: formData.tipo as InventoryItemType,
+      cantidadInicial: Number(formData.cantidadInicial),
+      unidadMedida: formData.unidadMedida.trim(),
+      laboratorioUbicacion: formData.laboratorioUbicacion.trim(),
+      condicion_almacenamiento:
+        formData.condicion_almacenamiento.trim() || undefined,
+      fechaVencimiento: formData.fechaVencimiento.trim() || undefined,
+      codigoCas: formData.codigoCas.trim() || undefined,
+      marca: formData.marca.trim() || undefined,
+      numeroLote: formData.numeroLote.trim() || undefined,
+      stockMinimo:
+        formData.stockMinimo !== "" ? Number(formData.stockMinimo) : undefined,
+      observaciones: formData.observaciones.trim() || undefined,
+    };
+
+    setInternalSubmitting(true);
+
+    try {
+      if (onSubmit) {
+        await onSubmit(payload);
+      } else {
+        console.log("Payload CreateInventoryItemPayload:", payload);
+      }
+      setServerSuccess(
+        "Elemento registrado correctamente en el inventario científico.",
+      );
+      if (onSuccess) {
+        onSuccess();
+      }
+    } catch (err: unknown) {
+      if (err instanceof ApiClientError && err.errors) {
+        const mappedErrors: FormErrors = {};
+        Object.entries(err.errors).forEach(([field, msg]) => {
+          const errorText = Array.isArray(msg) ? msg[0] : msg;
+          if (field in formData) {
+            mappedErrors[field as keyof FormState] = errorText;
+          } else if (field === "tipoElemento") {
+            mappedErrors.tipo = errorText;
+          } else if (field === "numeroCAS") {
+            mappedErrors.codigoCas = errorText;
+          } else if (field === "marcaFabricante") {
+            mappedErrors.marca = errorText;
+          }
+        });
+        setErrors((prev) => ({ ...prev, ...mappedErrors }));
+      }
+      const message =
+        err instanceof Error
+          ? err.message
+          : "Error al guardar el ítem en el inventario.";
+      setServerError(message);
+    } finally {
+      setInternalSubmitting(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {serverError && (
+        <Alert
+          variant="error"
+          title="Error en el registro"
+          message={serverError}
+        />
+      )}
+
+      {serverSuccess && (
+        <Alert
+          variant="success"
+          title="Registro exitoso"
+          message={serverSuccess}
+        />
+      )}
+
+      <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-xs space-y-6">
+        <div>
+          <span className="text-[11px] font-bold uppercase tracking-wider text-cit-petroleo bg-cit-petroleo/10 px-2.5 py-0.5 rounded-full border border-cit-petroleo/20">
+            Identificación Principal
+          </span>
+          <h2 className="text-lg font-bold text-gray-900 mt-2">
+            Datos Básicos del Elemento
+          </h2>
+          <p className="text-xs text-gray-600 mt-0.5">
+            Especifique el nombre oficial, tipo de material y número de
+            referencia química o institucional.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="lg:col-span-2">
+            <Input
+              id="nombre"
+              name="nombre"
+              label="Nombre del Elemento / Reactivo *"
+              placeholder="Ej. Ácido Clorhídrico 37%, Puntas de micropipeta 200 µL"
+              value={formData.nombre}
+              onChange={handleChange}
+              error={errors.nombre}
+              disabled={isSubmitting}
+            />
+          </div>
+
+          <div>
+            <Select
+              id="tipo"
+              name="tipo"
+              label="Tipo de Elemento *"
+              placeholder="Seleccionar tipo"
+              options={tipoOptions}
+              value={formData.tipo}
+              onChange={handleChange}
+              error={errors.tipo}
+              disabled={isSubmitting}
+            />
+          </div>
+
+          <div>
+            <Input
+              id="codigoCas"
+              name="codigoCas"
+              label="Número CAS (Opcional)"
+              placeholder="Ej. 7647-01-0"
+              value={formData.codigoCas}
+              onChange={handleChange}
+              error={errors.codigoCas}
+              disabled={isSubmitting}
+            />
+          </div>
+
+          <div>
+            <Input
+              id="marca"
+              name="marca"
+              label="Marca / Fabricante (Opcional)"
+              placeholder="Ej. Merck, Sigma-Aldrich, Eppendorf"
+              value={formData.marca}
+              onChange={handleChange}
+              error={errors.marca}
+              disabled={isSubmitting}
+            />
+          </div>
+
+          <div>
+            <Input
+              id="numeroLote"
+              name="numeroLote"
+              label="Número de Lote (Opcional)"
+              placeholder="Ej. LOT-2026-X88"
+              value={formData.numeroLote}
+              onChange={handleChange}
+              error={errors.numeroLote}
+              disabled={isSubmitting}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-xs space-y-6">
+        <div>
+          <span className="text-[11px] font-bold uppercase tracking-wider text-cit-petroleo bg-cit-petroleo/10 px-2.5 py-0.5 rounded-full border border-cit-petroleo/20">
+            Stock y Ubicación
+          </span>
+          <h2 className="text-lg font-bold text-gray-900 mt-2">
+            Existencias Iniciales y Destino
+          </h2>
+          <p className="text-xs text-gray-600 mt-0.5">
+            Defina la cantidad disponible de ingreso, la unidad de medida y el
+            laboratorio asignado.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div>
+            <Input
+              id="cantidadInicial"
+              name="cantidadInicial"
+              type="number"
+              min="0"
+              step="any"
+              label="Cantidad Inicial *"
+              placeholder="0.00"
+              value={formData.cantidadInicial}
+              onChange={handleChange}
+              error={errors.cantidadInicial}
+              disabled={isSubmitting}
+            />
+          </div>
+
+          <div>
+            <Select
+              id="unidadMedida"
+              name="unidadMedida"
+              label="Unidad de Medida *"
+              placeholder="Seleccionar unidad"
+              options={unidadOptions}
+              value={formData.unidadMedida}
+              onChange={handleChange}
+              error={errors.unidadMedida}
+              disabled={isSubmitting}
+            />
+          </div>
+
+          <div>
+            <Input
+              id="stockMinimo"
+              name="stockMinimo"
+              type="number"
+              min="0"
+              step="any"
+              label="Stock Mínimo de Alerta"
+              placeholder="Ej. 5"
+              value={formData.stockMinimo}
+              onChange={handleChange}
+              error={errors.stockMinimo}
+              disabled={isSubmitting}
+            />
+          </div>
+
+          <div className="md:col-span-2">
+            <Select
+              id="laboratorioUbicacion"
+              name="laboratorioUbicacion"
+              label="Laboratorio / Ubicación Física *"
+              placeholder="Seleccionar laboratorio de destino"
+              options={ubicacionOptions}
+              value={formData.laboratorioUbicacion}
+              onChange={handleChange}
+              error={errors.laboratorioUbicacion}
+              disabled={isSubmitting}
+            />
+          </div>
+
+          <div>
+            <Input
+              id="fechaVencimiento"
+              name="fechaVencimiento"
+              type="date"
+              label="Fecha de Vencimiento"
+              value={formData.fechaVencimiento}
+              onChange={handleChange}
+              error={errors.fechaVencimiento}
+              disabled={isSubmitting}
+            />
+          </div>
+
+          <div>
+            <Select
+              id="condicion_almacenamiento"
+              name="condicion_almacenamiento"
+              label="Condición de Almacenamiento"
+              placeholder="Seleccionar condición"
+              options={CONDICIONES}
+              value={formData.condicion_almacenamiento}
+              onChange={handleChange}
+              disabled={isSubmitting}
+            />
+          </div>
+        </div>
+
+        <div>
+          <label
+            htmlFor="observaciones"
+            className="block text-sm font-medium text-gray-800 mb-1.5"
+          >
+            Observaciones o Condiciones Especiales (Opcional)
+          </label>
+          <textarea
+            id="observaciones"
+            name="observaciones"
+            rows={3}
+            value={formData.observaciones}
+            onChange={handleChange}
+            placeholder="Especificar si requiere refrigeración (-20°C / 4°C), si es fotosensible, precauciones de seguridad, etc."
+            disabled={isSubmitting}
+            className="w-full rounded-lg border border-gray-300 bg-gray-50 px-3.5 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cit-turquesa focus:border-cit-turquesa transition-all duration-150"
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col-reverse sm:flex-row items-center justify-end gap-3 pt-2">
+        {onCancel && (
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={onCancel}
+            disabled={isSubmitting}
+            className="w-full sm:w-auto"
+          >
+            Cancelar
+          </Button>
+        )}
+
+        <Button
+          type="submit"
+          variant="primary"
+          isLoading={isSubmitting}
+          disabled={isSubmitting}
+          className="w-full sm:w-auto min-w-44"
+        >
+          Guardar Elemento
+        </Button>
+      </div>
+    </form>
+  );
+}

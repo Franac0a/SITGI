@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cit-turquesa: #01a696;
+  --color-cit-petroleo: #0185a7;
+  --color-cit-azul-fuerte: #0265bb;
+  --color-cit-azul-oscuro: #004ac8;
+
+  --font-sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-gray-900 antialiased;
+  }
+}
