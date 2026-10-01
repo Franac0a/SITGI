@@ -49,6 +49,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setToken(null)
     localStorage.removeItem(STORAGE_USER_KEY)
     localStorage.removeItem(STORAGE_TOKEN_KEY)
+    authService.logout().catch(() => {})
   }
 
   return (

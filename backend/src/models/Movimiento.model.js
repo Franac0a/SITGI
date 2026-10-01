@@ -1,52 +1,41 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/db.js";
-import { UserModel } from "./User.model.js";
 import { Item } from "./Item.model.js";
 
-export const MovimientoModel = sequelize.define(
+export const Movimiento = sequelize.define(
   "Movimiento",
   {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    tipo: {
-      type: DataTypes.ENUM("ingreso", "retiro", "descarte", "devolucion"),
+    tipo_movimiento: {
+      type: DataTypes.ENUM("Ingreso", "Egreso", "Ajuste", "Reparación"),
       allowNull: false,
     },
     cantidad: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull: false,
       validate: {
-        min: {
-          args: [1],
-          msg: "La cantidad del movimiento debe ser al menos 1 unidad.",
-        },
+        min: 0.01,
       },
     },
-    motivo_proyecto: {
+    fecha_movimiento: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    origen_destino: {
       type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: "Consumo general de laboratorio",
+      allowNull: true, // Para casos como "INTA Mercedes" o proveedores específicos
     },
-    stock_anterior: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+    costo_unitario: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: true, // Para el área de Bovinos Insumos y Adquisiciones
     },
-    stock_posterior: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+    responsable: {
+      type: DataTypes.STRING,
+      allowNull: false, // Para registrar quién realiza la acción (ej: Laura)
     },
-    usuario_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: { model: "usuarios", key: "id" },
-    },
-    item_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: { model: "items", key: "id" },
+    observaciones: {
+      type: DataTypes.TEXT,
+      allowNull: true, // Para anotar tratamientos, pacientes (Manchita) o fallas
     },
   },
   {
@@ -55,8 +44,13 @@ export const MovimientoModel = sequelize.define(
   },
 );
 
-MovimientoModel.belongsTo(UserModel, {
-  foreignKey: "usuario_id",
-  as: "usuario",
+// Definición de las relaciones de base de datos
+Item.hasMany(Movimiento, {
+  foreignKey: "itemId",
+  sourceKey: "id",
 });
-MovimientoModel.belongsTo(Item, { foreignKey: "item_id", as: "item" });
+
+Movimiento.belongsTo(Item, {
+  foreignKey: "itemId",
+  targetKey: "id",
+});

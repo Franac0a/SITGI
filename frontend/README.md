@@ -28,7 +28,7 @@ npm run lint       # Analiza el código en busca de problemas de linting
    ```
 2. Ajustar `VITE_API_URL` con la URL base del backend (por defecto `http://localhost:3000/api`).
 
----
+
 
 ## Estructura del Proyecto (`src/`)
 

@@ -34,9 +34,6 @@ export const registerSchema = z
       .trim()
       .min(1, { message: 'El correo electrónico es obligatorio.' })
       .regex(EMAIL_PATTERN, { message: 'Ingrese un correo electrónico válido.' }),
-    rol: z
-      .string()
-      .min(1, { message: 'Debe seleccionar un rol institucional.' }),
     password: z
       .string()
       .min(1, { message: 'La contraseña es obligatoria.' })

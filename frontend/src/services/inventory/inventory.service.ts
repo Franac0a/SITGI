@@ -9,9 +9,18 @@ interface ItemsResponse {
 export async function createInventoryItem(
   payload: CreateInventoryItemPayload,
 ): Promise<{ mensaje?: string; item?: InventoryItem }> {
+  const body = {
+    ...payload,
+    categoria: payload.tipo,
+    stock_actual: payload.cantidadInicial,
+    stock_minimo: payload.stockMinimo ?? 5,
+    unidad_medida: payload.unidadMedida,
+    ubicacion: payload.laboratorioUbicacion,
+  }
+
   return apiClient<{ mensaje?: string; item?: InventoryItem }>('/items', {
     method: 'POST',
-    body: payload,
+    body,
   })
 }
 
@@ -50,5 +59,36 @@ export async function getInventoryItemById(
 ): Promise<InventoryItem> {
   return apiClient<InventoryItem>(`/items/${id}`, {
     method: 'GET',
+  })
+}
+
+export async function updateInventoryItem(
+  id: string | number,
+  payload: Partial<CreateInventoryItemPayload>,
+): Promise<{ mensaje?: string; item?: InventoryItem }> {
+  const body: Record<string, unknown> = { ...payload }
+  if (payload.tipo !== undefined) body.categoria = payload.tipo
+  if (payload.cantidadInicial !== undefined) {
+    body.stock_actual = payload.cantidadInicial
+  }
+  if (payload.stockMinimo !== undefined) body.stock_minimo = payload.stockMinimo
+  if (payload.unidadMedida !== undefined) {
+    body.unidad_medida = payload.unidadMedida
+  }
+  if (payload.laboratorioUbicacion !== undefined) {
+    body.ubicacion = payload.laboratorioUbicacion
+  }
+
+  return apiClient<{ mensaje?: string; item?: InventoryItem }>(`/items/${id}`, {
+    method: 'PUT',
+    body,
+  })
+}
+
+export async function deleteInventoryItem(
+  id: string | number,
+): Promise<{ mensaje?: string }> {
+  return apiClient<{ mensaje?: string }>(`/items/${id}`, {
+    method: 'DELETE',
   })
 }

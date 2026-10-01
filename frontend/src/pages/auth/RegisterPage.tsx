@@ -14,16 +14,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { INSTITUTIONAL_ROLES } from '@/constants/roles'
 import { authService } from '@/services/auth/auth.service'
-import type { InstitutionalRole } from '@/types/auth.types'
 import { formatApiError } from '@/utils/errors'
 import { registerSchema, type RegisterSchemaType } from '@/utils/validation'
 
@@ -38,7 +29,6 @@ export function RegisterPage() {
       dni: '',
       nombre: '',
       email: '',
-      rol: '',
       password: '',
       confirmPassword: '',
     },
@@ -55,7 +45,6 @@ export function RegisterPage() {
         nombre: values.nombre.trim(),
         email: values.email.trim(),
         password: values.password,
-        rol: values.rol as InstitutionalRole,
       })
 
       setSuccessMessage(
@@ -159,35 +148,6 @@ export function RegisterPage() {
                     {...field}
                   />
                 </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="rol"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Rol institucional</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  value={field.value}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Seleccione un rol institucional" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {INSTITUTIONAL_ROLES.map((role) => (
-                      <SelectItem key={role.value} value={role.value}>
-                        {role.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
                 <FormMessage />
               </FormItem>
             )}

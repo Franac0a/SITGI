@@ -21,4 +21,10 @@ export const authService = {
       body: payload,
     })
   },
+
+  logout(): Promise<{ mensaje?: string }> {
+    return apiClient<{ mensaje?: string }>(`${AUTH_BASE}/logout`, {
+      method: 'POST',
+    })
+  },
 }

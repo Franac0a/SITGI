@@ -1,4 +1,4 @@
-export type InventoryItemType = 'reactivo' | 'insumo' | 'material' | 'equipo' | string
+export type InventoryItemType = 'Reactivo' | 'Insumo' | 'Material' | 'Equipo' | string
 
 export interface CreateInventoryItemPayload {
   nombre: string
@@ -15,6 +15,7 @@ export interface CreateInventoryItemPayload {
   numeroLote?: string
   stockMinimo?: number
   observaciones?: string
+  condicion_almacenamiento?: string
 }
 
 export interface ScientificDocument {
@@ -38,6 +39,7 @@ export interface InventoryItem {
   numeroCAS?: string
   casNumber?: string
   marcaFabricante?: string
+  marca?: string
   brand?: string
   numeroLote?: string
   batchNumber?: string
@@ -47,6 +49,7 @@ export interface InventoryItem {
   laboratorioUbicacion?: string
   ubicacion?: string
   location?: string
+  condicion_almacenamiento?: string | null
   cantidadInicial?: number
   stockActual?: number
   stock_actual?: number
@@ -55,11 +58,14 @@ export interface InventoryItem {
   stock_minimo?: number
   minStock?: number
   unidadMedida?: string
+  unidad_medida?: string
   unit?: string
   fechaVencimiento?: string
   fecha_vencimiento?: string
   expirationDate?: string
+  codigoCas?: string
   observaciones?: string
+  detalles_tecnicos?: Record<string, any>
   estado?: 'disponible' | 'bajo_stock' | 'agotado' | 'vencido' | 'activo' | string
   creadoPor?: number | null
   createdAt?: string
@@ -68,55 +74,181 @@ export interface InventoryItem {
   isSensitive?: boolean
 }
 
-export interface MovementRecord {
-  id: string
-  code: string
-  timestamp: string
-  type: 'ingreso' | 'retiro' | 'descarte' | 'ajuste'
-  itemCode: string
-  itemName: string
-  quantity: number
-  previousStock: number
-  newStock: number
-  unit: string
-  userId: number
-  userName: string
-  userRole: string
-  projectId?: string
-  projectName?: string
-  reason?: string
+export type MovementType = 'Ingreso' | 'Egreso' | 'Ajuste' | 'Reparación'
+
+export interface MovimientoItemRef {
+  id?: number
+  nombre?: string
+  codigo_identificacion?: string
+  unidad_medida?: string
 }
 
-export interface ResearchProject {
-  id: string
-  code: string
-  title: string
-  description?: string
-  director: string
-  status: 'en_ejecucion' | 'finalizado' | 'suspendido'
-  startDate?: string
-  endDate?: string
-  reagentsCount: number
+export interface Movimiento {
+  id: number
+  itemId: number
+  tipo_movimiento: MovementType
+  cantidad: number
+  fecha_movimiento?: string
+  origen_destino?: string | null
+  costo_unitario?: number | string | null
+  responsable: string
+  observaciones?: string | null
+  createdAt?: string
+  updatedAt?: string
+  Item?: MovimientoItemRef
 }
 
-export interface ReservationRequest {
-  id: string
-  code: string
-  equipmentOrItemName: string
-  equipmentOrItemCode: string
-  researcherName: string
-  date: string
-  shift: string
-  laboratory: string
-  status: 'aprobada' | 'pendiente' | 'rechazada' | 'cancelada'
+export interface RegisterMovementPayload {
+  itemId: number | string
+  tipo_movimiento: MovementType
+  cantidad: number
+  origen_destino?: string
+  costo_unitario?: number
+  responsable: string
+  observaciones?: string
 }
 
-export interface SystemAlert {
-  id: string
-  type: 'critica' | 'advertencia' | 'informativa'
-  title: string
-  description: string
-  timestamp: string
-  read: boolean
-  linkPath?: string
+export type SectorTipo =
+  | 'Laboratorio'
+  | 'Heladera'
+  | 'Droguero'
+  | 'Estante'
+  | 'Depósito'
+  | 'Otro'
+
+export interface Sector {
+  id: number
+  nombre: string
+  tipo: SectorTipo
+  descripcion?: string | null
+  createdAt?: string
+  updatedAt?: string
+}
+
+export type PedidoEstado = 'Pendiente' | 'Aprobado' | 'Ingresado'
+
+export interface Pedido {
+  id: number
+  item_nombre: string
+  cantidad: number
+  sector?: string | null
+  estado: PedidoEstado
+  responsable: string
+  observaciones?: string | null
+  createdAt?: string
+  updatedAt?: string
+}
+
+export interface RegisterPedidoPayload {
+  item_nombre: string
+  cantidad: number
+  sector?: string
+  responsable: string
+  observaciones?: string
+}
+
+export type ResiduoTipo = 'Patológico' | 'Químico' | 'Tóxico' | 'Biológico' | 'Otro'
+export type ResiduoEstado = 'Pendiente' | 'Retirado'
+
+export interface Residuo {
+  id: number
+  tipo: ResiduoTipo
+  descripcion: string
+  sector?: string | null
+  responsable: string
+  retiro_programado?: string | null
+  estado: ResiduoEstado
+  observaciones?: string | null
+  createdAt?: string
+  updatedAt?: string
+}
+
+export interface RegisterResiduoPayload {
+  tipo: ResiduoTipo
+  descripcion: string
+  sector?: string
+  responsable: string
+  retiro_programado?: string
+  observaciones?: string
+}
+
+export type AlertaTipo =
+  | 'stock_bajo'
+  | 'agotado'
+  | 'vencido'
+  | 'proximo_vencimiento'
+
+export interface ReporteAlerta {
+  tipo: AlertaTipo
+  item: InventoryItem
+}
+
+export type DocumentoCategoria = 'MSDS' | 'SOP' | 'COA' | 'Protocolo' | 'Otro'
+
+export interface Documento {
+  id: number
+  titulo: string
+  categoria: DocumentoCategoria
+  codigo?: string | null
+  descripcion?: string | null
+  nombre_archivo?: string | null
+  tamano?: number | null
+  createdAt?: string
+  updatedAt?: string
+}
+
+export interface ResumenReporte {
+  totalItems: number
+  totalStock: number
+  bajoStock: number
+  porCategoria: { categoria: string; cantidad: number }[]
+  porTipo: { tipo_movimiento: string; cantidad: number }[]
+  recientes: Movimiento[]
+}
+
+export interface Muestra {
+  id: number
+  tipo: string
+  fecha_ingreso?: string | null
+  numero_ingreso?: string | null
+  numero_protocolo?: string | null
+  propietario?: string | null
+  renspa?: string | null
+  veterinario?: string | null
+  establecimiento?: string | null
+  ubicacion?: string | null
+  departamento?: string | null
+  especie?: string | null
+  cantidad_muestras: number
+  positivos: number
+  sospechosos: number
+  negativos: number
+  fecha_resultado?: string | null
+  createdAt?: string
+  updatedAt?: string
+}
+
+export interface Notificacion {
+  id: number
+  titulo: string
+  mensaje: string
+  tipo: string
+  itemId?: number | null
+  leida: boolean
+  createdAt?: string
+}
+
+export type ProyectoEstado = 'En ejecución' | 'Finalizado' | 'Suspendido'
+
+export interface Proyecto {
+  id: number
+  codigo?: string | null
+  titulo: string
+  descripcion?: string | null
+  director?: string | null
+  estado: ProyectoEstado
+  fecha_inicio?: string | null
+  fecha_fin?: string | null
+  createdAt?: string
+  updatedAt?: string
 }

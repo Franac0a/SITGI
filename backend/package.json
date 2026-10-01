@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch app.js",
-    "seed:admin": "node src/scripts/crearDirector.js"
+    "seed:admin": "node src/scripts/crearDirector.js",
+    "import:inventario": "node src/scripts/importarInventario.js",
+    "import:diagnostico": "node src/scripts/importarDiagnostico.js"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +20,9 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
+    "multer": "^2.4.0",
     "mysql2": "^3.23.2",
-    "sequelize": "^6.37.8"
+    "sequelize": "^6.37.8",
+    "xlsx": "^0.18.5"
   }
 }

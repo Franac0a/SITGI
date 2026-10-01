@@ -8,7 +8,23 @@ import authRoutes from "./src/routes/auth.routes.js";
 import itemRoutes from "./src/routes/item.routes.js";
 import userRoutes from "./src/routes/user.routes.js";
 import movimientoRoutes from "./src/routes/movimiento.routes.js";
-import { MovimientoModel } from "./src/models/Movimiento.model.js";
+import sectorRoutes from "./src/routes/sector.routes.js";
+import pedidoRoutes from "./src/routes/pedido.routes.js";
+import residuoRoutes from "./src/routes/residuo.routes.js";
+import reporteRoutes from "./src/routes/reporte.routes.js";
+import documentoRoutes from "./src/routes/documento.routes.js";
+import muestraRoutes from "./src/routes/muestra.routes.js";
+import notificacionRoutes from "./src/routes/notificacion.routes.js";
+import proyectoRoutes from "./src/routes/proyecto.routes.js";
+import "./src/models/Item.model.js";
+import "./src/models/Movimiento.model.js";
+import "./src/models/Sector.model.js";
+import "./src/models/Pedido.model.js";
+import "./src/models/Residuo.model.js";
+import "./src/models/Documento.model.js";
+import "./src/models/Muestra.model.js";
+import "./src/models/Notificacion.model.js";
+import "./src/models/Proyecto.model.js";
 
 dotenv.config();
 
@@ -28,7 +44,7 @@ const inicializarBaseDeDatos = async () => {
   try {
     await startDB();
 
-    await sequelize.sync({ alter: true });
+    await sequelize.sync();
     console.log(
       "Modelos y tablas sincronizados correctamente en la base de datos.",
     );
@@ -43,6 +59,14 @@ app.use("/api/auth", authRoutes);
 app.use("/api/items", itemRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/movimientos", movimientoRoutes);
+app.use("/api/sectores", sectorRoutes);
+app.use("/api/pedidos", pedidoRoutes);
+app.use("/api/residuos", residuoRoutes);
+app.use("/api/reportes", reporteRoutes);
+app.use("/api/documentos", documentoRoutes);
+app.use("/api/muestras", muestraRoutes);
+app.use("/api/notificaciones", notificacionRoutes);
+app.use("/api/proyectos", proyectoRoutes);
 
 app.listen(PORT, () => {
   console.log(

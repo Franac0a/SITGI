@@ -19,5 +19,6 @@ export const startDB = async () => {
     console.log("Conexión a la base de datos establecida correctamente.");
   } catch (error) {
     console.error("Error al conectar a la base de datos:", error);
+    throw error;
   }
 };

@@ -1,5 +1,8 @@
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 import { UserModel } from "../models/User.model.js";
+
+dotenv.config();
 
 export const verificarAuth = async (req, res, next) => {
   try {

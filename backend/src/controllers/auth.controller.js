@@ -7,7 +7,7 @@ import {
 
 export const registrarUsuario = async (req, res) => {
   try {
-    const { dni, nombre, email, password, rol } = req.body;
+    const { dni, nombre, email, password } = req.body;
 
     const existeEmail = await UserModel.findOne({ where: { email } });
     if (existeEmail) {
@@ -30,7 +30,7 @@ export const registrarUsuario = async (req, res) => {
       nombre,
       email,
       password: hash,
-      rol: rol || "Investigador",
+      rol: "Investigador",
     });
 
     res.status(201).json({

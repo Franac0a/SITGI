@@ -1,19 +1,20 @@
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useState, useEffect, type ChangeEvent, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { NativeSelect as Select } from "@/components/ui/native-select";
 import { Alert } from "@/components/ui/alert";
 import { ApiClientError } from "@/services/api/client";
+import { getSectores } from "@/services/sectores/sectores.service";
 import type {
   CreateInventoryItemPayload,
   InventoryItemType,
 } from "@/types/scientific.types";
 
 const ITEM_TYPES = [
-  { value: "reactivo", label: "Reactivo Químico" },
-  { value: "insumo", label: "Insumo / Consumible" },
-  { value: "material", label: "Material de Laboratorio" },
-  { value: "equipo", label: "Equipo / Instrumental" },
+  { value: "Reactivo", label: "Reactivo Químico" },
+  { value: "Insumo", label: "Insumo / Consumible" },
+  { value: "Material", label: "Material de Laboratorio" },
+  { value: "Equipo", label: "Equipo / Instrumental" },
 ] as const;
 
 const COMMON_UNITS = [
@@ -49,12 +50,33 @@ const LAB_LOCATIONS = [
   },
 ] as const;
 
+const CONDICIONES = [
+  { value: "Ambiente", label: "Temperatura ambiente" },
+  { value: "Refrigerado (2-8°C)", label: "Refrigerado (2-8°C)" },
+  { value: "Congelado (-20°C)", label: "Congelado (-20°C)" },
+  { value: "Ultracongelado (-80°C)", label: "Ultracongelado (-80°C)" },
+  { value: "Fotosensible", label: "Fotosensible (proteger de la luz)" },
+  { value: "Otro", label: "Otro / Condiciones especiales" },
+] as const;
+
+function withCurrentOption<T extends { value: string; label: string }>(
+  options: readonly T[],
+  value: string,
+): { value: string; label: string }[] {
+  const result: { value: string; label: string }[] = [...options];
+  if (value && !options.some((o) => o.value === value)) {
+    result.push({ value, label: value });
+  }
+  return result;
+}
+
 interface FormState {
   nombre: string;
   tipo: InventoryItemType | "";
   cantidadInicial: string;
   unidadMedida: string;
   laboratorioUbicacion: string;
+  condicion_almacenamiento: string;
   fechaVencimiento: string;
   codigoCas: string;
   marca: string;
@@ -82,13 +104,14 @@ export function InventoryItemForm({
 }: InventoryItemFormProps) {
   const [formData, setFormData] = useState<FormState>({
     nombre: defaultValues?.nombre ?? "",
-    tipo: defaultValues?.tipo ?? "reactivo",
+    tipo: defaultValues?.tipo ?? "Reactivo",
     cantidadInicial:
       defaultValues?.cantidadInicial !== undefined
         ? String(defaultValues.cantidadInicial)
         : "",
     unidadMedida: defaultValues?.unidadMedida ?? "",
     laboratorioUbicacion: defaultValues?.laboratorioUbicacion ?? "",
+    condicion_almacenamiento: defaultValues?.condicion_almacenamiento ?? "",
     fechaVencimiento: defaultValues?.fechaVencimiento ?? "",
     codigoCas: defaultValues?.codigoCas ?? "",
     marca: defaultValues?.marca ?? "",
@@ -105,7 +128,37 @@ export function InventoryItemForm({
   const [serverError, setServerError] = useState<string | null>(null);
   const [serverSuccess, setServerSuccess] = useState<string | null>(null);
 
+  const [locationOptions, setLocationOptions] = useState<
+    { value: string; label: string }[]
+  >([...LAB_LOCATIONS]);
+
+  useEffect(() => {
+    let mounted = true;
+    getSectores()
+      .then((sectores) => {
+        if (mounted && sectores.length > 0) {
+          setLocationOptions(
+            sectores.map((s) => ({
+              value: s.nombre,
+              label: `${s.nombre} (${s.tipo})`,
+            })),
+          );
+        }
+      })
+      .catch(() => {});
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   const isSubmitting = isLoading || internalSubmitting;
+
+  const tipoOptions = withCurrentOption(ITEM_TYPES, formData.tipo as string);
+  const unidadOptions = withCurrentOption(COMMON_UNITS, formData.unidadMedida);
+  const ubicacionOptions = withCurrentOption(
+    locationOptions,
+    formData.laboratorioUbicacion,
+  );
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
@@ -155,7 +208,7 @@ export function InventoryItemForm({
     }
 
     if (formData.codigoCas.trim()) {
-      const casPattern = /^\d{2,7}-\d{2}-\d$/;
+      const casPattern = /^\d{2,10}-\d{2}-\d$/;
       if (!casPattern.test(formData.codigoCas.trim())) {
         nextErrors.codigoCas =
           "El formato CAS debe ser válido (ej. 7647-01-0 o 50-00-0).";
@@ -187,6 +240,8 @@ export function InventoryItemForm({
       cantidadInicial: Number(formData.cantidadInicial),
       unidadMedida: formData.unidadMedida.trim(),
       laboratorioUbicacion: formData.laboratorioUbicacion.trim(),
+      condicion_almacenamiento:
+        formData.condicion_almacenamiento.trim() || undefined,
       fechaVencimiento: formData.fechaVencimiento.trim() || undefined,
       codigoCas: formData.codigoCas.trim() || undefined,
       marca: formData.marca.trim() || undefined,
@@ -289,7 +344,7 @@ export function InventoryItemForm({
               name="tipo"
               label="Tipo de Elemento *"
               placeholder="Seleccionar tipo"
-              options={ITEM_TYPES}
+              options={tipoOptions}
               value={formData.tipo}
               onChange={handleChange}
               error={errors.tipo}
@@ -375,7 +430,7 @@ export function InventoryItemForm({
               name="unidadMedida"
               label="Unidad de Medida *"
               placeholder="Seleccionar unidad"
-              options={COMMON_UNITS}
+              options={unidadOptions}
               value={formData.unidadMedida}
               onChange={handleChange}
               error={errors.unidadMedida}
@@ -405,7 +460,7 @@ export function InventoryItemForm({
               name="laboratorioUbicacion"
               label="Laboratorio / Ubicación Física *"
               placeholder="Seleccionar laboratorio de destino"
-              options={LAB_LOCATIONS}
+              options={ubicacionOptions}
               value={formData.laboratorioUbicacion}
               onChange={handleChange}
               error={errors.laboratorioUbicacion}
@@ -422,6 +477,19 @@ export function InventoryItemForm({
               value={formData.fechaVencimiento}
               onChange={handleChange}
               error={errors.fechaVencimiento}
+              disabled={isSubmitting}
+            />
+          </div>
+
+          <div>
+            <Select
+              id="condicion_almacenamiento"
+              name="condicion_almacenamiento"
+              label="Condición de Almacenamiento"
+              placeholder="Seleccionar condición"
+              options={CONDICIONES}
+              value={formData.condicion_almacenamiento}
+              onChange={handleChange}
               disabled={isSubmitting}
             />
           </div>

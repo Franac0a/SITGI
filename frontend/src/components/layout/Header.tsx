@@ -12,6 +12,11 @@ import {
 import { useAuth, useNotifications } from '@/context'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import {
+  getNotificaciones,
+  marcarTodasLeidas,
+} from '@/services/notificaciones/notificaciones.service'
+import type { Notificacion } from '@/types/scientific.types'
 
 interface HeaderProps {
   onToggleSidebar: () => void
@@ -24,6 +29,17 @@ export function Header({ onToggleSidebar }: HeaderProps) {
 
   const [isNotifOpen, setIsNotifOpen] = useState<boolean>(false)
   const notifRef = useRef<HTMLDivElement>(null)
+  const [stockNotifs, setStockNotifs] = useState<Notificacion[]>([])
+  const [stockUnread, setStockUnread] = useState(0)
+
+  useEffect(() => {
+    getNotificaciones()
+      .then((res) => {
+        setStockNotifs(res.notificaciones)
+        setStockUnread(res.notificaciones.filter((n) => !n.leida).length)
+      })
+      .catch(() => {})
+  }, [])
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -40,6 +56,9 @@ export function Header({ onToggleSidebar }: HeaderProps) {
 
   const handleMarkAllAsRead = () => {
     markAllAsRead()
+    marcarTodasLeidas().catch(() => {})
+    setStockNotifs((prev) => prev.map((n) => ({ ...n, leida: true })))
+    setStockUnread(0)
   }
 
   const handleLogout = () => {
@@ -48,6 +67,7 @@ export function Header({ onToggleSidebar }: HeaderProps) {
   }
 
   const userInitial = user?.nombre?.charAt(0).toUpperCase() || 'U'
+  const totalUnread = unreadCount + stockUnread
 
   return (
     <header className="sticky top-0 z-30 h-16 sm:h-18 w-full border-b border-gray-200 bg-white px-4 sm:px-6 flex items-center justify-between shrink-0 transition-all">
@@ -91,9 +111,9 @@ export function Header({ onToggleSidebar }: HeaderProps) {
             aria-label="Notificaciones"
           >
             <Bell className="h-5 w-5" />
-            {unreadCount > 0 && (
+            {totalUnread > 0 && (
               <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-cit-petroleo text-[10px] font-bold text-white shadow-xs">
-                {unreadCount}
+                {totalUnread}
               </span>
             )}
           </Button>
@@ -105,14 +125,14 @@ export function Header({ onToggleSidebar }: HeaderProps) {
                   <span className="font-bold text-xs uppercase tracking-wider text-gray-900">
                     Notificaciones
                   </span>
-                  {unreadCount > 0 && (
+                  {totalUnread > 0 && (
                     <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-cit-petroleo text-white">
-                      {unreadCount}
+                      {totalUnread}
                     </span>
                   )}
                 </div>
 
-                {unreadCount > 0 && (
+                {totalUnread > 0 && (
                   <button
                     type="button"
                     onClick={handleMarkAllAsRead}
@@ -124,12 +144,35 @@ export function Header({ onToggleSidebar }: HeaderProps) {
               </div>
 
               <div className="max-h-80 overflow-y-auto divide-y divide-gray-100">
-                {notifications.length === 0 ? (
+                {stockNotifs.length === 0 && notifications.length === 0 ? (
                   <div className="p-6 text-center text-xs text-gray-500">
                     No hay notificaciones para mostrar
                   </div>
                 ) : (
-                  notifications.map((n) => (
+                  <>
+                    {stockNotifs.map((sn) => (
+                      <div
+                        key={`stock-${sn.id}`}
+                        className={`p-3.5 hover:bg-gray-50 transition-colors flex gap-3 ${
+                          !sn.leida ? 'bg-cit-petroleo/5' : ''
+                        }`}
+                      >
+                        <div className="shrink-0 mt-0.5">
+                          <div className="w-5 h-5 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs">
+                            <AlertTriangle className="w-3.5 h-3.5" />
+                          </div>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-bold text-gray-900 truncate">
+                            {sn.titulo}
+                          </p>
+                          <p className="text-xs text-gray-600 mt-0.5 leading-relaxed">
+                            {sn.mensaje}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                    {notifications.map((n) => (
                     <div
                       key={n.id}
                       className={`p-3.5 hover:bg-gray-50 transition-colors flex gap-3 ${
@@ -170,7 +213,8 @@ export function Header({ onToggleSidebar }: HeaderProps) {
                         </p>
                       </div>
                     </div>
-                  ))
+                    ))}
+                  </>
                 )}
               </div>
 

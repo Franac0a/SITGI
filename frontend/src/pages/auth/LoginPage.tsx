@@ -16,6 +16,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { useAuth } from '@/context'
 import { formatApiError } from '@/utils/errors'
+import { canManageUsers } from '@/utils/rbac'
 import { loginSchema, type LoginSchemaType } from '@/utils/validation'
 
 export function LoginPage() {
@@ -42,15 +43,7 @@ export function LoginPage() {
         password: values.password,
       })
 
-      const role = user.rol.toLowerCase()
-      if (
-        role === 'dirección' ||
-        role === 'direccion' ||
-        role === 'administración' ||
-        role === 'administracion' ||
-        role === 'administrador general' ||
-        role === 'admin'
-      ) {
+      if (canManageUsers(user.rol)) {
         navigate('/admin/usuarios')
       } else {
         navigate('/dashboard')

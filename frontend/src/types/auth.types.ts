@@ -21,7 +21,6 @@ export interface RegisterRequest {
   nombre: string
   email: string
   password: string
-  rol: InstitutionalRole
 }
 
 export interface AuthResponse {
@@ -41,7 +40,6 @@ export interface RegisterFormValues {
   email: string
   password: string
   confirmPassword: string
-  rol: InstitutionalRole | ''
 }
 
 export type LoginFormErrors = Partial<Record<keyof LoginFormValues, string>>

@@ -7,11 +7,14 @@ import { LoginPage } from '@/pages/auth/LoginPage'
 import { RegisterPage } from '@/pages/auth/RegisterPage'
 import { DashboardHome } from '@/pages/dashboard/DashboardHome'
 import { DocumentsPage } from '@/pages/documents/DocumentsPage'
-import { InventoryPage, NewInventoryItemPage } from '@/pages/inventory'
+import { InventoryPage, NewInventoryItemPage, EditInventoryItemPage } from '@/pages/inventory'
 import { MovementsPage } from '@/pages/movements/MovementsPage'
-import { ProjectsPage } from '@/pages/projects/ProjectsPage'
+import { MuestrasPage } from '@/pages/muestras/MuestrasPage'
+import { PedidosPage } from '@/pages/pedidos/PedidosPage'
+import { ProyectosPage } from '@/pages/proyectos/ProyectosPage'
 import { ReportsPage } from '@/pages/reports/ReportsPage'
-import { ReservationsPage } from '@/pages/reservations/ReservationsPage'
+import { ResiduosPage } from '@/pages/residuos/ResiduosPage'
+import { SectoresPage } from '@/pages/sectores/SectoresPage'
 import { canCreateInventory, canManageUsers } from '@/utils/rbac'
 
 export function AppRoutes() {
@@ -46,9 +49,20 @@ export function AppRoutes() {
             </RoleGuard>
           }
         />
+        <Route
+          path="/inventario/editar/:id"
+          element={
+            <RoleGuard checkPermission={canCreateInventory} fallback="denied">
+              <EditInventoryItemPage />
+            </RoleGuard>
+          }
+        />
         <Route path="/movimientos" element={<MovementsPage />} />
-        <Route path="/proyectos" element={<ProjectsPage />} />
-        <Route path="/reservas" element={<ReservationsPage />} />
+        <Route path="/pedidos" element={<PedidosPage />} />
+        <Route path="/sectores" element={<SectoresPage />} />
+        <Route path="/residuos" element={<ResiduosPage />} />
+        <Route path="/muestras" element={<MuestrasPage />} />
+        <Route path="/proyectos" element={<ProyectosPage />} />
         <Route path="/documentos" element={<DocumentsPage />} />
         <Route path="/reportes" element={<ReportsPage />} />
       </Route>

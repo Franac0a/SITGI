@@ -3,35 +3,18 @@ import { Op, Sequelize } from "sequelize";
 
 export const obtenerItems = async (req, res) => {
   try {
-    const { categoria, tipoElemento, stock_bajo, ubicacion, busqueda } =
-      req.query;
+    const { categoria, stock_bajo, ubicacion, busqueda } = req.query;
     const filtro = {};
 
-    if (categoria) {
-      filtro[Op.or] = [{ categoria }, { tipoElemento: categoria }];
-    } else if (tipoElemento) {
-      filtro.tipoElemento = tipoElemento;
-    }
-
-    if (ubicacion) {
-      filtro[Op.or] = [
-        { laboratorioUbicacion: { [Op.like]: `%${ubicacion}%` } },
-        { ubicacion: { [Op.like]: `%${ubicacion}%` } },
-      ];
-    }
-
+    if (categoria) filtro.categoria = categoria;
+    if (ubicacion) filtro.ubicacion = { [Op.like]: `%${ubicacion}%` };
     if (stock_bajo === "true") {
-      filtro[Op.or] = [
-        { stockActual: { [Op.lte]: Sequelize.col("stockMinimo") } },
-        { stock_actual: { [Op.lte]: Sequelize.col("stock_minimo") } },
-      ];
+      filtro.stock_actual = { [Op.lte]: Sequelize.col("stock_minimo") };
     }
-
     if (busqueda) {
       filtro[Op.or] = [
         { nombre: { [Op.like]: `%${busqueda}%` } },
         { codigo_identificacion: { [Op.like]: `%${busqueda}%` } },
-        { numeroCAS: { [Op.like]: `%${busqueda}%` } },
       ];
     }
 
@@ -40,7 +23,20 @@ export const obtenerItems = async (req, res) => {
       order: [["nombre", "ASC"]],
     });
 
-    res.status(200).json({ total: items.length, items });
+    const itemsFormateados = items.map((it) => {
+      const plain = it.toJSON();
+      const detalles = plain.detalles_tecnicos || {};
+      return {
+        ...plain,
+        codigoCas: detalles.codigoCas || plain.codigoCas,
+        numeroCAS: detalles.codigoCas || plain.numeroCAS,
+        fechaVencimiento: detalles.fechaVencimiento || plain.fechaVencimiento,
+        numeroLote: detalles.numeroLote || plain.numeroLote,
+        observaciones: detalles.observaciones || plain.observaciones,
+      };
+    });
+
+    res.status(200).json({ total: itemsFormateados.length, items: itemsFormateados });
   } catch (error) {
     console.error("Error al obtener ítems:", error.message);
     res.status(500).json({
@@ -61,7 +57,18 @@ export const obtenerItemPorId = async (req, res) => {
         .json({ mensaje: "El ítem solicitado no existe en el inventario." });
     }
 
-    res.status(200).json(item);
+    const plain = item.toJSON();
+    const detalles = plain.detalles_tecnicos || {};
+    const itemFormateado = {
+      ...plain,
+      codigoCas: detalles.codigoCas || plain.codigoCas,
+      numeroCAS: detalles.codigoCas || plain.numeroCAS,
+      fechaVencimiento: detalles.fechaVencimiento || plain.fechaVencimiento,
+      numeroLote: detalles.numeroLote || plain.numeroLote,
+      observaciones: detalles.observaciones || plain.observaciones,
+    };
+
+    res.status(200).json(itemFormateado);
   } catch (error) {
     console.error("Error al obtener ítem por ID:", error.message);
     res
@@ -75,165 +82,94 @@ export const crearItem = async (req, res) => {
     const {
       nombre,
       tipo,
-      tipoElemento,
-      codigoCas,
-      numeroCAS,
+      categoria,
       marca,
-      marcaFabricante,
-      numeroLote,
       cantidadInicial,
-      unidadMedida,
+      stock_actual,
       stockMinimo,
+      stock_minimo,
+      unidadMedida,
+      unidad_medida,
       laboratorioUbicacion,
       ubicacion,
+      condicion_almacenamiento,
+      codigoCas,
+      numeroCAS,
       fechaVencimiento,
+      numeroLote,
       observaciones,
-      codigo_identificacion,
+      detalles_tecnicos,
     } = req.body;
 
-    const errores = {};
-
-    // 1. Validaciones de campos obligatorios
-    const finalNombre = (nombre || "").trim();
-    if (!finalNombre) {
-      errores.nombre = "El nombre del elemento es obligatorio.";
-    }
-
-    const finalTipo = (tipoElemento || tipo || "").trim();
-    if (!finalTipo) {
-      errores.tipo = "Debe seleccionar un tipo de elemento.";
-    }
-
-    if (
-      cantidadInicial === undefined ||
-      cantidadInicial === null ||
-      cantidadInicial === "" ||
-      isNaN(Number(cantidadInicial)) ||
-      Number(cantidadInicial) < 0
-    ) {
-      errores.cantidadInicial =
-        "La cantidad inicial debe ser un número válido mayor o igual a 0.";
-    }
-
-    const finalUnidad = (unidadMedida || "").trim();
-    if (!finalUnidad) {
-      errores.unidadMedida = "Debe seleccionar la unidad de medida.";
-    }
-
-    const finalUbicacion = (laboratorioUbicacion || ubicacion || "").trim();
-    if (!finalUbicacion) {
-      errores.laboratorioUbicacion =
-        "Debe seleccionar el laboratorio o ubicación física.";
-    }
-
-    // 2. Validaciones de campos opcionales
-    let finalStockMinimo = 0;
-    if (
-      stockMinimo !== undefined &&
-      stockMinimo !== null &&
-      stockMinimo !== ""
-    ) {
-      if (isNaN(Number(stockMinimo)) || Number(stockMinimo) < 0) {
-        errores.stockMinimo = "El stock mínimo no puede ser negativo.";
-      } else {
-        finalStockMinimo = Number(stockMinimo);
-      }
-    }
-
-    let finalFechaVencimiento = null;
-    if (fechaVencimiento && String(fechaVencimiento).trim() !== "") {
-      const parsedDate = new Date(fechaVencimiento);
-      if (isNaN(parsedDate.getTime())) {
-        errores.fechaVencimiento =
-          "La fecha de vencimiento debe tener un formato válido (AAAA-MM-DD).";
-      } else {
-        finalFechaVencimiento = String(fechaVencimiento).trim();
-      }
-    }
-
-    if (Object.keys(errores).length > 0) {
+    const categoriaFinal = categoria || tipo;
+    if (!categoriaFinal) {
       return res.status(400).json({
-        mensaje: "Existen errores de validación en el formulario.",
-        errores,
+        mensaje: "El campo categoría (o tipo) es obligatorio.",
       });
     }
 
-    const finalCantidadInicial = Number(cantidadInicial);
-    const finalStockActual = finalCantidadInicial; // Regla de negocio: stockActual inicia con cantidadInicial
-
-    // Determinar estado según stock (stockMinimo > cantidadInicial es válido y genera alerta de stock bajo)
-    let estado = "disponible";
-    let alertaStockBajo = false;
-    if (finalStockActual === 0) {
-      estado = "agotado";
-      alertaStockBajo = true;
-    } else if (finalStockMinimo > 0 && finalStockActual <= finalStockMinimo) {
-      estado = "bajo_stock";
-      alertaStockBajo = true;
+    let codigo = req.body.codigo_identificacion;
+    if (!codigo || codigo.trim() === "") {
+      const prefijo = categoriaFinal.substring(0, 3).toUpperCase();
+      const timestamp = Date.now().toString().slice(-4);
+      const randomNum = Math.floor(100 + Math.random() * 900);
+      codigo = `CIT-${prefijo}-${timestamp}${randomNum}`;
     }
 
-    // Generar código de identificación único si no se proporciona
-    let codigo = (codigo_identificacion || "").trim();
-    if (!codigo) {
-      const prefijoTipo = finalTipo.slice(0, 3).toUpperCase();
-      const sufijoRandom = Math.floor(1000 + Math.random() * 9000);
-      codigo = `CIT-${prefijoTipo}-${sufijoRandom}`;
-    }
+    const stockActualFinal =
+      stock_actual !== undefined
+        ? Number(stock_actual)
+        : cantidadInicial !== undefined
+        ? Number(cantidadInicial)
+        : 0;
 
-    const nuevoItem = await Item.create({
-      nombre: finalNombre,
-      tipoElemento: finalTipo,
-      categoria: finalTipo,
+    const stockMinimoFinal =
+      stock_minimo !== undefined
+        ? Number(stock_minimo)
+        : stockMinimo !== undefined
+        ? Number(stockMinimo)
+        : 5;
+
+    const unidadMedidaFinal = unidad_medida || unidadMedida || "Unidad";
+    const ubicacionFinal = ubicacion || laboratorioUbicacion || "Sin asignar";
+
+    const detallesFinales = {
+      ...(detalles_tecnicos || {}),
+      ...(codigoCas || numeroCAS ? { codigoCas: codigoCas || numeroCAS } : {}),
+      ...(fechaVencimiento ? { fechaVencimiento } : {}),
+      ...(numeroLote ? { numeroLote } : {}),
+      ...(observaciones ? { observaciones } : {}),
+    };
+
+    const itemData = {
+      nombre,
       codigo_identificacion: codigo,
-      numeroCAS: (numeroCAS || codigoCas || "").trim() || null,
-      marcaFabricante: (marcaFabricante || marca || "").trim() || null,
-      numeroLote: (numeroLote || "").trim() || null,
-      cantidadInicial: finalCantidadInicial,
-      stockActual: finalStockActual,
-      stock_actual: finalStockActual,
-      unidadMedida: finalUnidad,
-      stockMinimo: finalStockMinimo,
-      stock_minimo: finalStockMinimo,
-      laboratorioUbicacion: finalUbicacion,
-      ubicacion: finalUbicacion,
-      fechaVencimiento: finalFechaVencimiento,
-      fecha_vencimiento: finalFechaVencimiento,
-      observaciones: (observaciones || "").trim() || null,
-      estado,
-      creadoPor: req.usuario?.id || null,
-    });
+      categoria: categoriaFinal,
+      marca: marca || null,
+      stock_actual: stockActualFinal,
+      stock_minimo: stockMinimoFinal,
+      unidad_medida: unidadMedidaFinal,
+      ubicacion: ubicacionFinal,
+      condicion_almacenamiento: condicion_almacenamiento || null,
+      detalles_tecnicos: detallesFinales,
+    };
 
+    const nuevoItem = await Item.create(itemData);
     res.status(201).json({
-      mensaje: `Elemento científico "${nuevoItem.nombre}" registrado con éxito.`,
+      mensaje: "Ítem agregado al inventario con éxito.",
       item: nuevoItem,
-      alertaStockBajo,
     });
   } catch (error) {
-    console.error("Error al crear ítem:", error);
+    console.error("Error al crear ítem:", error.message);
     if (error.name === "SequelizeUniqueConstraintError") {
       return res.status(400).json({
         mensaje:
           "El código de identificación ingresado ya existe en el sistema.",
-        error: error.message,
       });
     }
-    if (error.name === "SequelizeValidationError") {
-      const errores = {};
-      if (Array.isArray(error.errors)) {
-        error.errors.forEach((err) => {
-          errores[err.path] = err.message;
-        });
-      }
-      return res.status(400).json({
-        mensaje: "Error de validación al guardar el elemento.",
-        errores,
-        error: error.message,
-      });
-    }
-    res.status(500).json({
-      mensaje: error.message || "Error al guardar el ítem.",
-      error: error.message,
-    });
+    res
+      .status(500)
+      .json({ mensaje: "Error al guardar el ítem.", error: error.message });
   }
 };
 
@@ -246,7 +182,76 @@ export const actualizarItem = async (req, res) => {
       return res.status(404).json({ mensaje: "Ítem no encontrado." });
     }
 
-    await item.update(req.body);
+    const {
+      nombre,
+      tipo,
+      categoria,
+      marca,
+      cantidadInicial,
+      stock_actual,
+      stockMinimo,
+      stock_minimo,
+      unidadMedida,
+      unidad_medida,
+      laboratorioUbicacion,
+      ubicacion,
+      condicion_almacenamiento,
+      codigoCas,
+      numeroCAS,
+      fechaVencimiento,
+      numeroLote,
+      observaciones,
+      detalles_tecnicos,
+    } = req.body;
+
+    const dataToUpdate = {};
+    if (nombre !== undefined) dataToUpdate.nombre = nombre;
+    if (categoria !== undefined || tipo !== undefined) {
+      dataToUpdate.categoria = categoria || tipo;
+    }
+    if (marca !== undefined) dataToUpdate.marca = marca;
+    if (stock_actual !== undefined) {
+      dataToUpdate.stock_actual = Number(stock_actual);
+    } else if (cantidadInicial !== undefined) {
+      dataToUpdate.stock_actual = Number(cantidadInicial);
+    }
+    if (stock_minimo !== undefined) {
+      dataToUpdate.stock_minimo = Number(stock_minimo);
+    } else if (stockMinimo !== undefined) {
+      dataToUpdate.stock_minimo = Number(stockMinimo);
+    }
+    if (unidad_medida !== undefined || unidadMedida !== undefined) {
+      dataToUpdate.unidad_medida = unidad_medida || unidadMedida;
+    }
+    if (ubicacion !== undefined || laboratorioUbicacion !== undefined) {
+      dataToUpdate.ubicacion = ubicacion || laboratorioUbicacion;
+    }
+    if (condicion_almacenamiento !== undefined) {
+      dataToUpdate.condicion_almacenamiento = condicion_almacenamiento;
+    }
+
+    const tieneDetalles =
+      detalles_tecnicos !== undefined ||
+      codigoCas !== undefined ||
+      numeroCAS !== undefined ||
+      fechaVencimiento !== undefined ||
+      numeroLote !== undefined ||
+      observaciones !== undefined;
+
+    if (tieneDetalles) {
+      dataToUpdate.detalles_tecnicos = {
+        ...(item.detalles_tecnicos || {}),
+        ...(detalles_tecnicos || {}),
+        ...(codigoCas !== undefined || numeroCAS !== undefined
+          ? { codigoCas: codigoCas || numeroCAS }
+          : {}),
+        ...(fechaVencimiento !== undefined ? { fechaVencimiento } : {}),
+        ...(numeroLote !== undefined ? { numeroLote } : {}),
+        ...(observaciones !== undefined ? { observaciones } : {}),
+      };
+    }
+
+    await item.update(dataToUpdate);
     res.status(200).json({ mensaje: "Ítem actualizado correctamente.", item });
   } catch (error) {
     console.error("Error al actualizar ítem:", error.message);

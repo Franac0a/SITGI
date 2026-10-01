@@ -3,8 +3,11 @@ import { Link, useLocation } from 'react-router-dom'
 import {
   FlaskConical,
   ArrowLeftRight,
+  ClipboardList,
+  MapPin,
+  Recycle,
+  Microscope,
   FolderGit2,
-  CalendarDays,
   FileCheck2,
   BarChart3,
   ShieldCheck,
@@ -30,6 +33,7 @@ interface NavItem {
   path: string
   roles?: string[]
   icon: FC<{ className?: string }>
+  soon?: boolean
 }
 
 interface NavGroup {
@@ -54,16 +58,34 @@ const NAV_GROUPS: NavGroup[] = [
         icon: ArrowLeftRight,
       },
       {
+        id: 'pedidos',
+        label: 'Pedidos y reposición',
+        path: '/pedidos',
+        icon: ClipboardList,
+      },
+      {
+        id: 'sectores',
+        label: 'Ubicación y sectores',
+        path: '/sectores',
+        icon: MapPin,
+      },
+      {
+        id: 'residuos',
+        label: 'Residuos especiales',
+        path: '/residuos',
+        icon: Recycle,
+      },
+      {
+        id: 'muestras',
+        label: 'Muestras y diagnóstico',
+        path: '/muestras',
+        icon: Microscope,
+      },
+      {
         id: 'proyectos',
         label: 'Proyectos de investigación',
         path: '/proyectos',
         icon: FolderGit2,
-      },
-      {
-        id: 'reservas',
-        label: 'Reservas y solicitudes',
-        path: '/reservas',
-        icon: CalendarDays,
       },
     ],
   },
@@ -151,6 +173,24 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                     (item.path !== '/dashboard' &&
                       location.pathname.startsWith(item.path))
                   const Icon = item.icon
+
+                  if (item.soon) {
+                    return (
+                      <div
+                        key={item.id}
+                        className="group flex items-center justify-between px-3 py-2.5 rounded-lg text-sm text-gray-400 cursor-not-allowed"
+                        title="Disponible próximamente"
+                      >
+                        <div className="flex items-center gap-3 min-w-0">
+                          <Icon className="w-5 h-5 shrink-0 text-gray-300" />
+                          <span className="truncate">{item.label}</span>
+                        </div>
+                        <span className="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-full bg-gray-100 text-gray-500 border border-gray-200">
+                          Próximamente
+                        </span>
+                      </div>
+                    )
+                  }
 
                   return (
                     <Link
