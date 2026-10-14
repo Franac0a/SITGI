@@ -31,9 +31,33 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+const FRONTEND_URLS = (process.env.FRONTEND_URLS || "")
+  .split(",")
+  .map((u) => u.trim())
+  .filter(Boolean);
+
+const ALLOWED_ORIGINS = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  ...FRONTEND_URLS,
+];
+
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:3000"],
+    origin: (origin, callback) => {
+      // Permite requests sin origin (Postman, curl) y cualquier IP de red local
+      // (ej: http://192.168.x.x:5173) para trabajar con base compartida en LAN.
+      if (
+        !origin ||
+        ALLOWED_ORIGINS.includes(origin) ||
+        /^http:\/\/192\.168\.\d+\.\d+:\d+$/.test(origin) ||
+        /^http:\/\/10\.\d+\.\d+\.\d+:\d+$/.test(origin)
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error(`Origen no permitido: ${origin}`));
+      }
+    },
     credentials: true,
   }),
 );
