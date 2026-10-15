@@ -5,22 +5,25 @@ import {
   obtenerMovimientos,
 } from "../controllers/movimiento.controller.js";
 import { verificarAuth, verificarRol } from "../middlewares/auth.middleware.js";
+import { ROLES_GESTION, ROLES_SOLO_EGRESO } from "../utils/permisos.js";
 
 const router = Router();
 
-// Protegemos todas las rutas con el middleware de autenticación
+// Todas las rutas requieren autenticación
 router.use(verificarAuth);
 
 // Listado general de movimientos
 router.get("/", obtenerMovimientos);
 
-// Ruta para ver el historial de un ítem específico (ideal para mostrar en una tabla al hacer clic en un producto)
+// Historial de un ítem
 router.get("/historial/:itemId", obtenerHistorialPorItem);
 
-// Ruta para registrar un nuevo ingreso, egreso o ajuste de stock
+// Registrar un movimiento
+// Gestión: todos los tipos. Investigador y Técnico/Becario: solo egresos
+// (la restricción por tipo se valida en el controlador).
 router.post(
   "/",
-  verificarRol("Administración", "Inventario", "Dirección"),
+  verificarRol(...ROLES_GESTION, ...ROLES_SOLO_EGRESO),
   registrarMovimiento,
 );
 
