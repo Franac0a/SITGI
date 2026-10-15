@@ -74,7 +74,14 @@ export interface InventoryItem {
   isSensitive?: boolean
 }
 
-export type MovementType = 'Ingreso' | 'Egreso' | 'Ajuste' | 'Reparación'
+export type MovementType =
+  | 'Ingreso'
+  | 'Egreso'
+  | 'Ajuste'
+  | 'Reparación'
+  | 'Baja'
+  | 'Reposición'
+  | 'Cambio de ubicación'
 
 export interface MovimientoItemRef {
   id?: number
@@ -89,6 +96,7 @@ export interface Movimiento {
   tipo_movimiento: MovementType
   cantidad: number
   fecha_movimiento?: string
+  sector?: string | null
   origen_destino?: string | null
   costo_unitario?: number | string | null
   responsable: string
@@ -101,7 +109,9 @@ export interface Movimiento {
 export interface RegisterMovementPayload {
   itemId: number | string
   tipo_movimiento: MovementType
-  cantidad: number
+  cantidad?: number
+  sector?: string
+  nueva_ubicacion?: string
   origen_destino?: string
   costo_unitario?: number
   /** Lo define el backend con el usuario autenticado. */
@@ -254,4 +264,37 @@ export interface Proyecto {
   fecha_fin?: string | null
   createdAt?: string
   updatedAt?: string
+}
+
+export interface MovimientoFiltros {
+  sector?: string
+  tipo?: string
+  responsable?: string
+  desde?: string
+  hasta?: string
+}
+
+export interface ReporteFiltros {
+  categoria?: string
+  sector?: string
+  desde?: string
+  hasta?: string
+}
+
+export interface RotacionItem {
+  itemId: number
+  nombre: string
+  codigo_identificacion?: string | null
+  categoria?: string | null
+  unidad_medida?: string | null
+  consumo: number
+  movimientos: number
+  stock_actual: number
+  dias_cobertura: number | null
+}
+
+export interface RotacionResponse {
+  dias: number
+  desde: string
+  rotacion: RotacionItem[]
 }

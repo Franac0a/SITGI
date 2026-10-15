@@ -7,7 +7,7 @@ import { EmptyState } from '@/components/ui/empty-state'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Alert } from '@/components/ui/alert'
 import { useAuth } from '@/context'
-import { canCreateInventory } from '@/utils/rbac'
+import { canCreateInventory, canRegisterMovements } from '@/utils/rbac'
 import { getInventoryItems, deleteInventoryItem } from '@/services/inventory/inventory.service'
 import { getMovementHistory } from '@/services/movements/movements.service'
 import type { InventoryItem, Movimiento } from '@/types/scientific.types'
@@ -32,6 +32,7 @@ export function InventoryPage({
   const [detailLoading, setDetailLoading] = useState(false)
 
   const canCreate = canCreateInventory(user?.rol)
+  const canRetire = canRegisterMovements(user?.rol)
 
   const fetchItems = useCallback(async () => {
     try {
@@ -294,42 +295,44 @@ export function InventoryPage({
                         {expDate || '---'}
                       </td>
                       <td className="px-5 py-4 text-right whitespace-nowrap">
-                        {canCreate ? (
-                          <>
-                            <button
-                              type="button"
-                              onClick={() =>
-                                navigate(
-                                  `/movimientos?itemId=${item.id}&tipo=Egreso`,
-                                )
-                              }
-                              className="text-cit-petroleo font-bold hover:text-cit-azul-fuerte hover:underline mr-3"
-                            >
-                              Retiro
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => navigate(`/inventario/editar/${item.id}`)}
-                              className="text-cit-petroleo font-bold hover:text-cit-azul-fuerte hover:underline mr-3"
-                            >
-                              Editar
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => openDetail(item)}
-                              className="text-gray-500 font-medium hover:text-cit-petroleo mr-3"
-                            >
-                              Detalles
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => handleDelete(item)}
-                              className="text-red-600 font-medium hover:text-red-700"
-                            >
-                              Eliminar
-                            </button>
-                          </>
-                        ) : null}
+                        {canRetire && (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              navigate(
+                                `/movimientos?itemId=${item.id}&tipo=Egreso`,
+                              )
+                            }
+                            className="text-cit-petroleo font-bold hover:text-cit-azul-fuerte hover:underline mr-3"
+                          >
+                            Retiro
+                          </button>
+                        )}
+                        {canCreate && (
+                          <button
+                            type="button"
+                            onClick={() => navigate(`/inventario/editar/${item.id}`)}
+                            className="text-cit-petroleo font-bold hover:text-cit-azul-fuerte hover:underline mr-3"
+                          >
+                            Editar
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => openDetail(item)}
+                          className={`text-gray-500 font-medium hover:text-cit-petroleo${canCreate ? ' mr-3' : ''}`}
+                        >
+                          Detalles
+                        </button>
+                        {canCreate && (
+                          <button
+                            type="button"
+                            onClick={() => handleDelete(item)}
+                            className="text-red-600 font-medium hover:text-red-700"
+                          >
+                            Eliminar
+                          </button>
+                        )}
                       </td>
                     </tr>
                   )

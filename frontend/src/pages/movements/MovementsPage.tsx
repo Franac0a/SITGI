@@ -14,8 +14,9 @@ import { Alert } from '@/components/ui/alert'
 import { Input } from '@/components/ui/input'
 import { NativeSelect as Select } from '@/components/ui/native-select'
 import { useAuth } from '@/context'
-import { canCreateInventory } from '@/utils/rbac'
+import { allowedMovementTypes } from '@/utils/rbac'
 import { getInventoryItems } from '@/services/inventory/inventory.service'
+import { getSectores } from '@/services/sectores/sectores.service'
 import {
   getMovements,
   registerMovement,
@@ -25,22 +26,37 @@ import type {
   InventoryItem,
   Movimiento,
   MovementType,
+  MovimientoFiltros,
+  Sector,
 } from '@/types/scientific.types'
 
-const MOVEMENT_TYPES: { value: MovementType; label: string }[] = [
-  { value: 'Ingreso', label: 'Ingreso' },
-  { value: 'Egreso', label: 'Egreso' },
-  { value: 'Ajuste', label: 'Ajuste (conteo físico)' },
-  { value: 'Reparación', label: 'Reparación' },
-]
+const MOVEMENT_TYPE_LABELS: Record<MovementType, string> = {
+  Ingreso: 'Ingreso',
+  Egreso: 'Egreso (consumo)',
+  Reposición: 'Reposición',
+  Baja: 'Baja',
+  Ajuste: 'Ajuste (conteo físico)',
+  Reparación: 'Reparación',
+  'Cambio de ubicación': 'Cambio de ubicación',
+}
 
-const MOVEMENT_TYPE_VALUES = MOVEMENT_TYPES.map((t) => t.value)
+const MOVEMENT_TYPE_HELP: Record<MovementType, string> = {
+  Ingreso: 'Suma stock (compra, donación, ingreso al inventario).',
+  Egreso: 'Descuenta stock por consumo o uso.',
+  Reposición: 'Suma stock por reposición de un pedido.',
+  Baja: 'Descuenta stock por rotura, vencimiento o descarte.',
+  Ajuste: 'Indicá el stock real contado: reemplaza el stock actual.',
+  Reparación: 'Descuenta stock mientras el equipo está en reparación.',
+  'Cambio de ubicación': 'No cambia el stock: mueve el elemento a otra ubicación.',
+}
 
 interface MovementFormState {
   itemId: string
   tipo_movimiento: MovementType
   cantidad: string
   responsable: string
+  sector: string
+  nueva_ubicacion: string
   origen_destino: string
   costo_unitario: string
   observaciones: string
@@ -62,6 +78,12 @@ function badgeClasses(tipo: MovementType): string {
       return 'bg-amber-100 text-amber-800 border-amber-200'
     case 'Reparación':
       return 'bg-sky-100 text-sky-800 border-sky-200'
+    case 'Reposición':
+      return 'bg-teal-100 text-teal-800 border-teal-200'
+    case 'Baja':
+      return 'bg-rose-100 text-rose-800 border-rose-200'
+    case 'Cambio de ubicación':
+      return 'bg-violet-100 text-violet-800 border-violet-200'
     default:
       return 'bg-gray-100 text-gray-800 border-gray-200'
   }
@@ -69,17 +91,25 @@ function badgeClasses(tipo: MovementType): string {
 
 export function MovementsPage() {
   const { user } = useAuth()
-  const canManage = canCreateInventory(user?.rol)
+  // Qué tipos puede registrar este rol (espeja la regla del backend).
+  const allowedTypes = allowedMovementTypes(user?.rol)
+  const canManage = allowedTypes.length > 0
+  const movementTypeOptions = allowedTypes.map((t) => ({
+    value: t,
+    label: MOVEMENT_TYPE_LABELS[t],
+  }))
   const [searchParams] = useSearchParams()
 
-  const initialTipo = searchParams.get('tipo')
+  const initialTipo = searchParams.get('tipo') as MovementType | null
   const defaultTipo: MovementType =
-    initialTipo && MOVEMENT_TYPE_VALUES.includes(initialTipo as MovementType)
-      ? (initialTipo as MovementType)
-      : 'Egreso'
+    initialTipo && allowedTypes.includes(initialTipo)
+      ? initialTipo
+      : (allowedTypes[0] ?? 'Egreso')
 
   const [movements, setMovements] = useState<Movimiento[]>([])
   const [items, setItems] = useState<InventoryItem[]>([])
+  const [sectores, setSectores] = useState<Sector[]>([])
+  const [filtros, setFiltros] = useState<MovimientoFiltros>({})
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [showForm, setShowForm] = useState(false)
@@ -91,6 +121,8 @@ export function MovementsPage() {
     tipo_movimiento: defaultTipo,
     cantidad: '',
     responsable: user?.nombre ?? '',
+    sector: '',
+    nueva_ubicacion: '',
     origen_destino: '',
     costo_unitario: '',
     observaciones: '',
@@ -100,15 +132,20 @@ export function MovementsPage() {
     setLoading(true)
     setError(null)
     try {
-      const [movs, its] = await Promise.all([getMovements(), getInventoryItems()])
+      const [movs, its, secs] = await Promise.all([
+        getMovements(filtros),
+        getInventoryItems(),
+        getSectores().catch(() => [] as Sector[]),
+      ])
       setMovements(movs)
       setItems(its)
+      setSectores(secs)
     } catch (err: unknown) {
       setError(formatApiError(err))
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [filtros])
 
   useEffect(() => {
     fetchData()
@@ -130,9 +167,17 @@ export function MovementsPage() {
       setFormError('Debe seleccionar el ítem afectado.')
       return
     }
+    const tipo = form.tipo_movimiento
     const cantidadNum = Number(form.cantidad)
-    const esAjuste = form.tipo_movimiento === 'Ajuste'
-    if (
+    const esAjuste = tipo === 'Ajuste'
+    const esCambio = tipo === 'Cambio de ubicación'
+
+    if (esCambio) {
+      if (!form.nueva_ubicacion.trim()) {
+        setFormError('Indique la nueva ubicación del elemento.')
+        return
+      }
+    } else if (
       form.cantidad === '' ||
       isNaN(cantidadNum) ||
       cantidadNum < 0 ||
@@ -148,20 +193,23 @@ export function MovementsPage() {
 
     setSubmitting(true)
     try {
-      await registerMovement({
+      const respuesta = await registerMovement({
         itemId: form.itemId,
-        tipo_movimiento: form.tipo_movimiento,
-        cantidad: cantidadNum,
+        tipo_movimiento: tipo,
+        cantidad: esCambio ? undefined : cantidadNum,
+        sector: form.sector.trim() || undefined,
+        nueva_ubicacion: esCambio ? form.nueva_ubicacion.trim() : undefined,
         origen_destino: form.origen_destino.trim() || undefined,
         costo_unitario:
           form.costo_unitario !== '' ? Number(form.costo_unitario) : undefined,
         observaciones: form.observaciones.trim() || undefined,
       })
 
-      setFormSuccess('Movimiento registrado y stock actualizado con éxito.')
+      setFormSuccess(respuesta.mensaje ?? 'Movimiento registrado con éxito.')
       setForm((prev) => ({
         ...prev,
         cantidad: '',
+        nueva_ubicacion: '',
         origen_destino: '',
         costo_unitario: '',
         observaciones: '',
@@ -173,6 +221,14 @@ export function MovementsPage() {
       setSubmitting(false)
     }
   }
+
+  const handleFiltro = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const { name, value } = e.target
+    setFiltros((prev) => ({ ...prev, [name]: value }))
+  }
+  const hayFiltros = Object.values(filtros).some(Boolean)
 
   return (
     <MainLayout>
@@ -186,7 +242,7 @@ export function MovementsPage() {
               Stock y Movimientos
             </h1>
             <p className="text-sm text-gray-600 mt-1">
-              Registro de ingresos, egresos, ajustes y reparaciones de reactivos e insumos.
+              Historial de ingresos, consumos, bajas, reposiciones, ajustes y cambios de ubicación, por elemento, sector y usuario.
             </p>
           </div>
 
@@ -222,6 +278,22 @@ export function MovementsPage() {
               <Alert variant="success" message={formSuccess} />
             )}
 
+            <p className="text-xs text-gray-600 bg-cit-petroleo/5 border border-cit-petroleo/10 rounded-lg px-3 py-2">
+              <span className="font-bold">{form.tipo_movimiento}:</span>{' '}
+              {MOVEMENT_TYPE_HELP[form.tipo_movimiento]}
+              {allowedTypes.length === 1 && (
+                <span className="block mt-0.5 text-gray-500">
+                  Tu rol puede registrar solo consumos (egresos).
+                </span>
+              )}
+            </p>
+
+            <datalist id="ubicaciones-sugeridas">
+              {sectores.map((sec) => (
+                <option key={sec.id} value={sec.nombre} />
+              ))}
+            </datalist>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               <Select
                 id="itemId"
@@ -241,25 +313,52 @@ export function MovementsPage() {
                 id="tipo_movimiento"
                 name="tipo_movimiento"
                 label="Tipo de movimiento *"
-                options={MOVEMENT_TYPES}
+                options={movementTypeOptions}
                 value={form.tipo_movimiento}
                 onChange={handleChange}
                 disabled={submitting}
               />
 
-              <Input
-                id="cantidad"
-                name="cantidad"
-                type="number"
-                min={form.tipo_movimiento === 'Ajuste' ? '0' : '0.01'}
-                step="any"
-                label={
-                  form.tipo_movimiento === 'Ajuste'
-                    ? 'Stock real contado *'
-                    : 'Cantidad *'
-                }
-                placeholder="0.00"
-                value={form.cantidad}
+              {form.tipo_movimiento === 'Cambio de ubicación' ? (
+                <Input
+                  id="nueva_ubicacion"
+                  name="nueva_ubicacion"
+                  label="Nueva ubicación *"
+                  placeholder="Ej. Heladera 2, Estante B"
+                  list="ubicaciones-sugeridas"
+                  value={form.nueva_ubicacion}
+                  onChange={handleChange}
+                  disabled={submitting}
+                />
+              ) : (
+                <Input
+                  id="cantidad"
+                  name="cantidad"
+                  type="number"
+                  min={form.tipo_movimiento === 'Ajuste' ? '0' : '0.01'}
+                  step="any"
+                  label={
+                    form.tipo_movimiento === 'Ajuste'
+                      ? 'Stock real contado *'
+                      : 'Cantidad *'
+                  }
+                  placeholder="0.00"
+                  value={form.cantidad}
+                  onChange={handleChange}
+                  disabled={submitting}
+                />
+              )}
+
+              <Select
+                id="sector"
+                name="sector"
+                label="Sector (opcional)"
+                placeholder="Sin sector"
+                options={sectores.map((sec) => ({
+                  value: sec.nombre,
+                  label: sec.nombre,
+                }))}
+                value={form.sector}
                 onChange={handleChange}
                 disabled={submitting}
               />
@@ -324,6 +423,68 @@ export function MovementsPage() {
           </form>
         )}
 
+        <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 items-end">
+            <Select
+              id="filtro-sector"
+              name="sector"
+              label="Sector"
+              placeholder="Todos"
+              options={sectores.map((sec) => ({
+                value: sec.nombre,
+                label: sec.nombre,
+              }))}
+              value={filtros.sector ?? ''}
+              onChange={handleFiltro}
+            />
+            <Select
+              id="filtro-tipo"
+              name="tipo"
+              label="Tipo"
+              placeholder="Todos"
+              options={Object.entries(MOVEMENT_TYPE_LABELS).map(([value, label]) => ({
+                value,
+                label,
+              }))}
+              value={filtros.tipo ?? ''}
+              onChange={handleFiltro}
+            />
+            <Input
+              id="filtro-responsable"
+              name="responsable"
+              label="Usuario"
+              placeholder="Nombre"
+              value={filtros.responsable ?? ''}
+              onChange={handleFiltro}
+            />
+            <Input
+              id="filtro-desde"
+              name="desde"
+              type="date"
+              label="Desde"
+              value={filtros.desde ?? ''}
+              onChange={handleFiltro}
+            />
+            <Input
+              id="filtro-hasta"
+              name="hasta"
+              type="date"
+              label="Hasta"
+              value={filtros.hasta ?? ''}
+              onChange={handleFiltro}
+            />
+          </div>
+          {hayFiltros && (
+            <button
+              type="button"
+              onClick={() => setFiltros({})}
+              className="mt-3 text-xs font-semibold text-cit-petroleo hover:underline"
+            >
+              Limpiar filtros
+            </button>
+          )}
+        </div>
+
         {error && (
           <Alert variant="error" title="Error al cargar movimientos" message={error} />
         )}
@@ -336,8 +497,12 @@ export function MovementsPage() {
           </div>
         ) : movements.length === 0 ? (
           <EmptyState
-            title="No hay movimientos registrados"
-            description="Aún no se han asentado ingresos, egresos ni ajustes en el registro de trazabilidad."
+            title={hayFiltros ? 'Sin resultados para esos filtros' : 'No hay movimientos registrados'}
+            description={
+              hayFiltros
+                ? 'Probá con otro sector, tipo, usuario o período.'
+                : 'Aún no se han asentado ingresos, egresos ni ajustes en el registro de trazabilidad.'
+            }
             action={
               canManage ? (
                 <Button variant="primary" onClick={() => setShowForm(true)}>
@@ -355,6 +520,7 @@ export function MovementsPage() {
                   <th className="px-5 py-3.5">Tipo</th>
                   <th className="px-5 py-3.5">Ítem / Reactivo</th>
                   <th className="px-5 py-3.5 text-center">Cantidad</th>
+                  <th className="px-5 py-3.5">Sector</th>
                   <th className="px-5 py-3.5">Responsable</th>
                   <th className="px-5 py-3.5">Origen / Destino</th>
                 </tr>
@@ -382,10 +548,12 @@ export function MovementsPage() {
                     </td>
                     <td className="px-5 py-4 text-center font-mono">
                       <span className="font-bold text-cit-petroleo">
-                        {mov.cantidad}
-                        {mov.Item?.unidad_medida ? ` ${mov.Item.unidad_medida}` : ''}
+                        {mov.tipo_movimiento === 'Cambio de ubicación'
+                          ? '—'
+                          : `${mov.cantidad}${mov.Item?.unidad_medida ? ` ${mov.Item.unidad_medida}` : ''}`}
                       </span>
                     </td>
+                    <td className="px-5 py-4">{mov.sector || '---'}</td>
                     <td className="px-5 py-4">{mov.responsable}</td>
                     <td className="px-5 py-4 text-gray-700">{mov.origen_destino || '---'}</td>
                   </tr>
