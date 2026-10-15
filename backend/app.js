@@ -5,6 +5,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import dotenv from "dotenv";
 import { startDB, sequelize } from "./src/config/db.js";
+import { verificarEsquema } from "./src/config/esquema.js";
 
 import authRoutes from "./src/routes/auth.routes.js";
 import itemRoutes from "./src/routes/item.routes.js";
@@ -106,6 +107,7 @@ const iniciar = async () => {
   try {
     await startDB();
     await sequelize.sync();
+    await verificarEsquema();
     console.log(
       "Modelos y tablas sincronizados correctamente en la base de datos.",
     );

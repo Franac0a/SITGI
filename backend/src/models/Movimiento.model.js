@@ -6,7 +6,15 @@ export const Movimiento = sequelize.define(
   "Movimiento",
   {
     tipo_movimiento: {
-      type: DataTypes.ENUM("Ingreso", "Egreso", "Ajuste", "Reparación"),
+      type: DataTypes.ENUM(
+        "Ingreso",
+        "Egreso",
+        "Ajuste",
+        "Reparación",
+        "Baja",
+        "Reposición",
+        "Cambio de ubicación",
+      ),
       allowNull: false,
     },
     cantidad: {
@@ -21,21 +29,25 @@ export const Movimiento = sequelize.define(
       allowNull: false,
       defaultValue: DataTypes.NOW,
     },
+    sector: {
+      type: DataTypes.STRING,
+      allowNull: true, // Sector/área donde se origina o consume el movimiento
+    },
     origen_destino: {
       type: DataTypes.STRING,
-      allowNull: true, // Para casos como "INTA Mercedes" o proveedores específicos
+      allowNull: true, // proveedor, institución u otro origen/destino
     },
     costo_unitario: {
       type: DataTypes.DECIMAL(10, 2),
-      allowNull: true, // Para el área de Bovinos Insumos y Adquisiciones
+      allowNull: true,
     },
     responsable: {
       type: DataTypes.STRING,
-      allowNull: false, // Para registrar quién realiza la acción (ej: Laura)
+      allowNull: false, // quién realiza la acción
     },
     observaciones: {
       type: DataTypes.TEXT,
-      allowNull: true, // Para anotar tratamientos, pacientes (Manchita) o fallas
+      allowNull: true, // notas libres
     },
   },
   {
@@ -44,7 +56,7 @@ export const Movimiento = sequelize.define(
   },
 );
 
-// Definición de las relaciones de base de datos
+// Relaciones
 Item.hasMany(Movimiento, {
   foreignKey: "itemId",
   sourceKey: "id",
