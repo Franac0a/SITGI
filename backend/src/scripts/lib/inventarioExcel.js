@@ -1,14 +1,4 @@
 import XLSX from "xlsx";
-import { startDB, sequelize } from "../config/db.js";
-import { Item } from "../models/Item.model.js";
-
-const ruta = process.argv[2] || process.env.INVENTARIO_XLSX;
-if (!ruta) {
-  console.error(
-    "Uso: npm run import:inventario -- <ruta-al-xlsx>  (o definir INVENTARIO_XLSX en .env)",
-  );
-  process.exit(1);
-}
 
 const str = (v) => (v === null || v === undefined ? "" : String(v).trim());
 const num = (v) => {
@@ -143,10 +133,12 @@ function mapearFila(hoja, fila) {
   };
 }
 
-const importar = async () => {
-  await startDB();
-  await sequelize.sync();
-
+/**
+ * Lee el Excel de inventario y devuelve la lista de ítems lista para la base.
+ * No toca la base de datos. Los códigos son determinísticos, así que leer el
+ * mismo Excel siempre produce los mismos códigos.
+ */
+export function leerInventarioExcel(ruta) {
   const libro = XLSX.readFile(ruta);
   const hojas = libro.SheetNames;
 
@@ -157,36 +149,34 @@ const importar = async () => {
       return raw;
     }
     let c = `CIT-${prefijo}-${String(contador).padStart(4, "0")}`;
+    let sufijo = 1;
     while (codigosUsados.has(c)) {
-      c = `CIT-${prefijo}-${String(contador).padStart(4, "0")}-${Math.random().toString(36).slice(2, 5)}`;
+      c = `CIT-${prefijo}-${String(contador).padStart(4, "0")}-${sufijo++}`;
     }
     codigosUsados.add(c);
     return c;
   };
 
   let contador = 1;
-  let total = 0;
-  const resumen = [];
+  const items = [];
+  const avisos = [];
 
   for (const conf of configuracionHojas) {
     if (!hojas.includes(conf.nombre)) {
-      console.log(`Aviso: Hoja no encontrada: ${conf.nombre}`);
+      avisos.push(`Hoja no encontrada: ${conf.nombre}`);
       continue;
     }
-
-    const ws = libro.Sheets[conf.nombre];
-    const filas = XLSX.utils.sheet_to_json(ws, {
+    const filas = XLSX.utils.sheet_to_json(libro.Sheets[conf.nombre], {
       header: 1,
       raw: true,
       defval: "",
     });
-
     const prefijo = conf.categoria
       .replace(/[^a-zA-Z]/g, "")
       .slice(0, 3)
       .toUpperCase();
 
-    const items = [];
+    let cantidad = 0;
     for (let i = conf.headerSkip; i < filas.length; i++) {
       const item = mapearFila(conf, filas[i]);
       if (!item) continue;
@@ -195,27 +185,9 @@ const importar = async () => {
       item.codigo_identificacion = resolverCodigo(rawCodigo, prefijo, contador);
       items.push(item);
       contador++;
+      cantidad++;
     }
-
-    if (items.length === 0) {
-      console.log(`${conf.nombre}: sin filas con datos.`);
-      continue;
-    }
-
-    await Item.bulkCreate(items, { ignoreDuplicates: true });
-    total += items.length;
-    resumen.push(`${conf.nombre} (${conf.categoria}): ${items.length}`);
-    console.log(`${conf.nombre} -> ${items.length} ítems`);
+    avisos.push(`${conf.nombre} (${conf.categoria}): ${cantidad} ítems`);
   }
-
-  console.log("------------------------------------------");
-  console.log(`Resumen de importación:`);
-  for (const r of resumen) console.log(`  - ${r}`);
-  console.log(`Total: ${total} ítems procesados.`);
-  process.exit(0);
-};
-
-importar().catch((error) => {
-  console.error("Error durante la importación:", error);
-  process.exit(1);
-});
+  return { items, avisos };
+}

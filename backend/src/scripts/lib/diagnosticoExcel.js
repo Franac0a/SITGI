@@ -1,14 +1,4 @@
 import XLSX from "xlsx";
-import { startDB, sequelize } from "../config/db.js";
-import { Muestra } from "../models/Muestra.model.js";
-
-const ruta = process.argv[2] || process.env.DIAGNOSTICO_XLSX;
-if (!ruta) {
-  console.error(
-    "Uso: npm run import:diagnostico -- <ruta-al-xlsx>  (o definir DIAGNOSTICO_XLSX en .env)",
-  );
-  process.exit(1);
-}
 
 const str = (v) => (v === null || v === undefined ? "" : String(v).trim());
 
@@ -80,52 +70,32 @@ function mapearFila(conf, fila) {
   return base;
 }
 
-const importar = async () => {
-  await startDB();
-  await sequelize.sync();
-
+/** Lee el Excel de diagnóstico y devuelve las muestras. No toca la base. */
+export function leerDiagnosticoExcel(ruta) {
   const libro = XLSX.readFile(ruta);
   const hojas = libro.SheetNames;
-
-  await Muestra.destroy({ where: {}, force: true });
-
-  let total = 0;
+  const muestras = [];
+  const avisos = [];
 
   for (const conf of hojasConfig) {
     if (!hojas.includes(conf.nombre)) {
-      console.log(`Aviso: Hoja no encontrada: ${conf.nombre}`);
+      avisos.push(`Hoja no encontrada: ${conf.nombre}`);
       continue;
     }
-
-    const ws = libro.Sheets[conf.nombre];
-    const filas = XLSX.utils.sheet_to_json(ws, {
+    const filas = XLSX.utils.sheet_to_json(libro.Sheets[conf.nombre], {
       header: 1,
       raw: true,
       defval: "",
     });
-
-    const items = [];
+    let cantidad = 0;
     for (let i = conf.headerSkip; i < filas.length; i++) {
       const m = mapearFila(conf, filas[i]);
-      if (m) items.push(m);
+      if (m) {
+        muestras.push(m);
+        cantidad++;
+      }
     }
-
-    if (items.length === 0) {
-      console.log(`${conf.nombre}: sin filas con datos.`);
-      continue;
-    }
-
-    await Muestra.bulkCreate(items);
-    total += items.length;
-    console.log(`${conf.nombre} (${conf.tipo}) -> ${items.length} muestras`);
+    avisos.push(`${conf.nombre} (${conf.tipo}): ${cantidad} muestras`);
   }
-
-  console.log("------------------------------------------");
-  console.log(`Total: ${total} muestras cargadas.`);
-  process.exit(0);
-};
-
-importar().catch((error) => {
-  console.error("Error durante la importación:", error);
-  process.exit(1);
-});
+  return { muestras, avisos };
+}

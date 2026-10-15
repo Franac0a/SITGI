@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "node --watch app.js",
     "seed:admin": "node src/scripts/crearDirector.js",
-    "import:inventario": "node src/scripts/importarInventario.js",
-    "import:diagnostico": "node src/scripts/importarDiagnostico.js",
+    "seed": "node src/scripts/seed.js",
+    "seed:export": "node src/scripts/exportarSeed.js",
     "start": "node app.js"
   },
   "keywords": [],

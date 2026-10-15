@@ -26,11 +26,18 @@ npm run dev               # http://localhost:5173
 
 `sequelize.sync()` crea tablas nuevas pero no modifica las existentes. Si tu base ya existía antes de los tipos de movimiento y roles nuevos, el backend se detiene con un mensaje claro hasta que ejecutes `backend/migrations/001_etapa1_documento.sql` (phpMyAdmin → base `citproyecto` → pestaña SQL). Una base nueva y vacía no la necesita.
 
-**Carga inicial del inventario (opcional)**
+**Datos iniciales**
+
+Los datos del CIT (inventario y muestras) viajan con el repositorio en `backend/seed/*.json`. Con la base creada y el `.env` configurado:
 ```bash
 cd backend
-npm run import:inventario -- "<ruta>/inventario cit formosa.xlsx"
-npm run import:diagnostico -- "<ruta>/DIAGNOSTICO 2026- CIT.xlsx"
+npm run seed
+```
+Crea el usuario Dirección inicial y carga el inventario y las muestras. Se puede ejecutar más de una vez sin duplicar datos: los ítems que ya existen no se tocan y las muestras solo se cargan si la tabla está vacía.
+
+Si cambian los Excel, se regeneran los JSON con:
+```bash
+npm run seed:export -- "<ruta>/inventario cit formosa.xlsx" "<ruta>/DIAGNOSTICO 2026- CIT.xlsx"
 ```
 
 **Roles:**
@@ -39,8 +46,6 @@ npm run import:diagnostico -- "<ruta>/DIAGNOSTICO 2026- CIT.xlsx"
 - *Investigador* y *Técnico/Becario*: consulta, pedidos y registro de **consumos (egresos)**.
 - *Responsable de área*: consulta del stock y pedidos de reposición.
 Los usuarios que se registran quedan en estado *pendiente* hasta que la Dirección los apruebe.
-
-> Estado del repositorio: ver al final de este archivo el historial de correcciones.
 
 ---
 
