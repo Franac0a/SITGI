@@ -22,6 +22,25 @@ cp .env.example .env      # VITE_API_URL=http://localhost:4000/api
 npm run dev               # http://localhost:5173
 ```
 
+**Base de datos con Docker (sin XAMPP)**
+
+Requiere Docker Desktop. Desde la raíz del proyecto:
+```bash
+docker compose up -d      # levanta MySQL con la base citproyecto
+```
+En `backend/.env` usar:
+```
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=sitgi
+DB_PASSWORD=sitgi_dev
+DB_NAME=citproyecto
+DB_DIALECT=mysql
+```
+Después, `npm run dev` y `npm run seed` en `backend/` (el backend crea las tablas al arrancar). Los datos quedan guardados en un volumen de Docker. Para apagar: `docker compose down`; para borrar también los datos: `docker compose down -v`.
+
+El puerto 3306 no puede estar usado por otro MySQL (por ejemplo XAMPP). Si hace falta, se cambia con la variable `DB_PUERTO` (ejemplo: `DB_PUERTO=3307 docker compose up -d`) y `DB_PORT` en el `.env`.
+
 **Base de datos ya existente (migración 001)**
 
 `sequelize.sync()` crea tablas nuevas pero no modifica las existentes. Si tu base ya existía antes de los tipos de movimiento y roles nuevos, el backend se detiene con un mensaje claro hasta que ejecutes `backend/migrations/001_etapa1_documento.sql` (phpMyAdmin → base `citproyecto` → pestaña SQL). Una base nueva y vacía no la necesita.

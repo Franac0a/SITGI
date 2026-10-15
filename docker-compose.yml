@@ -1,0 +1,23 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: sitgi-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: citproyecto
+      MYSQL_USER: sitgi
+      MYSQL_PASSWORD: sitgi_dev
+      MYSQL_ROOT_PASSWORD: root_dev
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "${DB_PUERTO:-3306}:3306"
+    volumes:
+      - sitgi-datos:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot_dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  sitgi-datos:
