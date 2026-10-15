@@ -42,6 +42,8 @@ export const UserModel = sequelize.define(
         "Inventario",
         "Investigador",
         "Dirección",
+        "Responsable de área",
+        "Técnico/Becario",
       ),
       defaultValue: "Investigador",
       allowNull: false,

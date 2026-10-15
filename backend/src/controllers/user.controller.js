@@ -1,8 +1,9 @@
 import { UserModel } from "../models/User.model.js";
+import { ROLES } from "../utils/permisos.js";
 
 import { detalleError } from "../helpers/error.helper.js";
 const ESTADOS_USUARIO = ["pendiente", "activo", "rechazado"];
-const ROLES_USUARIO = ["Administración", "Inventario", "Investigador", "Dirección"];
+const ROLES_USUARIO = ROLES;
 
 export const obtenerUsuarios = async (req, res) => {
   try {

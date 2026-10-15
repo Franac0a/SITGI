@@ -1,7 +1,15 @@
 export const INSTITUTIONAL_ROLES = [
   {
     value: 'Investigador',
-    label: 'Investigador / Becario / Técnico',
+    label: 'Investigador',
+  },
+  {
+    value: 'Técnico/Becario',
+    label: 'Técnico / Becario',
+  },
+  {
+    value: 'Responsable de área',
+    label: 'Responsable de área o laboratorio',
   },
   {
     value: 'Inventario',
