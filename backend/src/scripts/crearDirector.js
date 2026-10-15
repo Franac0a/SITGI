@@ -17,7 +17,7 @@ const inicializarDirector = async () => {
       existe.estado = "activo";
       existe.rol = "Dirección";
       await existe.save();
-      console.log(`✅ El usuario ${emailDirector} ya existe y fue actualizado a estado 'activo' y rol 'Dirección'.`);
+      console.log(`El usuario ${emailDirector} ya existe y fue actualizado a estado 'activo' y rol 'Dirección'.`);
     } else {
       const passwordHash = await encriptarContraseña("Admin123!");
       await UserModel.create({
@@ -28,16 +28,16 @@ const inicializarDirector = async () => {
         rol: "Dirección",
         estado: "activo",
       });
-      console.log("✅ Usuario Director inicial creado con éxito.");
+      console.log("Usuario Director inicial creado con éxito.");
       console.log("-----------------------------------------");
-      console.log("📧 Email: director@citformosa.gob.ar");
-      console.log("🔑 Password: Admin123!");
+      console.log("Email: director@citformosa.gob.ar");
+      console.log("Password: Admin123!");
       console.log("-----------------------------------------");
     }
 
     process.exit(0);
   } catch (error) {
-    console.error("❌ Error al crear el director inicial:", error);
+    console.error("Error al crear el director inicial:", error);
     process.exit(1);
   }
 };

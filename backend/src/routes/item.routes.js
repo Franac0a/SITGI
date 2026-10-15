@@ -21,9 +21,7 @@ router.put(
   restaurarItem,
 );
 
-// -------------------------------------------------------------------------
-// RUTAS GENERALES DEL INVENTARIO
-// -------------------------------------------------------------------------
+// Rutas generales del inventario
 router.get("/", obtenerItems);
 router.get("/:id", obtenerItemPorId);
 router.post(

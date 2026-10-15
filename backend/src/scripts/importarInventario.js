@@ -170,7 +170,7 @@ const importar = async () => {
 
   for (const conf of configuracionHojas) {
     if (!hojas.includes(conf.nombre)) {
-      console.log(`⚠️  Hoja no encontrada: ${conf.nombre}`);
+      console.log(`Aviso: Hoja no encontrada: ${conf.nombre}`);
       continue;
     }
 
@@ -198,14 +198,14 @@ const importar = async () => {
     }
 
     if (items.length === 0) {
-      console.log(`ℹ️  ${conf.nombre}: sin filas con datos.`);
+      console.log(`${conf.nombre}: sin filas con datos.`);
       continue;
     }
 
     await Item.bulkCreate(items, { ignoreDuplicates: true });
     total += items.length;
     resumen.push(`${conf.nombre} (${conf.categoria}): ${items.length}`);
-    console.log(`✔  ${conf.nombre} -> ${items.length} ítems`);
+    console.log(`${conf.nombre} -> ${items.length} ítems`);
   }
 
   console.log("------------------------------------------");
@@ -216,6 +216,6 @@ const importar = async () => {
 };
 
 importar().catch((error) => {
-  console.error("❌ Error durante la importación:", error);
+  console.error("Error durante la importación:", error);
   process.exit(1);
 });

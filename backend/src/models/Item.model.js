@@ -25,7 +25,7 @@ export const Item = sequelize.define(
       allowNull: true, // Absorbe las marcas de Brucelosis y Droguero
     },
     stock_actual: {
-      type: DataTypes.FLOAT, // Soporta fracciones si en el futuro fraccionan drogas
+      type: DataTypes.FLOAT, // admite fracciones
       allowNull: false,
       defaultValue: 0,
       validate: {
@@ -56,7 +56,7 @@ export const Item = sequelize.define(
       type: DataTypes.JSON,
       allowNull: false,
       defaultValue: {},
-      // Acá guardamos dinámicamente:
+      // Datos propios de cada categoría:
       // - Brucelosis: { "n_inventario": "...", "n_serie": "...", "criticidad": "x" }
       // - Vidrio: { "material": "Borosilicato", "capacidad": "1 Lt" }
       // - Droguero: { "presentacion": "500 GR", "letra": "A" }

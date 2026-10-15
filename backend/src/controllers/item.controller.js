@@ -284,9 +284,7 @@ export const eliminarItem = async (req, res) => {
   }
 };
 
-// =========================================================================
-// SECCIÓN DE TRAZABILIDAD
-// =========================================================================
+// Trazabilidad
 
 export const obtenerItemsEliminados = async (req, res) => {
   try {
