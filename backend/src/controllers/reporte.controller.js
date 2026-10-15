@@ -1,6 +1,8 @@
 import { Item } from "../models/Item.model.js";
 import { Movimiento } from "../models/Movimiento.model.js";
 import { Sequelize, Op } from "sequelize";
+import { filtroMovimientos } from "./movimiento.controller.js";
+import { TIPOS_QUE_RESTAN } from "../utils/permisos.js";
 
 import { detalleError } from "../helpers/error.helper.js";
 export const obtenerAlertas = async (req, res) => {
@@ -49,9 +51,43 @@ export const obtenerAlertas = async (req, res) => {
   }
 };
 
+const escaparCsv = (valor) => {
+  const s = String(valor ?? "");
+  return /[";\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+};
+
+const enviarCsv = (res, nombreArchivo, header, rows) => {
+  const csv = [header, ...rows]
+    .map((r) => r.map(escaparCsv).join(";"))
+    .join("\n");
+  res.setHeader("Content-Type", "text/csv; charset=utf-8");
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename="${nombreArchivo}"`,
+  );
+  res.send("\uFEFF" + csv);
+};
+
+/** Filtros opcionales del inventario: categoria, sector (ubicación), busqueda (nombre/código). */
+const filtroInventario = ({ categoria, sector, busqueda }) => {
+  const where = {};
+  if (categoria) where.categoria = categoria;
+  if (sector) where.ubicacion = { [Op.like]: `%${sector}%` };
+  if (busqueda) {
+    where[Op.or] = [
+      { nombre: { [Op.like]: `%${busqueda}%` } },
+      { codigo_identificacion: { [Op.like]: `%${busqueda}%` } },
+    ];
+  }
+  return where;
+};
+
 export const exportarInventarioCsv = async (req, res) => {
   try {
-    const items = await Item.findAll({ order: [["nombre", "ASC"]] });
+    const items = await Item.findAll({
+      where: filtroInventario(req.query),
+      order: [["nombre", "ASC"]],
+    });
 
     const header = [
       "Codigo",
@@ -84,21 +120,7 @@ export const exportarInventarioCsv = async (req, res) => {
       ];
     });
 
-    const escapar = (valor) => {
-      const s = String(valor ?? "");
-      return /[";\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-    };
-
-    const csv = [header, ...rows]
-      .map((r) => r.map(escapar).join(";"))
-      .join("\n");
-
-    res.setHeader("Content-Type", "text/csv; charset=utf-8");
-    res.setHeader(
-      "Content-Disposition",
-      'attachment; filename="inventario.csv"',
-    );
-    res.send("\uFEFF" + csv);
+    enviarCsv(res, "inventario.csv", header, rows);
   } catch (error) {
     console.error("Error al exportar inventario:", error.message);
     res.status(500).json({
@@ -159,6 +181,121 @@ export const obtenerResumen = async (req, res) => {
     console.error("Error al obtener resumen:", error.message);
     res.status(500).json({
       mensaje: "Error al obtener el resumen.",
+      ...detalleError(error),
+    });
+  }
+};
+
+export const exportarMovimientosCsv = async (req, res) => {
+  try {
+    const where = filtroMovimientos(req.query);
+    const includeItem = {
+      model: Item,
+      attributes: ["nombre", "codigo_identificacion", "categoria", "unidad_medida"],
+      paranoid: false,
+    };
+    if (req.query.categoria) includeItem.where = { categoria: req.query.categoria };
+
+    const movimientos = await Movimiento.findAll({
+      where,
+      include: [includeItem],
+      order: [["fecha_movimiento", "DESC"], ["createdAt", "DESC"]],
+    });
+
+    const header = [
+      "Fecha",
+      "Tipo",
+      "Codigo",
+      "Elemento",
+      "Categoria",
+      "Cantidad",
+      "Unidad",
+      "Sector",
+      "Origen/Destino",
+      "Responsable",
+      "Observaciones",
+    ];
+    const rows = movimientos.map((m) => [
+      m.fecha_movimiento || "",
+      m.tipo_movimiento,
+      m.Item?.codigo_identificacion || "",
+      m.Item?.nombre || "",
+      m.Item?.categoria || "",
+      m.cantidad,
+      m.Item?.unidad_medida || "",
+      m.sector || "",
+      m.origen_destino || "",
+      m.responsable || "",
+      m.observaciones || "",
+    ]);
+
+    enviarCsv(res, "movimientos.csv", header, rows);
+  } catch (error) {
+    console.error("Error al exportar movimientos:", error.message);
+    res.status(500).json({
+      mensaje: "Error al exportar los movimientos.",
+      ...detalleError(error),
+    });
+  }
+};
+
+/**
+ * Alta rotación: elementos con más consumo (egresos, bajas, reparaciones)
+ * en los últimos N días (por defecto 30). Parámetros: dias, limite.
+ */
+export const obtenerRotacion = async (req, res) => {
+  try {
+    const dias = Math.min(Math.max(parseInt(req.query.dias, 10) || 30, 1), 365);
+    const limite = Math.min(Math.max(parseInt(req.query.limite, 10) || 10, 1), 50);
+
+    const desde = new Date();
+    desde.setDate(desde.getDate() - dias);
+    const desdeStr = desde.toISOString().slice(0, 10);
+
+    const filas = await Movimiento.findAll({
+      attributes: [
+        "itemId",
+        [Sequelize.fn("SUM", Sequelize.col("cantidad")), "consumo"],
+        [Sequelize.fn("COUNT", Sequelize.col("Movimiento.id")), "movimientos"],
+      ],
+      where: {
+        tipo_movimiento: { [Op.in]: TIPOS_QUE_RESTAN },
+        fecha_movimiento: { [Op.gte]: desdeStr },
+      },
+      include: [
+        {
+          model: Item,
+          attributes: ["nombre", "codigo_identificacion", "categoria", "unidad_medida", "stock_actual", "stock_minimo"],
+          paranoid: false,
+        },
+      ],
+      group: ["itemId", "Item.id"],
+      order: [[Sequelize.fn("SUM", Sequelize.col("cantidad")), "DESC"]],
+      limit: limite,
+    });
+
+    const rotacion = filas.map((f) => {
+      const consumo = Number(f.get("consumo")) || 0;
+      const stock = Number(f.Item?.stock_actual) || 0;
+      return {
+        itemId: f.itemId,
+        nombre: f.Item?.nombre || "(ítem eliminado)",
+        codigo_identificacion: f.Item?.codigo_identificacion || null,
+        categoria: f.Item?.categoria || null,
+        unidad_medida: f.Item?.unidad_medida || null,
+        consumo,
+        movimientos: Number(f.get("movimientos")) || 0,
+        stock_actual: stock,
+        // Días de cobertura estimados con el ritmo de consumo del período.
+        dias_cobertura: consumo > 0 ? Math.round((stock / consumo) * dias) : null,
+      };
+    });
+
+    res.status(200).json({ dias, desde: desdeStr, rotacion });
+  } catch (error) {
+    console.error("Error al calcular rotación:", error.message);
+    res.status(500).json({
+      mensaje: "Error al calcular la rotación.",
       ...detalleError(error),
     });
   }
