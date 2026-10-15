@@ -104,7 +104,8 @@ export interface RegisterMovementPayload {
   cantidad: number
   origen_destino?: string
   costo_unitario?: number
-  responsable: string
+  /** Lo define el backend con el usuario autenticado. */
+  responsable?: string
   observaciones?: string
 }
 
@@ -143,7 +144,8 @@ export interface RegisterPedidoPayload {
   item_nombre: string
   cantidad: number
   sector?: string
-  responsable: string
+  /** Lo define el backend con el usuario autenticado. */
+  responsable?: string
   observaciones?: string
 }
 
@@ -167,7 +169,8 @@ export interface RegisterResiduoPayload {
   tipo: ResiduoTipo
   descripcion: string
   sector?: string
-  responsable: string
+  /** Lo define el backend con el usuario autenticado. */
+  responsable?: string
   retiro_programado?: string
   observaciones?: string
 }

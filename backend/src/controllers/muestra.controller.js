@@ -1,5 +1,6 @@
 import { Muestra } from "../models/Muestra.model.js";
 
+import { detalleError } from "../helpers/error.helper.js";
 export const obtenerMuestras = async (req, res) => {
   try {
     const { tipo } = req.query;
@@ -19,7 +20,7 @@ export const obtenerMuestras = async (req, res) => {
     console.error("Error al obtener muestras:", error.message);
     res.status(500).json({
       mensaje: "Error al obtener las muestras.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
@@ -44,7 +45,7 @@ export const obtenerResumenMuestras = async (req, res) => {
     console.error("Error al obtener resumen de muestras:", error.message);
     res.status(500).json({
       mensaje: "Error al obtener el resumen de muestras.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };

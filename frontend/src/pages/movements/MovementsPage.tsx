@@ -14,6 +14,7 @@ import { Alert } from '@/components/ui/alert'
 import { Input } from '@/components/ui/input'
 import { NativeSelect as Select } from '@/components/ui/native-select'
 import { useAuth } from '@/context'
+import { canCreateInventory } from '@/utils/rbac'
 import { getInventoryItems } from '@/services/inventory/inventory.service'
 import {
   getMovements,
@@ -29,7 +30,7 @@ import type {
 const MOVEMENT_TYPES: { value: MovementType; label: string }[] = [
   { value: 'Ingreso', label: 'Ingreso' },
   { value: 'Egreso', label: 'Egreso' },
-  { value: 'Ajuste', label: 'Ajuste' },
+  { value: 'Ajuste', label: 'Ajuste (conteo físico)' },
   { value: 'Reparación', label: 'Reparación' },
 ]
 
@@ -68,6 +69,7 @@ function badgeClasses(tipo: MovementType): string {
 
 export function MovementsPage() {
   const { user } = useAuth()
+  const canManage = canCreateInventory(user?.rol)
   const [searchParams] = useSearchParams()
 
   const initialTipo = searchParams.get('tipo')
@@ -128,12 +130,19 @@ export function MovementsPage() {
       setFormError('Debe seleccionar el ítem afectado.')
       return
     }
-    if (form.cantidad === '' || isNaN(Number(form.cantidad)) || Number(form.cantidad) <= 0) {
-      setFormError('Ingrese una cantidad válida mayor a 0.')
-      return
-    }
-    if (!form.responsable.trim()) {
-      setFormError('Debe indicar el responsable del movimiento.')
+    const cantidadNum = Number(form.cantidad)
+    const esAjuste = form.tipo_movimiento === 'Ajuste'
+    if (
+      form.cantidad === '' ||
+      isNaN(cantidadNum) ||
+      cantidadNum < 0 ||
+      (!esAjuste && cantidadNum === 0)
+    ) {
+      setFormError(
+        esAjuste
+          ? 'Ingrese el stock real contado (0 o más).'
+          : 'Ingrese una cantidad válida mayor a 0.',
+      )
       return
     }
 
@@ -142,8 +151,7 @@ export function MovementsPage() {
       await registerMovement({
         itemId: form.itemId,
         tipo_movimiento: form.tipo_movimiento,
-        cantidad: Number(form.cantidad),
-        responsable: form.responsable.trim(),
+        cantidad: cantidadNum,
         origen_destino: form.origen_destino.trim() || undefined,
         costo_unitario:
           form.costo_unitario !== '' ? Number(form.costo_unitario) : undefined,
@@ -182,6 +190,7 @@ export function MovementsPage() {
             </p>
           </div>
 
+          {canManage && (
           <Button variant="primary" onClick={() => setShowForm((v) => !v)}>
             <svg
               className="w-4 h-4 mr-1.5"
@@ -198,9 +207,10 @@ export function MovementsPage() {
             </svg>
             {showForm ? 'Cerrar formulario' : 'Registrar Movimiento'}
           </Button>
+          )}
         </div>
 
-        {showForm && (
+        {canManage && showForm && (
           <form
             onSubmit={handleSubmit}
             className="bg-white border border-gray-200 rounded-xl p-6 shadow-xs space-y-5"
@@ -241,9 +251,13 @@ export function MovementsPage() {
                 id="cantidad"
                 name="cantidad"
                 type="number"
-                min="0.01"
+                min={form.tipo_movimiento === 'Ajuste' ? '0' : '0.01'}
                 step="any"
-                label="Cantidad *"
+                label={
+                  form.tipo_movimiento === 'Ajuste'
+                    ? 'Stock real contado *'
+                    : 'Cantidad *'
+                }
                 placeholder="0.00"
                 value={form.cantidad}
                 onChange={handleChange}
@@ -253,11 +267,10 @@ export function MovementsPage() {
               <Input
                 id="responsable"
                 name="responsable"
-                label="Responsable *"
-                placeholder="Nombre y apellido"
+                label="Responsable (usuario actual)"
                 value={form.responsable}
-                onChange={handleChange}
-                disabled={submitting}
+                readOnly
+                disabled
               />
 
               <Input
@@ -326,9 +339,11 @@ export function MovementsPage() {
             title="No hay movimientos registrados"
             description="Aún no se han asentado ingresos, egresos ni ajustes en el registro de trazabilidad."
             action={
-              <Button variant="primary" onClick={() => setShowForm(true)}>
-                Registrar Primer Movimiento
-              </Button>
+              canManage ? (
+                <Button variant="primary" onClick={() => setShowForm(true)}>
+                  Registrar Primer Movimiento
+                </Button>
+              ) : undefined
             }
           />
         ) : (

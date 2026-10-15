@@ -2,6 +2,7 @@ import { Item } from "../models/Item.model.js";
 import { Movimiento } from "../models/Movimiento.model.js";
 import { Sequelize, Op } from "sequelize";
 
+import { detalleError } from "../helpers/error.helper.js";
 export const obtenerAlertas = async (req, res) => {
   try {
     const items = await Item.findAll({ order: [["nombre", "ASC"]] });
@@ -43,7 +44,7 @@ export const obtenerAlertas = async (req, res) => {
     console.error("Error al obtener alertas:", error.message);
     res.status(500).json({
       mensaje: "Error al generar las alertas.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
@@ -85,11 +86,11 @@ export const exportarInventarioCsv = async (req, res) => {
 
     const escapar = (valor) => {
       const s = String(valor ?? "");
-      return /[",\n;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+      return /[";\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
     };
 
     const csv = [header, ...rows]
-      .map((r) => r.map(escapar).join(","))
+      .map((r) => r.map(escapar).join(";"))
       .join("\n");
 
     res.setHeader("Content-Type", "text/csv; charset=utf-8");
@@ -102,7 +103,7 @@ export const exportarInventarioCsv = async (req, res) => {
     console.error("Error al exportar inventario:", error.message);
     res.status(500).json({
       mensaje: "Error al exportar el inventario.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
@@ -158,7 +159,7 @@ export const obtenerResumen = async (req, res) => {
     console.error("Error al obtener resumen:", error.message);
     res.status(500).json({
       mensaje: "Error al obtener el resumen.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };

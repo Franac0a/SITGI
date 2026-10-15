@@ -1,5 +1,9 @@
 import { Residuo } from "../models/Residuo.model.js";
 
+import { detalleError } from "../helpers/error.helper.js";
+const TIPOS_RESIDUO = ["Patológico", "Químico", "Tóxico", "Biológico", "Otro"];
+const ESTADOS_RESIDUO = ["Pendiente", "Retirado"];
+
 export const obtenerResiduos = async (req, res) => {
   try {
     const residuos = await Residuo.findAll({
@@ -10,7 +14,7 @@ export const obtenerResiduos = async (req, res) => {
     console.error("Error al obtener residuos:", error.message);
     res.status(500).json({
       mensaje: "Error al obtener los residuos.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
@@ -21,21 +25,22 @@ export const crearResiduo = async (req, res) => {
       tipo,
       descripcion,
       sector,
-      responsable,
       retiro_programado,
       observaciones,
     } = req.body;
+    // El responsable es el usuario autenticado, no un dato del cliente.
+    const responsable = req.usuario.nombre;
+
+    if (tipo !== undefined && !TIPOS_RESIDUO.includes(tipo)) {
+      return res.status(400).json({
+        mensaje: `Tipo de residuo inválido. Valores permitidos: ${TIPOS_RESIDUO.join(", ")}.`,
+      });
+    }
 
     if (!descripcion || descripcion.trim() === "") {
       return res
         .status(400)
         .json({ mensaje: "La descripción del residuo es obligatoria." });
-    }
-
-    if (!responsable || responsable.trim() === "") {
-      return res
-        .status(400)
-        .json({ mensaje: "Debe indicar el responsable del residuo." });
     }
 
     const residuo = await Residuo.create({
@@ -52,7 +57,7 @@ export const crearResiduo = async (req, res) => {
     console.error("Error al crear residuo:", error.message);
     res.status(500).json({
       mensaje: "Error al crear el residuo.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
@@ -69,16 +74,25 @@ export const actualizarResiduo = async (req, res) => {
       tipo,
       descripcion,
       sector,
-      responsable,
       retiro_programado,
       estado,
       observaciones,
     } = req.body;
 
+    if (tipo !== undefined && !TIPOS_RESIDUO.includes(tipo)) {
+      return res.status(400).json({
+        mensaje: `Tipo de residuo inválido. Valores permitidos: ${TIPOS_RESIDUO.join(", ")}.`,
+      });
+    }
+    if (estado !== undefined && !ESTADOS_RESIDUO.includes(estado)) {
+      return res.status(400).json({
+        mensaje: `Estado inválido. Valores permitidos: ${ESTADOS_RESIDUO.join(", ")}.`,
+      });
+    }
+
     if (tipo !== undefined) residuo.tipo = tipo;
     if (descripcion !== undefined) residuo.descripcion = descripcion;
     if (sector !== undefined) residuo.sector = sector;
-    if (responsable !== undefined) residuo.responsable = responsable;
     if (retiro_programado !== undefined)
       residuo.retiro_programado = retiro_programado;
     if (estado !== undefined) residuo.estado = estado;
@@ -90,7 +104,7 @@ export const actualizarResiduo = async (req, res) => {
     console.error("Error al actualizar residuo:", error.message);
     res.status(500).json({
       mensaje: "Error al actualizar el residuo.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };

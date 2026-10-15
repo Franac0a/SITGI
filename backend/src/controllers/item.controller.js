@@ -1,6 +1,7 @@
 import { Item } from "../models/Item.model.js";
 import { Op, Sequelize } from "sequelize";
 
+import { detalleError } from "../helpers/error.helper.js";
 export const obtenerItems = async (req, res) => {
   try {
     const { categoria, stock_bajo, ubicacion, busqueda } = req.query;
@@ -41,7 +42,7 @@ export const obtenerItems = async (req, res) => {
     console.error("Error al obtener ítems:", error.message);
     res.status(500).json({
       mensaje: "Error interno al listar el inventario.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
@@ -73,7 +74,7 @@ export const obtenerItemPorId = async (req, res) => {
     console.error("Error al obtener ítem por ID:", error.message);
     res
       .status(500)
-      .json({ mensaje: "Error al buscar el ítem.", error: error.message });
+      .json({ mensaje: "Error al buscar el ítem.", ...detalleError(error) });
   }
 };
 
@@ -169,7 +170,7 @@ export const crearItem = async (req, res) => {
     }
     res
       .status(500)
-      .json({ mensaje: "Error al guardar el ítem.", error: error.message });
+      .json({ mensaje: "Error al guardar el ítem.", ...detalleError(error) });
   }
 };
 
@@ -257,7 +258,7 @@ export const actualizarItem = async (req, res) => {
     console.error("Error al actualizar ítem:", error.message);
     res
       .status(500)
-      .json({ mensaje: "Error al actualizar el ítem.", error: error.message });
+      .json({ mensaje: "Error al actualizar el ítem.", ...detalleError(error) });
   }
 };
 
@@ -279,7 +280,7 @@ export const eliminarItem = async (req, res) => {
     console.error("Error al eliminar ítem:", error.message);
     res
       .status(500)
-      .json({ mensaje: "Error al eliminar el ítem.", error: error.message });
+      .json({ mensaje: "Error al eliminar el ítem.", ...detalleError(error) });
   }
 };
 
@@ -302,7 +303,7 @@ export const obtenerItemsEliminados = async (req, res) => {
     console.error("Error al obtener ítems en trazabilidad:", error.message);
     res.status(500).json({
       mensaje: "Error al cargar el archivo de trazabilidad.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
@@ -335,7 +336,7 @@ export const restaurarItem = async (req, res) => {
     console.error("Error al restaurar ítem:", error.message);
     res.status(500).json({
       mensaje: "Error al intentar restaurar el ítem.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };

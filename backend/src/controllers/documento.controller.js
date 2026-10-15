@@ -2,6 +2,7 @@ import { Documento } from "../models/Documento.model.js";
 import fs from "node:fs";
 import path from "node:path";
 
+import { detalleError } from "../helpers/error.helper.js";
 export const obtenerDocumentos = async (req, res) => {
   try {
     const { categoria } = req.query;
@@ -17,7 +18,7 @@ export const obtenerDocumentos = async (req, res) => {
     console.error("Error al obtener documentos:", error.message);
     res.status(500).json({
       mensaje: "Error al obtener los documentos.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
@@ -52,7 +53,7 @@ export const subirDocumento = async (req, res) => {
     console.error("Error al subir documento:", error.message);
     res.status(500).json({
       mensaje: "Error al cargar el documento.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
@@ -77,7 +78,7 @@ export const descargarDocumento = async (req, res) => {
     console.error("Error al descargar documento:", error.message);
     res.status(500).json({
       mensaje: "Error al descargar el documento.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
@@ -103,7 +104,7 @@ export const eliminarDocumento = async (req, res) => {
     console.error("Error al eliminar documento:", error.message);
     res.status(500).json({
       mensaje: "Error al eliminar el documento.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };

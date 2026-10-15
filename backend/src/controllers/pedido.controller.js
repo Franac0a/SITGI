@@ -1,5 +1,8 @@
 import { Pedido } from "../models/Pedido.model.js";
 
+import { detalleError } from "../helpers/error.helper.js";
+const ESTADOS_PEDIDO = ["Pendiente", "Aprobado", "Ingresado"];
+
 export const obtenerPedidos = async (req, res) => {
   try {
     const { estado } = req.query;
@@ -16,15 +19,16 @@ export const obtenerPedidos = async (req, res) => {
     console.error("Error al obtener pedidos:", error.message);
     res.status(500).json({
       mensaje: "Error al obtener los pedidos.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
 
 export const crearPedido = async (req, res) => {
   try {
-    const { item_nombre, cantidad, sector, responsable, observaciones } =
-      req.body;
+    const { item_nombre, cantidad, sector, observaciones } = req.body;
+    // El responsable es el usuario autenticado, no un dato del cliente.
+    const responsable = req.usuario.nombre;
 
     if (!item_nombre || item_nombre.trim() === "") {
       return res
@@ -36,12 +40,6 @@ export const crearPedido = async (req, res) => {
       return res
         .status(400)
         .json({ mensaje: "La cantidad debe ser un número mayor a 0." });
-    }
-
-    if (!responsable || responsable.trim() === "") {
-      return res
-        .status(400)
-        .json({ mensaje: "Debe indicar el responsable del pedido." });
     }
 
     const pedido = await Pedido.create({
@@ -57,7 +55,7 @@ export const crearPedido = async (req, res) => {
     console.error("Error al crear pedido:", error.message);
     res.status(500).json({
       mensaje: "Error al crear el pedido.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
@@ -72,7 +70,12 @@ export const actualizarEstadoPedido = async (req, res) => {
       return res.status(404).json({ mensaje: "Pedido no encontrado." });
     }
 
-    if (estado) pedido.estado = estado;
+    if (!ESTADOS_PEDIDO.includes(estado)) {
+      return res.status(400).json({
+        mensaje: `Estado inválido. Valores permitidos: ${ESTADOS_PEDIDO.join(", ")}.`,
+      });
+    }
+    pedido.estado = estado;
     await pedido.save();
 
     res.status(200).json({ mensaje: "Pedido actualizado correctamente.", pedido });
@@ -80,7 +83,7 @@ export const actualizarEstadoPedido = async (req, res) => {
     console.error("Error al actualizar pedido:", error.message);
     res.status(500).json({
       mensaje: "Error al actualizar el pedido.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };

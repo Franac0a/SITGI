@@ -1,5 +1,16 @@
 import { Sector } from "../models/Sector.model.js";
 
+import { detalleError } from "../helpers/error.helper.js";
+const TIPOS_SECTOR = [
+  "Laboratorio",
+  "Heladera",
+  "Droguero",
+  "Estante",
+  "Depósito",
+  "Otro",
+];
+
+
 export const obtenerSectores = async (req, res) => {
   try {
     const sectores = await Sector.findAll({ order: [["nombre", "ASC"]] });
@@ -8,7 +19,7 @@ export const obtenerSectores = async (req, res) => {
     console.error("Error al obtener sectores:", error.message);
     res.status(500).json({
       mensaje: "Error al obtener los sectores.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
@@ -21,6 +32,12 @@ export const crearSector = async (req, res) => {
       return res
         .status(400)
         .json({ mensaje: "El nombre del sector es obligatorio." });
+    }
+
+    if (tipo !== undefined && !TIPOS_SECTOR.includes(tipo)) {
+      return res.status(400).json({
+        mensaje: `Tipo de sector inválido. Valores permitidos: ${TIPOS_SECTOR.join(", ")}.`,
+      });
     }
 
     const existe = await Sector.findOne({ where: { nombre } });
@@ -41,7 +58,7 @@ export const crearSector = async (req, res) => {
     console.error("Error al crear sector:", error.message);
     res.status(500).json({
       mensaje: "Error al crear el sector.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
@@ -55,6 +72,11 @@ export const actualizarSector = async (req, res) => {
     }
 
     const { nombre, tipo, descripcion } = req.body;
+    if (tipo !== undefined && !TIPOS_SECTOR.includes(tipo)) {
+      return res.status(400).json({
+        mensaje: `Tipo de sector inválido. Valores permitidos: ${TIPOS_SECTOR.join(", ")}.`,
+      });
+    }
     if (nombre !== undefined) sector.nombre = nombre;
     if (tipo !== undefined) sector.tipo = tipo;
     if (descripcion !== undefined) sector.descripcion = descripcion;
@@ -65,7 +87,7 @@ export const actualizarSector = async (req, res) => {
     console.error("Error al actualizar sector:", error.message);
     res.status(500).json({
       mensaje: "Error al actualizar el sector.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
@@ -84,7 +106,7 @@ export const eliminarSector = async (req, res) => {
     console.error("Error al eliminar sector:", error.message);
     res.status(500).json({
       mensaje: "Error al eliminar el sector.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };

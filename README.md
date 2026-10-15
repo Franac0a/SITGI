@@ -1,4 +1,42 @@
-# Revisión y correcciones de código — SITGI
+# SITGI — Sistema Integral de Inventario, Stock y Trazabilidad Científica (CIT Formosa)
+
+## Puesta en marcha
+
+Requisitos: Node.js 20+ y un MySQL accesible.
+
+**Backend**
+```bash
+cd backend
+npm install
+cp .env.example .env      # completar DB_*, JWT_SECRET (largo y aleatorio) y, si hace falta, FRONTEND_URLS
+npm run seed:admin        # crea el usuario Dirección inicial (director@citformosa.gob.ar / Admin123!)
+npm run dev               # http://localhost:4000
+```
+El servidor **no arranca si no puede conectarse a la base**: revisá `DB_HOST`, `DB_USER`, `DB_PASSWORD` y `DB_NAME`.
+
+**Frontend**
+```bash
+cd frontend
+npm install
+cp .env.example .env      # VITE_API_URL=http://localhost:4000/api
+npm run dev               # http://localhost:5173
+```
+
+**Carga inicial del inventario (opcional)**
+```bash
+cd backend
+npm run import:inventario -- "<ruta>/inventario cit formosa.xlsx"
+npm run import:diagnostico -- "<ruta>/DIAGNOSTICO 2026- CIT.xlsx"
+```
+
+**Roles:** Investigador (consulta y pedidos), Inventario y Administración (alta/edición, movimientos, residuos, documentos), Dirección (todo, más aprobación de usuarios).
+Los usuarios que se registran quedan en estado *pendiente* hasta que la Dirección los apruebe.
+
+> Estado del repositorio: ver al final de este archivo el historial de correcciones.
+
+---
+
+# Revisión y correcciones de código — SITGI (ronda 1)
 
 Resumen de los errores encontrados durante la revisión y de las correcciones aplicadas.
 
@@ -318,3 +356,38 @@ Se implementaron los módulos pendientes de la 2ª etapa según el documento.
 ## Estado final (1ª y 2ª etapa COMPLETAS)
 
 Todos los módulos del documento implementados y conectados. El alcance del proyecto quedó cubierto.
+
+
+---
+
+# Ronda de revisión 2 (seguridad, trazabilidad y consistencia)
+
+## Backend
+- **Trazabilidad:** el `responsable` de movimientos, pedidos y residuos se toma del usuario autenticado (`req.usuario.nombre`); el cliente ya no puede registrar acciones a nombre de otra persona.
+- **Stock:** `registrarMovimiento` bloquea la fila del ítem (`SELECT … FOR UPDATE`) dentro de la transacción para evitar condiciones de carrera. Valida tipo y cantidad.
+- **Ajuste = conteo físico:** la cantidad es el stock real contado (puede ser 0) y se guarda "stock anterior → nuevo" en las observaciones.
+- **Validaciones (400 en vez de 500):** tipo de movimiento, estado de pedido, tipo/estado de residuo, tipo de sector, rol/estado de usuario.
+- **Auth:** mensaje único "Credenciales inválidas", límite de intentos en login/registro (`express-rate-limit`), cabeceras de seguridad (`helmet`), cookie con `SameSite=Lax`, `Secure` en producción y vencimiento de 24 h.
+- **Usuarios:** la Dirección no puede modificar su propio rol/estado.
+- **Documentos:** solo Administración, Inventario y Dirección pueden subir; filtro de extensiones permitidas.
+- **Errores:** en producción los 500 no devuelven `error.message` (`helpers/error.helper.js`).
+- **Arranque:** el servidor solo escucha si la base está disponible; errores de carga de archivos devuelven 400.
+- **CORS:** se agrega `http://127.0.0.1:5173`.
+- **CSV:** separado por `;` para abrir bien en Excel en español.
+- **Scripts de importación:** sin rutas hardcodeadas (argumento o variable `INVENTARIO_XLSX` / `DIAGNOSTICO_XLSX`).
+- `.gitignore`: se ignora `uploads/`.
+
+## Frontend
+- Se quitó el campo editable de responsable (ahora es el usuario actual, solo lectura).
+- Formulario de movimientos adaptado al Ajuste (etiqueta "Stock real contado", permite 0).
+- Los botones de registrar movimiento y subir documentos se ocultan a quien no tiene permiso.
+- Si la sesión vence o el token es inválido, se limpia la sesión y se vuelve al login.
+- `.env.example` apunta al puerto 4000 del backend.
+
+## Verificado
+- Backend probado contra SQLite en memoria (login, roles, movimientos, pedidos, residuos, validaciones, uploads, CSV).
+- Frontend: `typecheck`, `lint` y `build` sin errores; recorrido en navegador de todas las páginas sin errores de consola ni de red.
+- **No verificado:** concurrencia real contra MySQL.
+
+## Nota sobre el módulo "Proyectos"
+El módulo de proyectos sigue presente (ruta, página y menú); la entrada "se eliminó" de la sección anterior quedó desactualizada.

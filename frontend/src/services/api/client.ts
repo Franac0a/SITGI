@@ -31,6 +31,23 @@ async function parseResponse<T>(response: Response): Promise<T> {
 
   if (!response.ok) {
     const errorPayload = payload as RawBackendError | null
+
+    // Sesión vencida o token inválido: se limpia la sesión local y se vuelve al login.
+    // (El login y el registro devuelven 401/403 por credenciales o aprobación; no se tocan.)
+    const esAuthPublica = /\/auth\/(login|register)$/.test(response.url)
+    if (
+      !esAuthPublica &&
+      (response.status === 401 ||
+        (response.status === 403 &&
+          /token/i.test(errorPayload?.mensaje ?? '')))
+    ) {
+      localStorage.removeItem('sitgi_token')
+      localStorage.removeItem('sitgi_user')
+      if (window.location.pathname !== '/login') {
+        window.location.assign('/login')
+      }
+    }
+
     const errorMessage =
       errorPayload?.mensaje ||
       errorPayload?.message ||

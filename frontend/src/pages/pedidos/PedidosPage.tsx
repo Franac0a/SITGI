@@ -42,7 +42,7 @@ export function PedidosPage() {
   const [itemNombre, setItemNombre] = useState('')
   const [cantidad, setCantidad] = useState('')
   const [sector, setSector] = useState('')
-  const [responsable, setResponsable] = useState(user?.nombre ?? '')
+  const responsable = user?.nombre ?? ''
   const [observaciones, setObservaciones] = useState('')
 
   const fetchData = useCallback(async () => {
@@ -74,10 +74,6 @@ export function PedidosPage() {
       setFormError('Ingrese una cantidad válida mayor a 0.')
       return
     }
-    if (!responsable.trim()) {
-      setFormError('El responsable es obligatorio.')
-      return
-    }
 
     setSubmitting(true)
     try {
@@ -85,7 +81,6 @@ export function PedidosPage() {
         item_nombre: itemNombre.trim(),
         cantidad: Number(cantidad),
         sector: sector.trim() || undefined,
-        responsable: responsable.trim(),
         observaciones: observaciones.trim() || undefined,
       })
       setFormSuccess('Pedido registrado con éxito.')
@@ -178,11 +173,10 @@ export function PedidosPage() {
               <Input
                 id="responsable"
                 name="responsable"
-                label="Responsable *"
-                placeholder="Nombre y apellido"
+                label="Responsable (usuario actual)"
                 value={responsable}
-                onChange={(e) => setResponsable(e.target.value)}
-                disabled={submitting}
+                readOnly
+                disabled
               />
               <Input
                 id="observaciones"

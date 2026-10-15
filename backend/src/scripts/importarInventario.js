@@ -2,8 +2,13 @@ import XLSX from "xlsx";
 import { startDB, sequelize } from "../config/db.js";
 import { Item } from "../models/Item.model.js";
 
-const RUTA_DEFECTO = "C:\\Users\\facun\\Desktop\\inventario cit formosa.xlsx";
-const ruta = process.argv[2] || RUTA_DEFECTO;
+const ruta = process.argv[2] || process.env.INVENTARIO_XLSX;
+if (!ruta) {
+  console.error(
+    "Uso: npm run import:inventario -- <ruta-al-xlsx>  (o definir INVENTARIO_XLSX en .env)",
+  );
+  process.exit(1);
+}
 
 const str = (v) => (v === null || v === undefined ? "" : String(v).trim());
 const num = (v) => {

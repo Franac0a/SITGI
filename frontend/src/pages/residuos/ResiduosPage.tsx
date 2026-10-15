@@ -43,7 +43,7 @@ export function ResiduosPage() {
   const [tipo, setTipo] = useState<ResiduoTipo>('Químico')
   const [descripcion, setDescripcion] = useState('')
   const [sector, setSector] = useState('')
-  const [responsable, setResponsable] = useState(user?.nombre ?? '')
+  const responsable = user?.nombre ?? ''
   const [retiroProgramado, setRetiroProgramado] = useState('')
   const [observaciones, setObservaciones] = useState('')
 
@@ -71,10 +71,6 @@ export function ResiduosPage() {
       setFormError('La descripción del residuo es obligatoria.')
       return
     }
-    if (!responsable.trim()) {
-      setFormError('El responsable es obligatorio.')
-      return
-    }
 
     setSubmitting(true)
     try {
@@ -82,7 +78,6 @@ export function ResiduosPage() {
         tipo,
         descripcion: descripcion.trim(),
         sector: sector.trim() || undefined,
-        responsable: responsable.trim(),
         retiro_programado: retiroProgramado || undefined,
         observaciones: observaciones.trim() || undefined,
       })
@@ -173,11 +168,10 @@ export function ResiduosPage() {
               <Input
                 id="responsable"
                 name="responsable"
-                label="Responsable *"
-                placeholder="Nombre y apellido"
+                label="Responsable (usuario actual)"
                 value={responsable}
-                onChange={(e) => setResponsable(e.target.value)}
-                disabled={submitting}
+                readOnly
+                disabled
               />
               <Input
                 id="retiroProgramado"

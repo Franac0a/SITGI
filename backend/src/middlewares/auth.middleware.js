@@ -31,6 +31,7 @@ export const verificarAuth = async (req, res, next) => {
 
     req.usuario = {
       id: usuario.id,
+      nombre: usuario.nombre,
       rol: usuario.rol,
       email: usuario.email,
       estado: usuario.estado,

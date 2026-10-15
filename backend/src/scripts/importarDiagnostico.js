@@ -2,8 +2,13 @@ import XLSX from "xlsx";
 import { startDB, sequelize } from "../config/db.js";
 import { Muestra } from "../models/Muestra.model.js";
 
-const RUTA_DEFECTO = "C:\\Users\\facun\\Desktop\\DIAGNOSTICO 2026- CIT.xlsx";
-const ruta = process.argv[2] || RUTA_DEFECTO;
+const ruta = process.argv[2] || process.env.DIAGNOSTICO_XLSX;
+if (!ruta) {
+  console.error(
+    "Uso: npm run import:diagnostico -- <ruta-al-xlsx>  (o definir DIAGNOSTICO_XLSX en .env)",
+  );
+  process.exit(1);
+}
 
 const str = (v) => (v === null || v === undefined ? "" : String(v).trim());
 

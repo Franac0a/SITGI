@@ -5,9 +5,21 @@ import {
   compararContraseña,
 } from "../helpers/bcrypt.helper.js";
 
+import { detalleError } from "../helpers/error.helper.js";
 export const registrarUsuario = async (req, res) => {
   try {
     const { dni, nombre, email, password } = req.body;
+
+    if (!dni || !nombre || !email || !password) {
+      return res.status(400).json({
+        mensaje: "DNI, nombre, email y contraseña son obligatorios.",
+      });
+    }
+    if (String(password).length < 8) {
+      return res.status(400).json({
+        mensaje: "La contraseña debe tener al menos 8 caracteres.",
+      });
+    }
 
     const existeEmail = await UserModel.findOne({ where: { email } });
     if (existeEmail) {
@@ -49,7 +61,7 @@ export const registrarUsuario = async (req, res) => {
     console.error("Error en el registro:", error);
     res.status(500).json({
       mensaje: "Error interno en el servidor al registrar.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
@@ -58,14 +70,20 @@ export const loginUsuario = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const usuario = await UserModel.findOne({ where: { email } });
-    if (!usuario) {
-      return res.status(404).json({ mensaje: "Usuario no encontrado." });
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ mensaje: "Email y contraseña son obligatorios." });
     }
 
-    const passwordValido = await compararContraseña(password, usuario.password);
-    if (!passwordValido) {
-      return res.status(401).json({ mensaje: "Contraseña incorrecta." });
+    const usuario = await UserModel.findOne({ where: { email } });
+    // Mismo mensaje si el usuario no existe o la contraseña es incorrecta,
+    // para no revelar qué correos están registrados.
+    const passwordValido = usuario
+      ? await compararContraseña(password, usuario.password)
+      : false;
+    if (!usuario || !passwordValido) {
+      return res.status(401).json({ mensaje: "Credenciales inválidas." });
     }
 
     if (usuario.estado === "pendiente") {
@@ -82,7 +100,12 @@ export const loginUsuario = async (req, res) => {
     }
 
     const token = generarToken({ id: usuario.id, rol: usuario.rol });
-    res.cookie("token", token, { httpOnly: true });
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
 
     res.status(200).json({
       mensaje: "Inicio de sesión exitoso.",
@@ -100,12 +123,16 @@ export const loginUsuario = async (req, res) => {
     console.error("Error en el login:", error);
     res.status(500).json({
       mensaje: "Error interno en el servidor al iniciar sesión.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
 
 export const logoutUsuario = (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+  });
   res.status(200).json({ mensaje: "Sesión cerrada correctamente." });
 };

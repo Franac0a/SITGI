@@ -13,7 +13,7 @@ export const Movimiento = sequelize.define(
       type: DataTypes.FLOAT,
       allowNull: false,
       validate: {
-        min: 0.01,
+        min: 0,
       },
     },
     fecha_movimiento: {

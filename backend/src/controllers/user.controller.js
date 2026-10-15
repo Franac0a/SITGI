@@ -1,5 +1,9 @@
 import { UserModel } from "../models/User.model.js";
 
+import { detalleError } from "../helpers/error.helper.js";
+const ESTADOS_USUARIO = ["pendiente", "activo", "rechazado"];
+const ROLES_USUARIO = ["Administración", "Inventario", "Investigador", "Dirección"];
+
 export const obtenerUsuarios = async (req, res) => {
   try {
     const { estado, rol } = req.query;
@@ -18,7 +22,7 @@ export const obtenerUsuarios = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       error: "Error al obtener la lista de usuarios.",
-      detalle: error.message,
+      ...detalleError(error),
     });
     console.log("Error al obtener la lista de usuarios");
   }
@@ -29,9 +33,23 @@ export const gestionarEstadoUsuario = async (req, res) => {
     const { id } = req.params;
     const { estado, rol } = req.body;
 
+    if (estado !== undefined && !ESTADOS_USUARIO.includes(estado)) {
+      return res.status(400).json({ error: "Estado de usuario inválido." });
+    }
+    if (rol !== undefined && !ROLES_USUARIO.includes(rol)) {
+      return res.status(400).json({ error: "Rol de usuario inválido." });
+    }
+
     const usuario = await UserModel.findByPk(id);
     if (!usuario) {
       return res.status(404).json({ error: "Usuario no encontrado." });
+    }
+
+    // Evita que la Dirección se quite el acceso a sí misma por error.
+    if (usuario.id === req.usuario.id) {
+      return res.status(400).json({
+        error: "No podés modificar tu propio estado o rol.",
+      });
     }
 
     if (estado) usuario.estado = estado;
@@ -53,7 +71,7 @@ export const gestionarEstadoUsuario = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       error: "Error al actualizar el estado del usuario.",
-      detalle: error.message,
+      ...detalleError(error),
     });
   }
 };

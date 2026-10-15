@@ -126,12 +126,14 @@ export function DocumentsPage() {
             </p>
           </div>
 
-          <Button variant="primary" onClick={() => setShowForm((v) => !v)}>
-            {showForm ? 'Cerrar formulario' : 'Subir Documento'}
-          </Button>
+          {canManage && (
+            <Button variant="primary" onClick={() => setShowForm((v) => !v)}>
+              {showForm ? 'Cerrar formulario' : 'Subir Documento'}
+            </Button>
+          )}
         </div>
 
-        {showForm && (
+        {canManage && showForm && (
           <form
             onSubmit={handleSubmit}
             className="bg-white border border-gray-200 rounded-xl p-6 shadow-xs space-y-5"

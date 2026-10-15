@@ -1,5 +1,6 @@
 import { Proyecto } from "../models/Proyecto.model.js";
 
+import { detalleError } from "../helpers/error.helper.js";
 export const obtenerProyectos = async (req, res) => {
   try {
     const proyectos = await Proyecto.findAll({ order: [["createdAt", "DESC"]] });
@@ -8,7 +9,7 @@ export const obtenerProyectos = async (req, res) => {
     console.error("Error al obtener proyectos:", error.message);
     res.status(500).json({
       mensaje: "Error al obtener los proyectos.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
@@ -37,7 +38,7 @@ export const crearProyecto = async (req, res) => {
     console.error("Error al crear proyecto:", error.message);
     res.status(500).json({
       mensaje: "Error al crear el proyecto.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
@@ -67,7 +68,7 @@ export const actualizarProyecto = async (req, res) => {
     console.error("Error al actualizar proyecto:", error.message);
     res.status(500).json({
       mensaje: "Error al actualizar el proyecto.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };
@@ -86,7 +87,7 @@ export const eliminarProyecto = async (req, res) => {
     console.error("Error al eliminar proyecto:", error.message);
     res.status(500).json({
       mensaje: "Error al eliminar el proyecto.",
-      error: error.message,
+      ...detalleError(error),
     });
   }
 };

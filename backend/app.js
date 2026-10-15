@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 import dotenv from "dotenv";
 import { startDB, sequelize } from "./src/config/db.js";
 
@@ -38,6 +40,7 @@ const FRONTEND_URLS = (process.env.FRONTEND_URLS || "")
 
 const ALLOWED_ORIGINS = [
   "http://localhost:5173",
+  "http://127.0.0.1:5173",
   "http://localhost:3000",
   ...FRONTEND_URLS,
 ];
@@ -61,23 +64,20 @@ app.use(
     credentials: true,
   }),
 );
+app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
 
-const inicializarBaseDeDatos = async () => {
-  try {
-    await startDB();
-
-    await sequelize.sync();
-    console.log(
-      "Modelos y tablas sincronizados correctamente en la base de datos.",
-    );
-  } catch (error) {
-    console.error("Error crítico al inicializar la base de datos:", error);
-  }
-};
-
-inicializarBaseDeDatos();
+// Límite de intentos en login/registro para frenar fuerza bruta.
+const limitadorAuth = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { mensaje: "Demasiados intentos. Probá de nuevo en unos minutos." },
+});
+app.use("/api/auth/login", limitadorAuth);
+app.use("/api/auth/register", limitadorAuth);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/items", itemRoutes);
@@ -92,10 +92,34 @@ app.use("/api/muestras", muestraRoutes);
 app.use("/api/notificaciones", notificacionRoutes);
 app.use("/api/proyectos", proyectoRoutes);
 
-app.listen(PORT, () => {
-  console.log(
-    ` Servidor del CIT Formosa ejecutándose en http://localhost:${PORT}`,
-  );
+// Manejo central de errores (por ejemplo, archivo no permitido en uploads)
+app.use((err, req, res, next) => {
+  if (res.headersSent) return next(err);
+  const esErrorDeCarga = err?.name === "MulterError" || /archivo/i.test(err?.message || "");
+  res.status(esErrorDeCarga ? 400 : 500).json({
+    mensaje: err?.message || "Error interno del servidor.",
+  });
 });
+
+// El servidor solo arranca si la base de datos está disponible.
+const iniciar = async () => {
+  try {
+    await startDB();
+    await sequelize.sync();
+    console.log(
+      "Modelos y tablas sincronizados correctamente en la base de datos.",
+    );
+    app.listen(PORT, () => {
+      console.log(
+        ` Servidor del CIT Formosa ejecutándose en http://localhost:${PORT}`,
+      );
+    });
+  } catch (error) {
+    console.error("Error crítico al inicializar la base de datos:", error);
+    process.exit(1);
+  }
+};
+
+iniciar();
 
 export default app;
