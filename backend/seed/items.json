@@ -1,0 +1,5395 @@
+[
+  {
+    "nombre": "TENAZA 1O\" PROFIELD",
+    "categoria": "Herramientas",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "deposito interno",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "T 01"
+  },
+  {
+    "nombre": "PINZA 8\" PROFIELD",
+    "categoria": "Herramientas",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "deposito interno",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "P02"
+  },
+  {
+    "nombre": "ALICATE 6\" ROTTWEILER",
+    "categoria": "Herramientas",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "deposito interno",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "A03"
+  },
+  {
+    "nombre": "PINZA PUNTA 8\" PROFIELD",
+    "categoria": "Herramientas",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "deposito interno",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "PP04"
+  },
+  {
+    "nombre": "BUSCAPOLO \"SICA\"",
+    "categoria": "Herramientas",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "deposito interno",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "B05"
+  },
+  {
+    "nombre": "MARTILLO GALPONERO \"TRAMONTINA\"",
+    "categoria": "Herramientas",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "deposito interno",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "MG06"
+  },
+  {
+    "nombre": "JGO. DESTORNILLADOR JPCS. PROFIELD",
+    "categoria": "Herramientas",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "deposito interno",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "JGO 07"
+  },
+  {
+    "nombre": "MAZO X 1 KG. \"GALDEX\"",
+    "categoria": "Herramientas",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "deposito interno",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "MAZO 08"
+  },
+  {
+    "nombre": "SERRUCHO 22 \"HANSAW",
+    "categoria": "Herramientas",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "deposito interno",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "S 09"
+  },
+  {
+    "nombre": "ARCO SIERRA \"ABRASOL",
+    "categoria": "Herramientas",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "deposito interno",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "SIERRA 10"
+  },
+  {
+    "nombre": "HACHA ROTTWEILER \" C/ CABO",
+    "categoria": "Herramientas",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "deposito interno",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "HACHA 11"
+  },
+  {
+    "nombre": "PINZA PICO DE LORO \"ROTTWEILER",
+    "categoria": "Herramientas",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "deposito interno",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "PL 12"
+  },
+  {
+    "nombre": "PALA PUNTA HIERRO",
+    "categoria": "Herramientas",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "deposito interno",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "PUNTA PALA 13"
+  },
+  {
+    "nombre": "TIJERA PARA DESLANAR",
+    "categoria": "Herramientas",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "deposito interno",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "TIJ DES 14"
+  },
+  {
+    "nombre": "DESCORNADOR",
+    "categoria": "Herramientas",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "deposito interno",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "DESC 15"
+  },
+  {
+    "nombre": "Freezer",
+    "categoria": "Brucelosis",
+    "marca": "Philips-Tropical",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Sector estufas/Refrigerados",
+    "detalles_tecnicos": {
+      "nInventario": "29438",
+      "enLineaEnsayos": "Bruce/Anemia"
+    },
+    "codigo_identificacion": "CIT-Fsa 06"
+  },
+  {
+    "nombre": "Heladera",
+    "categoria": "Brucelosis",
+    "marca": "Siams-Ditela",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Sector estufas/Refrigerados",
+    "detalles_tecnicos": {
+      "nInventario": "781004721",
+      "modelo": "110",
+      "nSerie": "R12",
+      "enLineaEnsayos": "Bruce/Anemia"
+    },
+    "codigo_identificacion": "CIT-Fsa 07"
+  },
+  {
+    "nombre": "Heladera mostradora",
+    "categoria": "Brucelosis",
+    "marca": "Briket",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Sector estufas/Refrigerados",
+    "detalles_tecnicos": {
+      "nInventario": "R41111119",
+      "modelo": "M5000",
+      "nSerie": "8418.50.90",
+      "enLineaEnsayos": "Bruce/Anemia"
+    },
+    "codigo_identificacion": "CIT-Fsa 08"
+  },
+  {
+    "nombre": "Micropipeta 20-100 ul",
+    "categoria": "Brucelosis",
+    "marca": "EAGLE",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Lab Brucelosis",
+    "detalles_tecnicos": {
+      "nSerie": "A0601455",
+      "criticidad": "x",
+      "enLineaEnsayos": "Anemia"
+    },
+    "codigo_identificacion": "CIT-Fsa 09"
+  },
+  {
+    "nombre": "Micropipeta 2-20 ul",
+    "categoria": "Brucelosis",
+    "marca": "Eppendorf Research",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Lab Brucelosis",
+    "detalles_tecnicos": {
+      "nSerie": "197137",
+      "criticidad": "x",
+      "enLineaEnsayos": "Bruce"
+    },
+    "codigo_identificacion": "CIT-Fsa 10"
+  },
+  {
+    "nombre": "Micropipeta 10-100 ul",
+    "categoria": "Brucelosis",
+    "marca": "Socorex",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Lab Brucelosis",
+    "detalles_tecnicos": {
+      "nSerie": "10051416",
+      "criticidad": "x",
+      "enLineaEnsayos": "Bruce"
+    },
+    "codigo_identificacion": "CIT-Fsa 11"
+  },
+  {
+    "nombre": "Polarizador Fluorescente",
+    "categoria": "Brucelosis",
+    "marca": "Tecan Genios Pro",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Lab Brucelosis",
+    "detalles_tecnicos": {
+      "nSerie": "F129043",
+      "criticidad": "x",
+      "enLineaEnsayos": "Bruce"
+    },
+    "codigo_identificacion": "CIT-Fsa 12"
+  },
+  {
+    "nombre": "Pipeta multicanal",
+    "categoria": "Brucelosis",
+    "marca": "Socorex",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Lab Brucelosis",
+    "detalles_tecnicos": {
+      "modelo": "Calibra 852",
+      "nSerie": "9091209",
+      "enLineaEnsayos": "Bruce"
+    },
+    "codigo_identificacion": "CIT-Fsa 13"
+  },
+  {
+    "nombre": "Estufa de incubacion",
+    "categoria": "Brucelosis",
+    "marca": "Dalvo",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Sector estufas/Refrigerados",
+    "detalles_tecnicos": {
+      "nInventario": "41300035",
+      "modelo": "MCM 10",
+      "enLineaEnsayos": "Bruce"
+    },
+    "codigo_identificacion": "CIT-Fsa 14"
+  },
+  {
+    "nombre": "PH metro",
+    "categoria": "Brucelosis",
+    "marca": "ADWA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Microbiología",
+    "detalles_tecnicos": {
+      "modelo": "AD 1030",
+      "criticidad": "x",
+      "enLineaEnsayos": "Anemia"
+    },
+    "codigo_identificacion": "CIT-Fsa 15"
+  },
+  {
+    "nombre": "Pesa 20 g",
+    "categoria": "Brucelosis",
+    "marca": "Juego de Piezas\n analiticas\n de alta precision",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Microbiología",
+    "detalles_tecnicos": {
+      "enLineaEnsayos": "Bruce/Anemia"
+    },
+    "codigo_identificacion": "CIT-Fsa 16"
+  },
+  {
+    "nombre": "balanza",
+    "categoria": "Brucelosis",
+    "marca": "Radwag Max 360 g",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Microbiología",
+    "detalles_tecnicos": {
+      "modelo": "PS 360 R1",
+      "nSerie": "534881",
+      "criticidad": "x",
+      "enLineaEnsayos": "Bruce/Anemia"
+    },
+    "codigo_identificacion": "CIT-Fsa 17"
+  },
+  {
+    "nombre": "Vortex",
+    "categoria": "Brucelosis",
+    "marca": "Decalab SRL",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Microbiología",
+    "detalles_tecnicos": {
+      "nInventario": "R 45611121",
+      "modelo": "Fbr",
+      "enLineaEnsayos": "Bruce/Anemia"
+    },
+    "codigo_identificacion": "CIT-Fsa 18"
+  },
+  {
+    "nombre": "Base membrana sinterizada (equipo filtración)",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Vidrio"
+    },
+    "codigo_identificacion": "LG1 -B1"
+  },
+  {
+    "nombre": "Botella de cultivo",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 22,
+    "stock_minimo": 0,
+    "unidad_medida": "1 Lt",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Borosilicato"
+    },
+    "codigo_identificacion": "lG2-B2"
+  },
+  {
+    "nombre": "Botella de cultivo",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "80 ml",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "borosilicato"
+    },
+    "codigo_identificacion": "LG3-B3"
+  },
+  {
+    "nombre": "desecador",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "30 cm",
+    "ubicacion": "Sin asignar",
+    "detalles_tecnicos": {
+      "tipo": "vidrio"
+    },
+    "codigo_identificacion": "LG -d1"
+  },
+  {
+    "nombre": "Embudo Buchner",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Cerámica"
+    },
+    "codigo_identificacion": "LG4"
+  },
+  {
+    "nombre": "Embudo",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 mm",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Vidrio"
+    },
+    "codigo_identificacion": "LG5"
+  },
+  {
+    "nombre": "Embudo",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "85 mm",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Vidrio"
+    },
+    "codigo_identificacion": "LG6"
+  },
+  {
+    "nombre": "Embudo chico de vastago corto",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 4,
+    "stock_minimo": 0,
+    "unidad_medida": "55 mm",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Vidrio"
+    },
+    "codigo_identificacion": "LG7"
+  },
+  {
+    "nombre": "Embudo Glassco (equipo filtración)",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "300 mL",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Vidrio"
+    },
+    "codigo_identificacion": "LG8"
+  },
+  {
+    "nombre": "Erlenmeyer Glassco (equipo filtración)",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 Lt",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Borosilicato"
+    },
+    "codigo_identificacion": "LG9"
+  },
+  {
+    "nombre": "Erlenmeyer PYREX",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 Lt",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Borosilicato"
+    },
+    "codigo_identificacion": "LG10"
+  },
+  {
+    "nombre": "Erlenmeyer PYREX",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 3,
+    "stock_minimo": 0,
+    "unidad_medida": "500 mL",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Borosilicato"
+    },
+    "codigo_identificacion": "LG11"
+  },
+  {
+    "nombre": "Erlenmeyer PYREX",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 4,
+    "stock_minimo": 0,
+    "unidad_medida": "125 mL",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Borosilicato"
+    },
+    "codigo_identificacion": "LG12"
+  },
+  {
+    "nombre": "Erlenmeyer PYREX",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "50 mL",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Borosilicato"
+    },
+    "codigo_identificacion": "LG13"
+  },
+  {
+    "nombre": "Filtros Nylon 47mm",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "2 cajas",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Nylon"
+    },
+    "codigo_identificacion": "LG14"
+  },
+  {
+    "nombre": "Jeringas de 5mL",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 caja",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Plástico"
+    },
+    "codigo_identificacion": "LG15"
+  },
+  {
+    "nombre": "Kitasatos PYREX",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1Lt",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Borosilicato"
+    },
+    "codigo_identificacion": "LG16"
+  },
+  {
+    "nombre": "Kitasatos GLASSCO",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1Lt",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Borosilicato"
+    },
+    "codigo_identificacion": "LG17"
+  },
+  {
+    "nombre": "Manifold AGILE",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Plastico"
+    },
+    "codigo_identificacion": "LG18"
+  },
+  {
+    "nombre": "Matraz",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 Lt",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Borosilicato"
+    },
+    "codigo_identificacion": "LG19"
+  },
+  {
+    "nombre": "Matraz",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "500 mL",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Borosilicato"
+    },
+    "codigo_identificacion": "LG20"
+  },
+  {
+    "nombre": "Matraz",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 mL",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Borosilicato"
+    },
+    "codigo_identificacion": "LG21"
+  },
+  {
+    "nombre": "Matraz",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 4,
+    "stock_minimo": 0,
+    "unidad_medida": "100 mL",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Borosilicato"
+    },
+    "codigo_identificacion": "LG22"
+  },
+  {
+    "nombre": "Matraz",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "50 mL",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Borosilicato"
+    },
+    "codigo_identificacion": "LG23"
+  },
+  {
+    "nombre": "Matraz",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 4,
+    "stock_minimo": 0,
+    "unidad_medida": "25 mL",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Borosilicato"
+    },
+    "codigo_identificacion": "LG24"
+  },
+  {
+    "nombre": "Matraz",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 5,
+    "stock_minimo": 0,
+    "unidad_medida": "10 mL",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Borosilicato"
+    },
+    "codigo_identificacion": "LG25"
+  },
+  {
+    "nombre": "Parafilm (film de parafina)",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 caja",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Parafina"
+    },
+    "codigo_identificacion": "LG26"
+  },
+  {
+    "nombre": "PHmetro",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Frágil"
+    },
+    "codigo_identificacion": "LG27"
+  },
+  {
+    "nombre": "Piseta",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Plastico"
+    },
+    "codigo_identificacion": "LG28"
+  },
+  {
+    "nombre": "placas de petri x 90 mm",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 5,
+    "stock_minimo": 0,
+    "unidad_medida": "5",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "vidrio"
+    },
+    "codigo_identificacion": "LG29"
+  },
+  {
+    "nombre": "placas de petri x150 mm",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 5,
+    "stock_minimo": 0,
+    "unidad_medida": "5",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "vidrio"
+    },
+    "codigo_identificacion": "LG30"
+  },
+  {
+    "nombre": "Probeta",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 mL",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Vidrio"
+    },
+    "codigo_identificacion": "LG31"
+  },
+  {
+    "nombre": "Probeta",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "250 mL",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Vidrio"
+    },
+    "codigo_identificacion": "LG32"
+  },
+  {
+    "nombre": "Probeta",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "100 mL",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Vidrio"
+    },
+    "codigo_identificacion": "LG33"
+  },
+  {
+    "nombre": "Tiras indicadoras de PH",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 caja",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Papel especial"
+    },
+    "codigo_identificacion": "LG34"
+  },
+  {
+    "nombre": "tubos de ensayos",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1000,
+    "stock_minimo": 0,
+    "unidad_medida": "1000",
+    "ubicacion": "Sin asignar",
+    "detalles_tecnicos": {
+      "tipo": "borosilicato"
+    },
+    "codigo_identificacion": "LG35"
+  },
+  {
+    "nombre": "Trampa de vacío",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1unid",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "vidrio"
+    },
+    "codigo_identificacion": "LG36"
+  },
+  {
+    "nombre": "Vaso precipitado",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "150 mL",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Borosilicato"
+    },
+    "codigo_identificacion": "LG37"
+  },
+  {
+    "nombre": "Vaso precipitado",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "50 mL",
+    "ubicacion": "laboratorio garrapatas",
+    "detalles_tecnicos": {
+      "tipo": "Borosilicato"
+    },
+    "codigo_identificacion": "LG38"
+  },
+  {
+    "nombre": "vidrios de reloj",
+    "categoria": "Vidrio e Insumos",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Sin asignar",
+    "detalles_tecnicos": {
+      "tipo": "borosilicarto"
+    },
+    "codigo_identificacion": "LG39"
+  },
+  {
+    "nombre": "ARABINOSA",
+    "categoria": "Droguero",
+    "marca": "DIFCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 G",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"A\""
+    },
+    "codigo_identificacion": "4"
+  },
+  {
+    "nombre": "AGAR SANGRE BASE",
+    "categoria": "Droguero",
+    "marca": "BRITANIA",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "15"
+  },
+  {
+    "nombre": "ACETATO DE PLOMO",
+    "categoria": "Droguero",
+    "marca": "TIMPER",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "19"
+  },
+  {
+    "nombre": "AGAR CITRATO SIMMONS",
+    "categoria": "Droguero",
+    "marca": "DIFCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "454 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "22"
+  },
+  {
+    "nombre": "AGAR LYSINE IRON",
+    "categoria": "Droguero",
+    "marca": "DIFCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "454 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "28"
+  },
+  {
+    "nombre": "ARGININA HC",
+    "categoria": "Droguero",
+    "marca": "DIFCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "10 G",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "30"
+  },
+  {
+    "nombre": "AGAR BASE CON CETRIMIDA",
+    "categoria": "Droguero",
+    "marca": "BRITANIA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "31"
+  },
+  {
+    "nombre": "ÁCIDO HIPURICO",
+    "categoria": "Droguero",
+    "marca": "SIGMA",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "40"
+  },
+  {
+    "nombre": "AGAR BASE SANGRE AZIDE",
+    "categoria": "Droguero",
+    "marca": "OXOID",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "45"
+  },
+  {
+    "nombre": "ÁCIDO SULFANÍLICO",
+    "categoria": "Droguero",
+    "marca": "MUNCHEN",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "46"
+  },
+  {
+    "nombre": "AGAR BILE RED VIOLET",
+    "categoria": "Droguero",
+    "marca": "BIOKAR",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "147"
+  },
+  {
+    "nombre": "AGAR DEXTROSE DE POTASIO",
+    "categoria": "Droguero",
+    "marca": "BIOKAR",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "49"
+  },
+  {
+    "nombre": "AGAR SOYA TRIPTEINA",
+    "categoria": "Droguero",
+    "marca": "BRITANIA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "50"
+  },
+  {
+    "nombre": "ÁCIDO NICOTÍNICO",
+    "categoria": "Droguero",
+    "marca": "BDH",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "52"
+  },
+  {
+    "nombre": "ÁCIDO PÍCRICO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "56"
+  },
+  {
+    "nombre": "AURAMINA",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "50 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "57"
+  },
+  {
+    "nombre": "AURAMINA",
+    "categoria": "Droguero",
+    "marca": "GURR",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0085"
+  },
+  {
+    "nombre": "ALCOHOL AMÍLICO",
+    "categoria": "Droguero",
+    "marca": "SINTORGAN",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 ML",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "64"
+  },
+  {
+    "nombre": "ALCOHOL ETÍLICO",
+    "categoria": "Droguero",
+    "marca": "BIOPACK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1001 ML",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "66"
+  },
+  {
+    "nombre": "ÁCIDO CÍTRICO",
+    "categoria": "Droguero",
+    "marca": "BAKER",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "453 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "83"
+  },
+  {
+    "nombre": "ÁCIDO CÍTRICO",
+    "categoria": "Droguero",
+    "marca": "BERNA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0089"
+  },
+  {
+    "nombre": "ÁCIDO ACÉTICO GLACIAL",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "93"
+  },
+  {
+    "nombre": "ÁCIDO ACÉTICO GLACIAL",
+    "categoria": "Droguero",
+    "marca": "DORWIL",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0091"
+  },
+  {
+    "nombre": "ÁCIDO ACÉTICO ETILENO",
+    "categoria": "Droguero",
+    "marca": "BDH",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "94"
+  },
+  {
+    "nombre": "ÁCIDO PIRÚVICO SAL SÓDICA",
+    "categoria": "Droguero",
+    "marca": "RIEDEL",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "101"
+  },
+  {
+    "nombre": "ÁCIDO PIRÚVICO SAL SÓDICA",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0094"
+  },
+  {
+    "nombre": "ÁCIDO PIRÚVICO",
+    "categoria": "Droguero",
+    "marca": "GIBCO",
+    "stock_actual": 4,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0095"
+  },
+  {
+    "nombre": "ÁCIDO PIRÚVICO",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0096"
+  },
+  {
+    "nombre": "ASPARAGINA",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "103"
+  },
+  {
+    "nombre": "ASPARAGINA",
+    "categoria": "Droguero",
+    "marca": "GIBCO",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0098"
+  },
+  {
+    "nombre": "ÁCIDO L- ASPARTIC",
+    "categoria": "Droguero",
+    "marca": "GIBCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "105"
+  },
+  {
+    "nombre": "ALANINA",
+    "categoria": "Droguero",
+    "marca": "GIBCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "106"
+  },
+  {
+    "nombre": "ÁCIDO AMINOACÉTICO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "109"
+  },
+  {
+    "nombre": "ACETATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "111"
+  },
+  {
+    "nombre": "AGAR ROSA",
+    "categoria": "Droguero",
+    "marca": "GIBCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "113"
+  },
+  {
+    "nombre": "AGAR ROSA",
+    "categoria": "Droguero",
+    "marca": "BDH",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "10 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0104"
+  },
+  {
+    "nombre": "AZUL DE BROMOTIMOL",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "10 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "34"
+  },
+  {
+    "nombre": "AZUL DE EVANS",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "10 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "60"
+  },
+  {
+    "nombre": "AZUL DE METILENO",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "73"
+  },
+  {
+    "nombre": "ÁCIDO TÁNICO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "121"
+  },
+  {
+    "nombre": "AZUL BRILLANTE DE COOMASSIE",
+    "categoria": "Droguero",
+    "marca": "ULTRAPURE",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "10 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "124"
+  },
+  {
+    "nombre": "ÁCIDO NÍTRICO 65%",
+    "categoria": "Droguero",
+    "marca": "LENNOX",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "126"
+  },
+  {
+    "nombre": "ACETATO DE AMILO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "131"
+  },
+  {
+    "nombre": "ÁCIDO SULFÚRICO",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "132"
+  },
+  {
+    "nombre": "ÁCIDO SULFÚRICO",
+    "categoria": "Droguero",
+    "marca": "ANEDRA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 ml",
+    "ubicacion": "NUTRICIÓN",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0113"
+  },
+  {
+    "nombre": "AGAR PURIFIED",
+    "categoria": "Droguero",
+    "marca": "OXOID",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "136"
+  },
+  {
+    "nombre": "ALCOHOL BUTÍLICO",
+    "categoria": "Droguero",
+    "marca": "DOUGLAS",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "142"
+  },
+  {
+    "nombre": "ÁCIDO ASCÓRBICO",
+    "categoria": "Droguero",
+    "marca": "ANEDRA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "149"
+  },
+  {
+    "nombre": "ÁCIDO ORTOSFÓRICO",
+    "categoria": "Droguero",
+    "marca": "RIEDEL DE HAEN",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "160"
+  },
+  {
+    "nombre": "ACETATO DE ETILO",
+    "categoria": "Droguero",
+    "marca": "DORWIL",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "163"
+  },
+  {
+    "nombre": "ÁCIDO BENZOICO",
+    "categoria": "Droguero",
+    "marca": "STERILIN",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 frasquito",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "167"
+  },
+  {
+    "nombre": "ÁCIDO GLUTÁMICO",
+    "categoria": "Droguero",
+    "marca": "SIGMA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "171"
+  },
+  {
+    "nombre": "ÁCIDO TARTÁRICO",
+    "categoria": "Droguero",
+    "marca": "BAKER",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "177"
+  },
+  {
+    "nombre": "ACEITE DE INMERSIÓN",
+    "categoria": "Droguero",
+    "marca": "BIOPUR",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "100 ML",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "212"
+  },
+  {
+    "nombre": "ÁCIDO LÁCTICO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "226"
+  },
+  {
+    "nombre": "ÁCIDO CÍTRICO",
+    "categoria": "Droguero",
+    "marca": "BERNA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "115"
+  },
+  {
+    "nombre": "ÁCIDO CLOHÍDRICO",
+    "categoria": "Droguero",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 ML",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "80"
+  },
+  {
+    "nombre": "ACETATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 KG",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "107"
+  },
+  {
+    "nombre": "ÁCIDO BÓRICO",
+    "categoria": "Droguero",
+    "marca": "CICARELLI",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "133"
+  },
+  {
+    "nombre": "ÁCIDO BÓRICO",
+    "categoria": "Droguero",
+    "marca": "CICARELLI",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0128"
+  },
+  {
+    "nombre": "ÁCIDO DIETILBARBITÚRICO",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "112"
+  },
+  {
+    "nombre": "ÁCIDO FÉNICO",
+    "categoria": "Droguero",
+    "marca": "BERNA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "234"
+  },
+  {
+    "nombre": "ÁCIDO FÉNICO",
+    "categoria": "Droguero",
+    "marca": "PUT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1KG",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0131"
+  },
+  {
+    "nombre": "ÁCIDO FÉNICO",
+    "categoria": "Droguero",
+    "marca": "sYNTH",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 G",
+    "ubicacion": "NUTRICIÓN",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0132"
+  },
+  {
+    "nombre": "ÁCIDO N- FENILANTRANÍLICO",
+    "categoria": "Droguero",
+    "marca": "SINTORGAN",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "50 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "239"
+  },
+  {
+    "nombre": "ACRIL BIS",
+    "categoria": "Droguero",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "200 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "246"
+  },
+  {
+    "nombre": "ACETONA",
+    "categoria": "Droguero",
+    "marca": "CICARELLI",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "70"
+  },
+  {
+    "nombre": "AZUL DE NAFTOL NEGRO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "10 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "129"
+  },
+  {
+    "nombre": "ACIDO SULFITO ANHYIDRO",
+    "categoria": "Droguero",
+    "marca": "CICARELLI",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "NUTRICIÓN",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "293"
+  },
+  {
+    "nombre": "ACIDO AMINO 2 NAFTOL 4-SULFONICO",
+    "categoria": "Droguero",
+    "marca": "CICARELLI",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 G",
+    "ubicacion": "NUTRICIÓN",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "294"
+  },
+  {
+    "nombre": "ACIDO TRICLORACETICO",
+    "categoria": "Droguero",
+    "marca": "CICARELLI",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "NUTRICIÓN",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "295"
+  },
+  {
+    "nombre": "ACIDO METABISULFITO",
+    "categoria": "Droguero",
+    "marca": "CICARELLI",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 G",
+    "ubicacion": "NUTRICIÓN",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "296"
+  },
+  {
+    "nombre": "AZUL DE BROMOFENOL",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "84"
+  },
+  {
+    "nombre": "BICARBONATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "ANEDRA",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"B\""
+    },
+    "codigo_identificacion": "96"
+  },
+  {
+    "nombre": "BICARBONATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0143"
+  },
+  {
+    "nombre": "BICARBONATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "DEL PRET",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0144"
+  },
+  {
+    "nombre": "BUTILHIDROXITOLUOL",
+    "categoria": "Droguero",
+    "marca": "WARD",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "122"
+  },
+  {
+    "nombre": "BICARBONATO DE POTASIO",
+    "categoria": "Droguero",
+    "marca": "ANEDRA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "172"
+  },
+  {
+    "nombre": "BISULFITO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "175"
+  },
+  {
+    "nombre": "BORATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "ANEDRA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "237"
+  },
+  {
+    "nombre": "BUFFER CONTROL pH 10",
+    "categoria": "Droguero",
+    "marca": "ANEDRA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 ML",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "213"
+  },
+  {
+    "nombre": "BUFFER CONTROL pH 4",
+    "categoria": "Droguero",
+    "marca": "ANEDRA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1001 ML",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "214"
+  },
+  {
+    "nombre": "BUFFER CONTROL pH 7",
+    "categoria": "Droguero",
+    "marca": "ANEDRA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1002 ML",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "215"
+  },
+  {
+    "nombre": "BOROHIDRURO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "SIGMA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "10 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "219"
+  },
+  {
+    "nombre": "BROMOCRESOL VERDE",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "10 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "240"
+  },
+  {
+    "nombre": "BROMO THYMOL AZUL",
+    "categoria": "Droguero",
+    "marca": "PABLO ZURIZARRETA WARD",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "50 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "241"
+  },
+  {
+    "nombre": "CARBONATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 KG",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"C\""
+    },
+    "codigo_identificacion": "41"
+  },
+  {
+    "nombre": "CARBONATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "BERNA",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0156"
+  },
+  {
+    "nombre": "CITRATO DE MAGNESIO",
+    "categoria": "Droguero",
+    "marca": "BDH",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "55"
+  },
+  {
+    "nombre": "CRISTAL VIOLETA",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 frasquito",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "76"
+  },
+  {
+    "nombre": "CLORURO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "BIOPACK",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "78"
+  },
+  {
+    "nombre": "CLORURO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "CICARELLI",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0160"
+  },
+  {
+    "nombre": "CLORURO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "Nutricion",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0161"
+  },
+  {
+    "nombre": "CISTINA",
+    "categoria": "Droguero",
+    "marca": "BERNA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "10 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "10"
+  },
+  {
+    "nombre": "CISTEÍNA CLORHIDRATO MONOHIDRATO",
+    "categoria": "Droguero",
+    "marca": "ANEDRA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "79"
+  },
+  {
+    "nombre": "CISTEÍNA CLORHIDRATO",
+    "categoria": "Droguero",
+    "marca": null,
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "1 frasquito",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0164"
+  },
+  {
+    "nombre": "Cloruro de litio",
+    "categoria": "Droguero",
+    "marca": "BIOPACK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "Agos",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "266"
+  },
+  {
+    "nombre": "CLORURO DE MAGNESIO",
+    "categoria": "Droguero",
+    "marca": "CICARELLI",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "90"
+  },
+  {
+    "nombre": "CLORURO DE MAGNESIO",
+    "categoria": "Droguero",
+    "marca": "SIGMA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 ML",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0167"
+  },
+  {
+    "nombre": "CLORURO DE MAGNESIO",
+    "categoria": "Droguero",
+    "marca": "BIOPACK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0168"
+  },
+  {
+    "nombre": "CONGOROT",
+    "categoria": "Droguero",
+    "marca": "GRUBLER Y CO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "10 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "120"
+  },
+  {
+    "nombre": "CLHLOR-2,4 DINITRO - BENZOL",
+    "categoria": "Droguero",
+    "marca": "FLUKA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "125"
+  },
+  {
+    "nombre": "COLORANTE DE SHORR",
+    "categoria": "Droguero",
+    "marca": "BIOPUR",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 ML",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "128"
+  },
+  {
+    "nombre": "CALDO BASE CON TETRATIONATO",
+    "categoria": "Droguero",
+    "marca": "GIBCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "17"
+  },
+  {
+    "nombre": "CALDO BASE CON TETRATIONATO",
+    "categoria": "Droguero",
+    "marca": "BRITANIA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0173"
+  },
+  {
+    "nombre": "CARBON ACTIVADO",
+    "categoria": "Droguero",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 frasquito",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "166"
+  },
+  {
+    "nombre": "CLORURO DE AMONIO",
+    "categoria": "Droguero",
+    "marca": "ANEDRA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "173"
+  },
+  {
+    "nombre": "CITRATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "CICARELLI",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "249"
+  },
+  {
+    "nombre": "CITRATO FÉRRICO",
+    "categoria": "Droguero",
+    "marca": "BDH",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "20"
+  },
+  {
+    "nombre": "CLORURO DE CALCIO",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 KG",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "24"
+  },
+  {
+    "nombre": "CLORURO DE POTASIO",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "62"
+  },
+  {
+    "nombre": "CLORURO DE POTASIO",
+    "categoria": "Droguero",
+    "marca": "AIKE",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0180"
+  },
+  {
+    "nombre": "CLORURO DE POTASIO",
+    "categoria": "Droguero",
+    "marca": "AIKE",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0181"
+  },
+  {
+    "nombre": "CLORURO DE AMONIO",
+    "categoria": "Droguero",
+    "marca": "ALCOR",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "67"
+  },
+  {
+    "nombre": "CARBONATO DE CALCIO",
+    "categoria": "Droguero",
+    "marca": "BRONFIELD",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "68"
+  },
+  {
+    "nombre": "CARBONATO DE CALCIO",
+    "categoria": "Droguero",
+    "marca": "BERNA",
+    "stock_actual": 4,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0184"
+  },
+  {
+    "nombre": "CROMATO DE POTASIO",
+    "categoria": "Droguero",
+    "marca": "BERNA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "69"
+  },
+  {
+    "nombre": "CLORURO DE BARIO",
+    "categoria": "Droguero",
+    "marca": "TIMPER",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "98"
+  },
+  {
+    "nombre": "CLORURO DE BARIO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0187"
+  },
+  {
+    "nombre": "CLORURO DE BARIO",
+    "categoria": "Droguero",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 KG",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0188"
+  },
+  {
+    "nombre": "CEMENTO QUIRURGICO",
+    "categoria": "Droguero",
+    "marca": "DICKINSON",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "60 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "63"
+  },
+  {
+    "nombre": "CITRATO KOSER MEDIO",
+    "categoria": "Droguero",
+    "marca": "DIFCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "251"
+  },
+  {
+    "nombre": "CLORURO DE HIERRO",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "53"
+  },
+  {
+    "nombre": "CETRIMIDA",
+    "categoria": "Droguero",
+    "marca": "BIOPACK",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "NUTRICIÓN",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "292"
+  },
+  {
+    "nombre": "CITRATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "230"
+  },
+  {
+    "nombre": "DICROMATO DE POTASIO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"D\""
+    },
+    "codigo_identificacion": "26"
+  },
+  {
+    "nombre": "DICARBOXILASE DE MOELLER BASE",
+    "categoria": "Droguero",
+    "marca": "DIFCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "114 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "32"
+  },
+  {
+    "nombre": "DIMETIL NAFTILAMINA",
+    "categoria": "Droguero",
+    "marca": "FLUKA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "10 ML",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "38"
+  },
+  {
+    "nombre": "DIMETIL AMINOBENZALDEHIDO",
+    "categoria": "Droguero",
+    "marca": "LOWENS",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "253"
+  },
+  {
+    "nombre": "DODECILSULFATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "FLUKA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 KG",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "178"
+  },
+  {
+    "nombre": "DODECILSULFATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0199"
+  },
+  {
+    "nombre": "DIHYDROGENOFOSFATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 KG",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "184"
+  },
+  {
+    "nombre": "EOSINA",
+    "categoria": "Droguero",
+    "marca": "DIFCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"E\""
+    },
+    "codigo_identificacion": "85"
+  },
+  {
+    "nombre": "ESCULINA PARA MICROBIOLOGIA",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "5 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "43"
+  },
+  {
+    "nombre": "ERITRITOL",
+    "categoria": "Droguero",
+    "marca": "SIGMA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "181"
+  },
+  {
+    "nombre": "ETILENDAMINO TERTAACETATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "CICARELLI",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "95"
+  },
+  {
+    "nombre": "ETILENDAMINO TERTAACETATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "TIMPER",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "50 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0205"
+  },
+  {
+    "nombre": "ETILENDAMINO TERTAACETATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "HOPPE",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0206"
+  },
+  {
+    "nombre": "ETILENDAMINO TERTAACETATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 frasquito",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0207"
+  },
+  {
+    "nombre": "ESTABILIZADOR",
+    "categoria": "Droguero",
+    "marca": "BIOPUR",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 ML",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "117"
+  },
+  {
+    "nombre": "ESTAFILOCOCO CALDO BASE ENRIQUECIDO",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "14"
+  },
+  {
+    "nombre": "ETER SULFÚRICO",
+    "categoria": "Droguero",
+    "marca": "ASSAY",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "900 ML",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "235"
+  },
+  {
+    "nombre": "EXTRACTO DE MALTA",
+    "categoria": "Droguero",
+    "marca": "BRITANIA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "242"
+  },
+  {
+    "nombre": "ETILENGLICOL",
+    "categoria": "Droguero",
+    "marca": "RIEDEL DE HAEN",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "101 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "216"
+  },
+  {
+    "nombre": "FOSFATO DE POTASIO MONOBÁSICO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 KG",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"F\""
+    },
+    "codigo_identificacion": "25"
+  },
+  {
+    "nombre": "FOSFATO DE POTASIO MONOBÁSICO",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 KG",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0214"
+  },
+  {
+    "nombre": "FOSFATO DE POTASIO MONOBÁSICO",
+    "categoria": "Droguero",
+    "marca": "ANEDRA",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0215"
+  },
+  {
+    "nombre": "FOSFATO DE POTASIO MONOBÁSICO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 3,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0216"
+  },
+  {
+    "nombre": "FOSFATO DE POTASIO MONOBÁSICO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0217"
+  },
+  {
+    "nombre": "FOSFATO DE POTASIO MONOBÁSICO",
+    "categoria": "Droguero",
+    "marca": "CICARELLI",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "501 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0218"
+  },
+  {
+    "nombre": "FOSFATO DE SODIO MONOBÁSICO",
+    "categoria": "Droguero",
+    "marca": "M & B",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "118"
+  },
+  {
+    "nombre": "FOSFATO DE SODIO MONOBÁSICO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0220"
+  },
+  {
+    "nombre": "FOSFATO DE SODIO MONOBÁSICO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0221"
+  },
+  {
+    "nombre": "FOSFATO DE SODIO MONOBÁSICO",
+    "categoria": "Droguero",
+    "marca": "ANEDRA",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0222"
+  },
+  {
+    "nombre": "FOSFATO DE SODIO HIDROGENADO",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 KG",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "148"
+  },
+  {
+    "nombre": "FOSFATO DE SODIO HIDROGENADO",
+    "categoria": "Droguero",
+    "marca": "M & B",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0224"
+  },
+  {
+    "nombre": "FOSFATO DE SODIO HIDROGENADO",
+    "categoria": "Droguero",
+    "marca": "ANEDRA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0225"
+  },
+  {
+    "nombre": "FOSFATO DE SODIO DIBÁSICO ANHÍDRO",
+    "categoria": "Droguero",
+    "marca": "BIOPACK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0226"
+  },
+  {
+    "nombre": "FLORURO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "J.T. BLAKER",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "183"
+  },
+  {
+    "nombre": "FUCSINA BÁSICA",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "10 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "48"
+  },
+  {
+    "nombre": "FENILAMINA",
+    "categoria": "Droguero",
+    "marca": "BRITANIA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 ML",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "224"
+  },
+  {
+    "nombre": "FENANTROLINA CLORHIDRATO",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "10 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "244"
+  },
+  {
+    "nombre": "FOSFATO DE POTASIO DIBÁSICO",
+    "categoria": "Droguero",
+    "marca": "CICARELLI",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "250"
+  },
+  {
+    "nombre": "GALACTOSA ANHYDRO",
+    "categoria": "Droguero",
+    "marca": "BDH",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"G\""
+    },
+    "codigo_identificacion": "2"
+  },
+  {
+    "nombre": "GLICERINA",
+    "categoria": "Droguero",
+    "marca": "BIOPACK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "65"
+  },
+  {
+    "nombre": "GLICERINA",
+    "categoria": "Droguero",
+    "marca": "ANEDRA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0234"
+  },
+  {
+    "nombre": "GLICERINA",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0235"
+  },
+  {
+    "nombre": "FORMOL (36,5%)",
+    "categoria": "Droguero",
+    "marca": "RIEDEL DE HAEN",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "77"
+  },
+  {
+    "nombre": "FORMOL (40%)",
+    "categoria": "Droguero",
+    "marca": "AIKE",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0237"
+  },
+  {
+    "nombre": "GLICINA",
+    "categoria": "Droguero",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "88"
+  },
+  {
+    "nombre": "GLUTAMINA",
+    "categoria": "Droguero",
+    "marca": "GIBCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "102"
+  },
+  {
+    "nombre": "GOMA ARABIGA",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "119"
+  },
+  {
+    "nombre": "DEXTROSE",
+    "categoria": "Droguero",
+    "marca": "SIGMA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "9"
+  },
+  {
+    "nombre": "DEXTROSE ANHIDRIDO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0242"
+  },
+  {
+    "nombre": "GRAM COLORACIÓN",
+    "categoria": "Droguero",
+    "marca": "BRIZUELA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "CAJA",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "247"
+  },
+  {
+    "nombre": "HIDRÓXDO DE POTASIO",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"H\""
+    },
+    "codigo_identificacion": "47"
+  },
+  {
+    "nombre": "HIDRÓXDO DE POTASIO",
+    "categoria": "Droguero",
+    "marca": "PUREST",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0245"
+  },
+  {
+    "nombre": "HEMATOXILINA",
+    "categoria": "Droguero",
+    "marca": "HELLICE",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "86"
+  },
+  {
+    "nombre": "HIDRÓXDO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 KG",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "97"
+  },
+  {
+    "nombre": "HEPES",
+    "categoria": "Droguero",
+    "marca": "GIBCO",
+    "stock_actual": 4,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "100"
+  },
+  {
+    "nombre": "HIPURATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "DIFCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "180"
+  },
+  {
+    "nombre": "HEPTOMOLIBDATO DE AMONIO",
+    "categoria": "Droguero",
+    "marca": "UCB",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "238"
+  },
+  {
+    "nombre": "INOSITOL",
+    "categoria": "Droguero",
+    "marca": "DIFCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"I\""
+    },
+    "codigo_identificacion": "11"
+  },
+  {
+    "nombre": "IODURO DE POTASIO",
+    "categoria": "Droguero",
+    "marca": "ANEDRA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "71"
+  },
+  {
+    "nombre": "IODO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "72"
+  },
+  {
+    "nombre": "LACTOSA",
+    "categoria": "Droguero",
+    "marca": "DIFCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"L\""
+    },
+    "codigo_identificacion": "12"
+  },
+  {
+    "nombre": "LISINA HCL",
+    "categoria": "Droguero",
+    "marca": "DIFCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "5 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "37"
+  },
+  {
+    "nombre": "LITMUS MILK",
+    "categoria": "Droguero",
+    "marca": "OXOID",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "255"
+  },
+  {
+    "nombre": "LACTOALBÚMINA",
+    "categoria": "Droguero",
+    "marca": "GIBCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0257"
+  },
+  {
+    "nombre": "LAURIL SUFLATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "141"
+  },
+  {
+    "nombre": "LÍQUIDO EMULSIONABLE",
+    "categoria": "Droguero",
+    "marca": "BASF",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "231"
+  },
+  {
+    "nombre": "LÍQUIDO DE DACIE",
+    "categoria": "Droguero",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "245"
+  },
+  {
+    "nombre": "MALTOSA",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"M\""
+    },
+    "codigo_identificacion": "1"
+  },
+  {
+    "nombre": "MALTOSA",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0262"
+  },
+  {
+    "nombre": "MELOBIOSA",
+    "categoria": "Droguero",
+    "marca": "DIFCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "10 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "3"
+  },
+  {
+    "nombre": "MONOLAURATO POLIOXIETILENO SORBITANO",
+    "categoria": "Droguero",
+    "marca": "ANEDRA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "87"
+  },
+  {
+    "nombre": "METANOL",
+    "categoria": "Droguero",
+    "marca": "BERNA",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "227"
+  },
+  {
+    "nombre": "MERCAPTOEHTANOL",
+    "categoria": "Droguero",
+    "marca": "FLUKA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 ML",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "150"
+  },
+  {
+    "nombre": "MERCAPTOEHTANOL",
+    "categoria": "Droguero",
+    "marca": "BIOPACK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 ML",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0267"
+  },
+  {
+    "nombre": "NITRATO DE POTASIO",
+    "categoria": "Droguero",
+    "marca": "J.T. BLAKER",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 LIBRA",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"N\""
+    },
+    "codigo_identificacion": "54"
+  },
+  {
+    "nombre": "NITRATO DE POTASIO",
+    "categoria": "Droguero",
+    "marca": "BERNA",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0269"
+  },
+  {
+    "nombre": "NITRATO DE PLATA",
+    "categoria": "Droguero",
+    "marca": "TIMPER",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "99"
+  },
+  {
+    "nombre": "NITRATO DE PLATA",
+    "categoria": "Droguero",
+    "marca": "ARTO KALCIYAN",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0271"
+  },
+  {
+    "nombre": "NITRATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "108"
+  },
+  {
+    "nombre": "NITRATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0273"
+  },
+  {
+    "nombre": "NITRATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "NUTRICION",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0274"
+  },
+  {
+    "nombre": "NITRATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "NUTRICION",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0275"
+  },
+  {
+    "nombre": "NITRATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "NUTRICION",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0276"
+  },
+  {
+    "nombre": "OXALATO DE AMONIO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"O\""
+    },
+    "codigo_identificacion": "174"
+  },
+  {
+    "nombre": "OXALATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "TIMPER",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "236"
+  },
+  {
+    "nombre": "PONCEAU`S",
+    "categoria": "Droguero",
+    "marca": "SINTORGAN",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "5GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"P\""
+    },
+    "codigo_identificacion": "116"
+  },
+  {
+    "nombre": "PERMANGANATO DE POTASIO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "59"
+  },
+  {
+    "nombre": "PERIODATE DE SODIO",
+    "categoria": "Droguero",
+    "marca": "SIGMA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "165"
+  },
+  {
+    "nombre": "POLIETILENGLICOL",
+    "categoria": "Droguero",
+    "marca": "SIGMA",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "169"
+  },
+  {
+    "nombre": "POLIETILENGLICOL",
+    "categoria": "Droguero",
+    "marca": "FLUKA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 KG",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0283"
+  },
+  {
+    "nombre": "PÚRPURA DE BROMO CRESOL",
+    "categoria": "Droguero",
+    "marca": "STANDARD",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "1GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "179"
+  },
+  {
+    "nombre": "PROLINA",
+    "categoria": "Droguero",
+    "marca": "SIGMA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "188"
+  },
+  {
+    "nombre": "PRESULFATO DE AMONIO",
+    "categoria": "Droguero",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 ML",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "89"
+  },
+  {
+    "nombre": "REFINOSA PENTAHIDRATO",
+    "categoria": "Droguero",
+    "marca": "NBC",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"R\""
+    },
+    "codigo_identificacion": "5"
+  },
+  {
+    "nombre": "RAMNOSA",
+    "categoria": "Droguero",
+    "marca": "DIFCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "7"
+  },
+  {
+    "nombre": "ROJO DE METILO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "50 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "29"
+  },
+  {
+    "nombre": "ROJO NEUTRAL",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "10 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "35"
+  },
+  {
+    "nombre": "ROJO DE FENOL",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "5 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "243"
+  },
+  {
+    "nombre": "SALICIN HIDROXIMETIL",
+    "categoria": "Droguero",
+    "marca": "FLUKA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "10 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"S\""
+    },
+    "codigo_identificacion": "6"
+  },
+  {
+    "nombre": "SACCHAROSE",
+    "categoria": "Droguero",
+    "marca": "DIFCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "8"
+  },
+  {
+    "nombre": "SORBITOL",
+    "categoria": "Droguero",
+    "marca": "GIBCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "21"
+  },
+  {
+    "nombre": "SULFATO DE AMONIO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "23"
+  },
+  {
+    "nombre": "SULFATO DE AMONIO",
+    "categoria": "Droguero",
+    "marca": "ANEDRA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0296"
+  },
+  {
+    "nombre": "SULFATO DE CALCIO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "228"
+  },
+  {
+    "nombre": "SULFATO CÚPRICO",
+    "categoria": "Droguero",
+    "marca": "CICARELLI",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "232"
+  },
+  {
+    "nombre": "SELENITO CALDO BASE",
+    "categoria": "Droguero",
+    "marca": "BRITANIA",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "252"
+  },
+  {
+    "nombre": "SELENITO CALDO BASE",
+    "categoria": "Droguero",
+    "marca": "GIBCO BRL",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0300"
+  },
+  {
+    "nombre": "SALMONELLA SHIGELLA AGAR",
+    "categoria": "Droguero",
+    "marca": "GIBCO BRL",
+    "stock_actual": 3,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "42"
+  },
+  {
+    "nombre": "SELENITO DE SODIO HIDROGENADO",
+    "categoria": "Droguero",
+    "marca": "BDH",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "44"
+  },
+  {
+    "nombre": "SELENITO DE SODIO HIDROGENADO",
+    "categoria": "Droguero",
+    "marca": "GIBCO BRL",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0303"
+  },
+  {
+    "nombre": "SULFATO DE ALUMINIO Y POTASIO",
+    "categoria": "Droguero",
+    "marca": "TIMPER",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "61"
+  },
+  {
+    "nombre": "SULFATO DE COBRE",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "74"
+  },
+  {
+    "nombre": "SULFATO DE COBRE",
+    "categoria": "Droguero",
+    "marca": "TIMPER",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0306"
+  },
+  {
+    "nombre": "SERINA",
+    "categoria": "Droguero",
+    "marca": "GIBCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "104"
+  },
+  {
+    "nombre": "SUFLATO DE MAGNESIO",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "110"
+  },
+  {
+    "nombre": "SEPHADEX G-200",
+    "categoria": "Droguero",
+    "marca": "PHARMACIA LKB",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "161"
+  },
+  {
+    "nombre": "SEPHADEX G-25",
+    "categoria": "Droguero",
+    "marca": "PHARMACIA LKB",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0310"
+  },
+  {
+    "nombre": "SEPHADEX G-25",
+    "categoria": "Droguero",
+    "marca": "PONCEAU",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0311"
+  },
+  {
+    "nombre": "SOLUCION DE PONCEAU",
+    "categoria": "Droguero",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "217"
+  },
+  {
+    "nombre": "SULFATO DE SODIO",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "1000 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "229"
+  },
+  {
+    "nombre": "SULFATO DE PLATA",
+    "categoria": "Droguero",
+    "marca": null,
+    "stock_actual": 3,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "NUTRICION",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0314"
+  },
+  {
+    "nombre": "TETRATHIONATO CALDO BASE",
+    "categoria": "Droguero",
+    "marca": "GIBCO BRL",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"T\""
+    },
+    "codigo_identificacion": "CIT-DRO-0315"
+  },
+  {
+    "nombre": "TETRATHIONATO CALDO BASE",
+    "categoria": "Droguero",
+    "marca": "BRITANIA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0316"
+  },
+  {
+    "nombre": "TRIPSINA SOYA CALDO",
+    "categoria": "Droguero",
+    "marca": "BRITANIA",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "51"
+  },
+  {
+    "nombre": "TRIS HIDROXIMETIL",
+    "categoria": "Droguero",
+    "marca": "BRL",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "82"
+  },
+  {
+    "nombre": "TRIS HIDROXIMETIL",
+    "categoria": "Droguero",
+    "marca": "GIBCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0319"
+  },
+  {
+    "nombre": "TRIPSINA (PARA PARVOVIRUS PORCINO)",
+    "categoria": "Droguero",
+    "marca": "GIBCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "25 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "134"
+  },
+  {
+    "nombre": "TRICHOMONAS MEDIO BASE",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "143"
+  },
+  {
+    "nombre": "TWEEN 80",
+    "categoria": "Droguero",
+    "marca": "MERCK",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "168"
+  },
+  {
+    "nombre": "THIMOL",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "176"
+  },
+  {
+    "nombre": "THIMEROSAL",
+    "categoria": "Droguero",
+    "marca": "ICN",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-DRO-0324"
+  },
+  {
+    "nombre": "UREA",
+    "categoria": "Droguero",
+    "marca": "CICARELLI",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"U\""
+    },
+    "codigo_identificacion": "13"
+  },
+  {
+    "nombre": "VERONAL ÁCIDO",
+    "categoria": "Droguero",
+    "marca": "VOLCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"V\""
+    },
+    "codigo_identificacion": "185"
+  },
+  {
+    "nombre": "VERONAL SÓDICO",
+    "categoria": "Droguero",
+    "marca": "VOLCO",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "186"
+  },
+  {
+    "nombre": "VERDE DE MALAQUITA",
+    "categoria": "Droguero",
+    "marca": "MALLINCKRODT",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "100 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "36"
+  },
+  {
+    "nombre": "VASELINA",
+    "categoria": "Droguero",
+    "marca": "EWE",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "145"
+  },
+  {
+    "nombre": "XILENO PURO",
+    "categoria": "Droguero",
+    "marca": "AIKE",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"X\""
+    },
+    "codigo_identificacion": "146"
+  },
+  {
+    "nombre": "ZINC",
+    "categoria": "Droguero",
+    "marca": "BDH",
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "500 GR",
+    "ubicacion": "DROGUERO",
+    "detalles_tecnicos": {
+      "letra": "\"Z\""
+    },
+    "codigo_identificacion": "162"
+  },
+  {
+    "nombre": "Cuba de electroforesis",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0332"
+  },
+  {
+    "nombre": "Fuente de poder BioRad",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0333"
+  },
+  {
+    "nombre": "Transiluminador Acuris",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0334"
+  },
+  {
+    "nombre": "Termociclador Ivema T21",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0335"
+  },
+  {
+    "nombre": "Microondas Atma",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0336"
+  },
+  {
+    "nombre": "Freezer Vertical Briket",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0337"
+  },
+  {
+    "nombre": "UPS Eaton",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0338"
+  },
+  {
+    "nombre": "Freezer Horizontal Cindy",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0339"
+  },
+  {
+    "nombre": "Microcentrífuga Dlab",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0340"
+  },
+  {
+    "nombre": "Micropipeta Sartorius",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "P 1000",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0341"
+  },
+  {
+    "nombre": "Micropipeta Sartorius",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "P 200",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0342"
+  },
+  {
+    "nombre": "Micropipeta Sartorius",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 3,
+    "stock_minimo": 0,
+    "unidad_medida": "P 20",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0343"
+  },
+  {
+    "nombre": "Micropipeta Gilson",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "P 1000",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0344"
+  },
+  {
+    "nombre": "Micropipeta Gilson",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "P 200",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0345"
+  },
+  {
+    "nombre": "Micropipeta Gilson",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "P 20",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0346"
+  },
+  {
+    "nombre": "Micropipeta Sartorius",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "P 3",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0347"
+  },
+  {
+    "nombre": "Micropipeta Eppendorf",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "P 10",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0348"
+  },
+  {
+    "nombre": "Agitador Velp",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0349"
+  },
+  {
+    "nombre": "Baño Termostático Mason Vickin",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0350"
+  },
+  {
+    "nombre": "Termómetro químico mercurio",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "-10 a 200°",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0351"
+  },
+  {
+    "nombre": "Kit extracción Roche",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Práctica",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0352"
+  },
+  {
+    "nombre": "Kit extracción Roche",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 6,
+    "stock_minimo": 0,
+    "unidad_medida": "100 extracciones",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0353"
+  },
+  {
+    "nombre": "Kit extracción InBio",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "50 extracciones",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0354"
+  },
+  {
+    "nombre": "Alcohol Isopropílico Dorwil",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1l",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0355"
+  },
+  {
+    "nombre": "Cloroformo Biopack",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0356"
+  },
+  {
+    "nombre": "Buffer TE Inbio",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "100 ml",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0357"
+  },
+  {
+    "nombre": "Tris HCL Biofroxx",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 gr",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0358"
+  },
+  {
+    "nombre": "SDS Biofroxx",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "250 gr",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0359"
+  },
+  {
+    "nombre": "Acetato de Potasio Carlo Erba",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "1 kg",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0360"
+  },
+  {
+    "nombre": "Buffer TAE 40X Inbio",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 3,
+    "stock_minimo": 0,
+    "unidad_medida": "1 L",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0361"
+  },
+  {
+    "nombre": "Agarosa Inbio",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 5,
+    "stock_minimo": 0,
+    "unidad_medida": "100 gr",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0362"
+  },
+  {
+    "nombre": "agua Ultra Pura Inbio",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 4,
+    "stock_minimo": 0,
+    "unidad_medida": "100 ml",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0363"
+  },
+  {
+    "nombre": "Marcador Peso Molecular Inbio",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 3,
+    "stock_minimo": 0,
+    "unidad_medida": "descongelado",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0364"
+  },
+  {
+    "nombre": "Máster Mix Inbio",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "descongelado",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0365"
+  },
+  {
+    "nombre": "Eco gel Inbio",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "descongelado",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0366"
+  },
+  {
+    "nombre": "Kit dNTPs Inbio",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 4,
+    "stock_minimo": 0,
+    "unidad_medida": "descongelado",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0367"
+  },
+  {
+    "nombre": "Taq adn polimerasa Inbio",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 4,
+    "stock_minimo": 0,
+    "unidad_medida": "descongelado",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0368"
+  },
+  {
+    "nombre": "Marcador Peso Molecular Trans gen",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "descongelado",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0369"
+  },
+  {
+    "nombre": "dNTPs Trans gen",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "descongelado",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0370"
+  },
+  {
+    "nombre": "Taq adn polimerasa Trans gen",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "descongelado",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0371"
+  },
+  {
+    "nombre": "Primers 1591 Campy",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "descongelado",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0372"
+  },
+  {
+    "nombre": "Primers Hum Campy",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "descongelado",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0373"
+  },
+  {
+    "nombre": "Primers B4-B5 Bruce",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "descongelado",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0374"
+  },
+  {
+    "nombre": "Primers Housk Eucariota",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "descongelado",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0375"
+  },
+  {
+    "nombre": "Primers Bar-Baf",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "Liofilizado",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0376"
+  },
+  {
+    "nombre": "Primers Bmel",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Liofilizado",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0377"
+  },
+  {
+    "nombre": "Primers 1591 Campy",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Liofilizado",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0378"
+  },
+  {
+    "nombre": "Primers Hum Campy",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Liofilizado",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0379"
+  },
+  {
+    "nombre": "Primers Trico",
+    "categoria": "Biología Molecular",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Liofilizado",
+    "ubicacion": "Biología Molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-BIO-0380"
+  },
+  {
+    "nombre": "Micropipeta",
+    "categoria": "Hemoparásitos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Laboratorio de Parasitología (H.P)",
+    "detalles_tecnicos": {
+      "tipo": "Monocanal",
+      "pfi": "2024"
+    },
+    "codigo_identificacion": "CIT-HEM-0381"
+  },
+  {
+    "nombre": "Micropipeta",
+    "categoria": "Hemoparásitos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Laboratorio de Parasitología (H.P)",
+    "detalles_tecnicos": {
+      "tipo": "Monocanal",
+      "pfi": "2024"
+    },
+    "codigo_identificacion": "CIT-HEM-0382"
+  },
+  {
+    "nombre": "Micropipeta",
+    "categoria": "Hemoparásitos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Laboratorio de Parasitología (H.P)",
+    "detalles_tecnicos": {
+      "tipo": "Monocanal",
+      "pfi": "2024"
+    },
+    "codigo_identificacion": "CIT-HEM-0383"
+  },
+  {
+    "nombre": "Micropipeta",
+    "categoria": "Hemoparásitos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Laboratorio de Parasitología (H.P)",
+    "detalles_tecnicos": {
+      "tipo": "Multicanal",
+      "pfi": "2024"
+    },
+    "codigo_identificacion": "CIT-HEM-0384"
+  },
+  {
+    "nombre": "Soporte para Micropipetas",
+    "categoria": "Hemoparásitos",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Laboratorio de Parasitología (H.P)",
+    "detalles_tecnicos": {
+      "pfi": "2024"
+    },
+    "codigo_identificacion": "CIT-HEM-0385"
+  },
+  {
+    "nombre": "tratamiento vet",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "observaciones": "tilmicosina (manchita)"
+    },
+    "codigo_identificacion": "CIT-BOV-0386"
+  },
+  {
+    "nombre": "baño",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "observaciones": "aspersin"
+    },
+    "codigo_identificacion": "CIT-BOV-0387"
+  },
+  {
+    "nombre": "baño",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "observaciones": "aspersin"
+    },
+    "codigo_identificacion": "CIT-BOV-0388"
+  },
+  {
+    "nombre": "tratamiento vet",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "observaciones": "tilmicosina (manchita), curabichera"
+    },
+    "codigo_identificacion": "CIT-BOV-0389"
+  },
+  {
+    "nombre": "alimento",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 10,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "costo": "17000",
+      "observaciones": "bolsas de balanceado (25 kg), afrecho (40kg)"
+    },
+    "codigo_identificacion": "CIT-BOV-0390"
+  },
+  {
+    "nombre": "tratamiento vet",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "costo": "15000",
+      "observaciones": "control de animales"
+    },
+    "codigo_identificacion": "CIT-BOV-0391"
+  },
+  {
+    "nombre": "combustible",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "costo": "6000",
+      "observaciones": "devolución de carro"
+    },
+    "codigo_identificacion": "CIT-BOV-0392"
+  },
+  {
+    "nombre": "combustible",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "costo": "15000",
+      "observaciones": "traslado de animales al CIT"
+    },
+    "codigo_identificacion": "CIT-BOV-0393"
+  },
+  {
+    "nombre": "accesorios",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "costo": "6005",
+      "observaciones": "cadena, argolla, soga"
+    },
+    "codigo_identificacion": "CIT-BOV-0394"
+  },
+  {
+    "nombre": "alimento",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "costo": "3400",
+      "observaciones": "bolsas de balanceado"
+    },
+    "codigo_identificacion": "CIT-BOV-0395"
+  },
+  {
+    "nombre": "tratamiento vet",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "observaciones": "curabicherea, ivomec gold 6 mm, oxitetraciclicna 40ml, baño con aspersin-Ambos animales"
+    },
+    "codigo_identificacion": "CIT-BOV-0396"
+  },
+  {
+    "nombre": "alimento",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 25,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "costo": "47500",
+      "observaciones": "bolsas de balanceado, alfalfa"
+    },
+    "codigo_identificacion": "CIT-BOV-0397"
+  },
+  {
+    "nombre": "tratamiento vet",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "observaciones": "doramectina 6ml c/u, meglumina flnixin 7 ml c/u, penicilina strepto 20ml c/u, limpieza con H2O oxig, curabichera, parasta amarilla"
+    },
+    "codigo_identificacion": "CIT-BOV-0398"
+  },
+  {
+    "nombre": "personal",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "costo": "5000",
+      "observaciones": "trabajo de manga con personal"
+    },
+    "codigo_identificacion": "CIT-BOV-0399"
+  },
+  {
+    "nombre": "alimento",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "costo": "3900",
+      "observaciones": "bolsas de balanceado, fardo"
+    },
+    "codigo_identificacion": "CIT-BOV-0400"
+  },
+  {
+    "nombre": "tratamiento vet",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "observaciones": "penicilina strepto 20ml c/u limpieza con H2O oxig, parasta amarilla"
+    },
+    "codigo_identificacion": "CIT-BOV-0401"
+  },
+  {
+    "nombre": "tratamiento vet",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "observaciones": "curabichera, 30 ml overlina, 5 ml biogenesis kit"
+    },
+    "codigo_identificacion": "CIT-BOV-0402"
+  },
+  {
+    "nombre": "alimento",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 10,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "costo": "17000",
+      "observaciones": "bolsas de balanceado"
+    },
+    "codigo_identificacion": "CIT-BOV-0403"
+  },
+  {
+    "nombre": "tratamiento vet",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "observaciones": "antibioticos (manchita)"
+    },
+    "codigo_identificacion": "CIT-BOV-0404"
+  },
+  {
+    "nombre": "alimento",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 15,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "costo": "22500",
+      "observaciones": "bolsas de balanceado"
+    },
+    "codigo_identificacion": "CIT-BOV-0405"
+  },
+  {
+    "nombre": "alimento",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 10,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "costo": "11000",
+      "observaciones": "alfalfa"
+    },
+    "codigo_identificacion": "CIT-BOV-0406"
+  },
+  {
+    "nombre": "alimento",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 20,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "costo": "32000",
+      "observaciones": "bolsas de balanceado, alfalfa"
+    },
+    "codigo_identificacion": "CIT-BOV-0407"
+  },
+  {
+    "nombre": "alimento",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 15,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "costo": "29250",
+      "observaciones": "bolsas de balanceado"
+    },
+    "codigo_identificacion": "CIT-BOV-0408"
+  },
+  {
+    "nombre": "alimento",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "costo": "37450",
+      "observaciones": "bolsas de balanceado, alfalfa"
+    },
+    "codigo_identificacion": "CIT-BOV-0409"
+  },
+  {
+    "nombre": "alimento",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 10,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "costo": "19500",
+      "observaciones": "bolsas de balanceado"
+    },
+    "codigo_identificacion": "CIT-BOV-0410"
+  },
+  {
+    "nombre": "alimento",
+    "categoria": "Bovinos Insumos",
+    "marca": null,
+    "stock_actual": 15,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Bovinos",
+    "detalles_tecnicos": {
+      "costo": "36750",
+      "observaciones": "terminador"
+    },
+    "codigo_identificacion": "CIT-BOV-0411"
+  },
+  {
+    "nombre": "Mochila para aspersion",
+    "categoria": "Bovinos Adquisiciones",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Galpón Bovinos",
+    "detalles_tecnicos": {
+      "observaciones": "Laura"
+    },
+    "codigo_identificacion": "CIT-BOV-0412"
+  },
+  {
+    "nombre": "bozales",
+    "categoria": "Bovinos Adquisiciones",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Galpón Bovinos",
+    "detalles_tecnicos": {
+      "observaciones": "Laura"
+    },
+    "codigo_identificacion": "CIT-BOV-0413"
+  },
+  {
+    "nombre": "sogas x x mtrs",
+    "categoria": "Bovinos Adquisiciones",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Galpón Bovinos",
+    "detalles_tecnicos": {
+      "observaciones": "Laura"
+    },
+    "codigo_identificacion": "CIT-BOV-0414"
+  },
+  {
+    "nombre": "selladora de frasco",
+    "categoria": "Bovinos Adquisiciones",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Galpón Bovinos",
+    "detalles_tecnicos": {
+      "observaciones": "laura"
+    },
+    "codigo_identificacion": "CIT-BOV-0415"
+  },
+  {
+    "nombre": "selladora de film +3 rollos para autoclave",
+    "categoria": "Bovinos Adquisiciones",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "Galpón Bovinos",
+    "detalles_tecnicos": {
+      "observaciones": "laura"
+    },
+    "codigo_identificacion": "CIT-BOV-0416"
+  },
+  {
+    "nombre": "Termociclador",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "inta mercedes / biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "510681"
+  },
+  {
+    "nombre": "Fuente de poder",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "inta mercedes / biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "40770"
+  },
+  {
+    "nombre": "Cuba de electroforesis",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "inta mercedes / biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0419"
+  },
+  {
+    "nombre": "Transiluminador",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "inta mercedes / biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "510682"
+  },
+  {
+    "nombre": "Microscopio óptico Leica DM500",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "inta mercedes / biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "61466/515983"
+  },
+  {
+    "nombre": "Insumos",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0422"
+  },
+  {
+    "nombre": "Tips sin filtro 1000 ul (3 bolsas de mil)",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0423"
+  },
+  {
+    "nombre": "Tips sin filtro 200 ul (3 dolsas de mil)",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0424"
+  },
+  {
+    "nombre": "Tips sin filtro 10 ul (2 bolsas de mil)",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0425"
+  },
+  {
+    "nombre": "Tips con filtro 1000 ul (1 Rack)",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0426"
+  },
+  {
+    "nombre": "Tips con filtro 200 ul (1 Rack)",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0427"
+  },
+  {
+    "nombre": "Tips con filtro 10 ul (2 Rack)",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0428"
+  },
+  {
+    "nombre": "Tubos de 15 ml (100 unidades)",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0429"
+  },
+  {
+    "nombre": "Eppendorff 1,5 ml (2 bolsas de 1000)",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0430"
+  },
+  {
+    "nombre": "Eppendorff 2 ml (2 bolsas de 1000)",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0431"
+  },
+  {
+    "nombre": "Probeta 50 ml (1)",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0432"
+  },
+  {
+    "nombre": "Probeta 100 ml (1)",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0433"
+  },
+  {
+    "nombre": "Frasco de 200 ml (1)",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0434"
+  },
+  {
+    "nombre": "Frasco de 500 ml (1)",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0435"
+  },
+  {
+    "nombre": "Pipetas (2) Gradilla (1) Cajas de guardado en freezer (3)",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0436"
+  },
+  {
+    "nombre": "Alcohol Etílico Absoluto",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0437"
+  },
+  {
+    "nombre": "Alcohol Isoprpílico",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0438"
+  },
+  {
+    "nombre": "Taq Polimerasa",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0439"
+  },
+  {
+    "nombre": "DNTPs",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0440"
+  },
+  {
+    "nombre": "Primers hemoparásitos (Anaplasma (2), Babesia bovis (1) Babesia bigemina (1) Trypanosoma (1)",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0441"
+  },
+  {
+    "nombre": "Marcados de peso molecular",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0442"
+  },
+  {
+    "nombre": "Buffer TAE 10   x",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0443"
+  },
+  {
+    "nombre": "Agarosa 100 g",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0444"
+  },
+  {
+    "nombre": "Bromuro de etidio",
+    "categoria": "INTA",
+    "marca": null,
+    "stock_actual": 0,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "biologia molecular",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-INT-0445"
+  },
+  {
+    "nombre": "Microscopio Arcano Linea XSZ 107 BN Binocular",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de garrapatas",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0446"
+  },
+  {
+    "nombre": "Agitador magnético VELP Scientifica",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de garrapatas",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0447"
+  },
+  {
+    "nombre": "Balanza analítica  RadwagWTB400 (Máximo 400 g-0.01 g)",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de Prep Soluciones",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0448"
+  },
+  {
+    "nombre": "Ampolla de decantación",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de Prep Soluciones",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0449"
+  },
+  {
+    "nombre": "Pipeta de vidrio simple aforo x 10 ML",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de garrapatas",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0450"
+  },
+  {
+    "nombre": "Probeta de 100 ml",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de garrapatas",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0451"
+  },
+  {
+    "nombre": "Barrita magnética  x 2 cm",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de garrapatas",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0452"
+  },
+  {
+    "nombre": "Vaso de ppado de 1000 ml",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de garrapatas",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0453"
+  },
+  {
+    "nombre": "Pera de goma",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 2,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de garrapatas",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0454"
+  },
+  {
+    "nombre": "cronometro",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de garrapatas",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0455"
+  },
+  {
+    "nombre": "embudo",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de garrapatas",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0456"
+  },
+  {
+    "nombre": "filtro",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de garrapatas",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0457"
+  },
+  {
+    "nombre": "Cámara de lectura",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de garrapatas",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0458"
+  },
+  {
+    "nombre": "Soporte universal",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de Prep Soluciones",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0459"
+  },
+  {
+    "nombre": "Pinza para ampolla de decantación",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de garrapatas",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0460"
+  },
+  {
+    "nombre": "Termómetro de 0-100°C",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de garrapatas",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0461"
+  },
+  {
+    "nombre": "pepsina",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de garrapatas",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0462"
+  },
+  {
+    "nombre": "Conexión tubo de vacio de venturi",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de garrapatas",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0463"
+  },
+  {
+    "nombre": "Tiras indicador de pH (para 100 determinaciones)",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de garrapatas",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0464"
+  },
+  {
+    "nombre": "Gradilla para 24 tubos de 50 mL",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de garrapatas",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0465"
+  },
+  {
+    "nombre": "Tubos de centrifuga plástico de 50 ml",
+    "categoria": "Triquinelosis",
+    "marca": null,
+    "stock_actual": 1,
+    "stock_minimo": 0,
+    "unidad_medida": "Unidad",
+    "ubicacion": "laboratorio de garrapatas",
+    "detalles_tecnicos": {},
+    "codigo_identificacion": "CIT-TRI-0466"
+  }
+]
