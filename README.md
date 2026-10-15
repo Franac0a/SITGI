@@ -8,7 +8,7 @@ Requisitos: Node.js 20+ y un MySQL accesible.
 ```bash
 cd backend
 npm install
-cp .env.example .env      # completar DB_*, JWT_SECRET (largo y aleatorio) y, si hace falta, FRONTEND_URLS
+cp .env.example .env      # completar JWT_SECRET (largo y aleatorio) y, si hace falta, DB_* y FRONTEND_URLS
 npm run seed:admin        # crea el usuario Dirección inicial (director@citformosa.gob.ar / Admin123!)
 npm run dev               # http://localhost:4000
 ```
@@ -28,15 +28,8 @@ Requiere Docker Desktop. Desde la raíz del proyecto:
 ```bash
 docker compose up -d      # levanta MySQL con la base citproyecto
 ```
-En `backend/.env` usar:
-```
-DB_HOST=localhost
-DB_PORT=3306
-DB_USER=sitgi
-DB_PASSWORD=sitgi_dev
-DB_NAME=citproyecto
-DB_DIALECT=mysql
-```
+Copiar `backend/.env.example` a `backend/.env`: ya trae los valores de Docker. Solo hay que completar `JWT_SECRET` con una clave larga y aleatoria (el comando para generarla está en el mismo archivo).
+
 Después, `npm run dev` y `npm run seed` en `backend/` (el backend crea las tablas al arrancar). Los datos quedan guardados en un volumen de Docker. Para apagar: `docker compose down`; para borrar también los datos: `docker compose down -v`.
 
 El puerto 3306 no puede estar usado por otro MySQL (por ejemplo XAMPP). Si hace falta, se cambia con la variable `DB_PUERTO` (ejemplo: `DB_PUERTO=3307 docker compose up -d`) y `DB_PORT` en el `.env`.
