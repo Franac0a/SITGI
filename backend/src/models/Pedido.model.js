@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/db.js";
+import { Item } from "./Item.model.js";
 
 export const Pedido = sequelize.define(
   "Pedido",
@@ -44,5 +45,14 @@ export const Pedido = sequelize.define(
     tableName: "pedidos",
   },
 );
+
+// Ítem del inventario al que se repone; se completa al pedirlo o al ingresarlo.
+Item.hasMany(Pedido, { foreignKey: "itemId", sourceKey: "id" });
+Pedido.belongsTo(Item, {
+  foreignKey: "itemId",
+  targetKey: "id",
+  as: "item",
+  onDelete: "SET NULL",
+});
 
 export default Pedido;

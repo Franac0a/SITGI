@@ -1,11 +1,8 @@
 import { sequelize } from "./db.js";
 
-/**
- * `sequelize.sync()` crea las tablas que faltan, pero NO modifica las que ya
- * existen. Si la base es anterior a los últimos cambios (sector en movimientos,
- * tipos de movimiento nuevos y roles nuevos), se avisa con un mensaje claro en
- * lugar de fallar más tarde con errores confusos.
- */
+// sequelize.sync() crea las tablas que faltan pero no modifica las existentes.
+// Si la base es anterior a los últimos cambios, se avisa con un mensaje claro
+// que indica qué migración falta, en vez de fallar más tarde con errores confusos.
 export const verificarEsquema = async () => {
   const dialecto = sequelize.getDialect();
   if (dialecto !== "mysql" && dialecto !== "mariadb") return;
@@ -13,22 +10,36 @@ export const verificarEsquema = async () => {
   const qi = sequelize.getQueryInterface();
   const movimientos = await qi.describeTable("movimientos");
   const usuarios = await qi.describeTable("usuarios");
+  const pedidos = await qi.describeTable("pedidos");
   const enumDe = (col) => String(col?.type ?? "").toLowerCase();
 
   const faltantes = [];
-  if (!movimientos.sector) faltantes.push("columna movimientos.sector");
+  const migraciones = [];
+
+  const falta001 = [];
+  if (!movimientos.sector) falta001.push("columna movimientos.sector");
   if (!enumDe(movimientos.tipo_movimiento).includes("cambio de ubicaci")) {
-    faltantes.push("tipos nuevos en movimientos.tipo_movimiento");
+    falta001.push("tipos nuevos en movimientos.tipo_movimiento");
   }
   if (!enumDe(usuarios.rol).includes("cnico/becario")) {
-    faltantes.push("roles nuevos en usuarios.rol");
+    falta001.push("roles nuevos en usuarios.rol");
+  }
+  if (falta001.length > 0) {
+    faltantes.push(...falta001);
+    migraciones.push("001_etapa1_documento.sql");
+  }
+
+  if (!pedidos.itemId) {
+    faltantes.push("columna pedidos.itemId");
+    migraciones.push("002_pedidos_item.sql");
   }
 
   if (faltantes.length > 0) {
     throw new Error(
       `La base de datos está desactualizada (falta: ${faltantes.join("; ")}). ` +
-        "Ejecutá el script backend/migrations/001_etapa1_documento.sql en phpMyAdmin " +
-        "(pestaña SQL, con la base seleccionada) y volvé a iniciar el servidor.",
+        `Ejecutá en phpMyAdmin (pestaña SQL, con la base seleccionada), en este orden: ` +
+        `${migraciones.map((m) => `backend/migrations/${m}`).join(", ")}. ` +
+        "Después volvé a iniciar el servidor.",
     );
   }
 };

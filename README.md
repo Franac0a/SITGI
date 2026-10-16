@@ -34,9 +34,14 @@ Después, `npm run dev` y `npm run seed` en `backend/` (el backend crea las tabl
 
 El puerto 3306 no puede estar usado por otro MySQL (por ejemplo XAMPP). Si hace falta, se cambia con la variable `DB_PUERTO` (ejemplo: `DB_PUERTO=3307 docker compose up -d`) y `DB_PORT` en el `.env`.
 
-**Base de datos ya existente (migración 001)**
+**Base de datos ya existente (migraciones)**
 
-`sequelize.sync()` crea tablas nuevas pero no modifica las existentes. Si tu base ya existía antes de los tipos de movimiento y roles nuevos, el backend se detiene con un mensaje claro hasta que ejecutes `backend/migrations/001_etapa1_documento.sql` (phpMyAdmin → base `citproyecto` → pestaña SQL). Una base nueva y vacía no la necesita.
+`sequelize.sync()` crea tablas nuevas pero no modifica las existentes. Si la base ya existía antes de los últimos cambios, el backend se detiene con un mensaje que indica qué migración falta. Se ejecutan una sola vez, en orden, en phpMyAdmin (base `citproyecto` → pestaña SQL):
+
+1. `backend/migrations/001_etapa1_documento.sql`: sector en movimientos, tipos de movimiento y roles nuevos.
+2. `backend/migrations/002_pedidos_item.sql`: vincula los pedidos con los ítems del inventario.
+
+Una base nueva y vacía no necesita ninguna. Con Docker, la forma más simple es `docker compose down -v`, volver a levantar y correr `npm run seed`.
 
 **Datos iniciales**
 
@@ -65,7 +70,7 @@ Los usuarios que se registran quedan en estado *pendiente* hasta que la Direcci�
 
 - **Inventario**: ítems por categoría, stock mínimo, ubicación y condición de almacenamiento.
 - **Movimientos**: ingreso, reposición, egreso, reparación, baja, ajuste y cambio de ubicación, con historial y filtros.
-- **Pedidos y residuos**: solicitudes de compra y registro de residuos.
+- **Pedidos y residuos**: solicitudes de reposición, que al marcarse como ingresadas suman el stock y registran el movimiento, y registro de residuos.
 - **Documentos**: MSDS, SOP y COA asociados a los ítems.
 - **Muestras**: registro de diagnóstico.
 - **Proyectos**: proyectos de investigación.
