@@ -7,13 +7,14 @@ import { EmptyState } from '@/components/ui/empty-state'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAuth } from '@/context'
 import { canCreateInventory } from '@/utils/rbac'
+import { getInventoryItems } from '@/services/inventory/inventory.service'
 import { formatApiError } from '@/utils/errors'
 import {
   getPedidos,
   createPedido,
   updatePedidoEstado,
 } from '@/services/pedidos/pedidos.service'
-import type { Pedido, PedidoEstado } from '@/types/scientific.types'
+import type { InventoryItem, Pedido, PedidoEstado } from '@/types/scientific.types'
 
 function estadoBadge(estado: PedidoEstado): string {
   switch (estado) {
@@ -39,6 +40,10 @@ export function PedidosPage() {
   const [submitting, setSubmitting] = useState(false)
   const [formError, setFormError] = useState<string | null>(null)
   const [formSuccess, setFormSuccess] = useState<string | null>(null)
+  const [items, setItems] = useState<InventoryItem[]>([])
+  const [itemId, setItemId] = useState('')
+  const [itemParaIngreso, setItemParaIngreso] = useState<Record<number, string>>({})
+  const [aviso, setAviso] = useState<string | null>(null)
   const [itemNombre, setItemNombre] = useState('')
   const [cantidad, setCantidad] = useState('')
   const [sector, setSector] = useState('')
@@ -61,6 +66,25 @@ export function PedidosPage() {
     fetchData()
   }, [fetchData])
 
+  useEffect(() => {
+    if (!canManage) return
+    getInventoryItems()
+      .then(setItems)
+      .catch(() => setItems([]))
+  }, [canManage])
+
+  const nombreDeItem = (it: InventoryItem) => it.nombre ?? it.name ?? ''
+  const etiquetaItem = (it: InventoryItem) => {
+    const codigo = it.codigo_identificacion ?? it.code
+    return codigo ? `${nombreDeItem(it)} (${codigo})` : nombreDeItem(it)
+  }
+
+  const handleItemSeleccionado = (valor: string) => {
+    setItemId(valor)
+    const it = items.find((i) => String(i.id) === valor)
+    if (it) setItemNombre(nombreDeItem(it))
+  }
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setFormError(null)
@@ -79,12 +103,14 @@ export function PedidosPage() {
     try {
       await createPedido({
         item_nombre: itemNombre.trim(),
+        itemId: itemId ? Number(itemId) : undefined,
         cantidad: Number(cantidad),
         sector: sector.trim() || undefined,
         observaciones: observaciones.trim() || undefined,
       })
       setFormSuccess('Pedido registrado con éxito.')
       setItemNombre('')
+      setItemId('')
       setCantidad('')
       setSector('')
       setObservaciones('')
@@ -96,10 +122,14 @@ export function PedidosPage() {
     }
   }
 
-  const handleEstado = async (id: number, estado: PedidoEstado) => {
+  const handleEstado = async (id: number, estado: PedidoEstado, itemElegido?: string) => {
     setError(null)
+    setAviso(null)
     try {
-      await updatePedidoEstado(id, estado)
+      const resp = await updatePedidoEstado(id, estado, itemElegido ? Number(itemElegido) : undefined)
+      if (estado === 'Ingresado') {
+        setAviso(`${resp.mensaje ?? 'Pedido ingresado.'} Stock actual: ${resp.nuevo_stock ?? '-'}.`)
+      }
       await fetchData()
     } catch (err) {
       setError(formatApiError(err))
@@ -138,6 +168,30 @@ export function PedidosPage() {
             {formSuccess && <Alert variant="success" message={formSuccess} />}
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {items.length > 0 && (
+                <div className="lg:col-span-3">
+                  <label
+                    htmlFor="itemId"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Ítem del inventario (opcional)
+                  </label>
+                  <select
+                    id="itemId"
+                    value={itemId}
+                    onChange={(e) => handleItemSeleccionado(e.target.value)}
+                    disabled={submitting}
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm"
+                  >
+                    <option value="">Insumo nuevo, todavía no está en el inventario</option>
+                    {items.map((it) => (
+                      <option key={it.id} value={String(it.id)}>
+                        {etiquetaItem(it)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
               <div className="lg:col-span-2">
                 <Input
                   id="itemNombre"
@@ -197,6 +251,8 @@ export function PedidosPage() {
           </form>
         )}
 
+        {aviso && <Alert variant="success" message={aviso} />}
+
         {error && (
           <Alert variant="error" title="Error al cargar pedidos" message={error} />
         )}
@@ -229,6 +285,11 @@ export function PedidosPage() {
                   <tr key={p.id} className="hover:bg-gray-50/80 transition-colors">
                     <td className="px-5 py-4 font-bold">
                       {p.item_nombre}
+                      {p.item && (
+                        <span className="block text-[11px] text-gray-500 font-normal">
+                          Inventario: {p.item.codigo_identificacion ?? p.item.nombre} · stock {p.item.stock_actual}
+                        </span>
+                      )}
                       {p.observaciones && (
                         <span className="block text-[11px] text-gray-500 font-normal">
                           {p.observaciones}
@@ -257,13 +318,33 @@ export function PedidosPage() {
                           </button>
                         )}
                         {p.estado === 'Aprobado' && (
-                          <button
-                            type="button"
-                            onClick={() => handleEstado(p.id, 'Ingresado')}
-                            className="text-emerald-700 font-bold hover:text-emerald-900 hover:underline"
-                          >
-                            Marcar Ingresado
-                          </button>
+                          <span className="inline-flex items-center gap-2">
+                            {!p.itemId && (
+                              <select
+                                aria-label="Ítem al que ingresa el pedido"
+                                value={itemParaIngreso[p.id] ?? ''}
+                                onChange={(e) =>
+                                  setItemParaIngreso((prev) => ({ ...prev, [p.id]: e.target.value }))
+                                }
+                                className="max-w-48 rounded-md border border-gray-300 bg-white px-2 py-1 text-xs"
+                              >
+                                <option value="">Elegir ítem...</option>
+                                {items.map((it) => (
+                                  <option key={it.id} value={String(it.id)}>
+                                    {etiquetaItem(it)}
+                                  </option>
+                                ))}
+                              </select>
+                            )}
+                            <button
+                              type="button"
+                              disabled={!p.itemId && !itemParaIngreso[p.id]}
+                              onClick={() => handleEstado(p.id, 'Ingresado', itemParaIngreso[p.id])}
+                              className="text-emerald-700 font-bold hover:text-emerald-900 hover:underline disabled:opacity-40 disabled:no-underline"
+                            >
+                              Ingresar al stock
+                            </button>
+                          </span>
                         )}
                       </td>
                     )}

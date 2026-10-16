@@ -21,9 +21,13 @@ export async function createPedido(
 export async function updatePedidoEstado(
   id: string | number,
   estado: string,
-): Promise<{ mensaje?: string; pedido?: Pedido }> {
-  return apiClient<{ mensaje?: string; pedido?: Pedido }>(`${BASE}/${id}/estado`, {
-    method: 'PUT',
-    body: { estado },
-  })
+  itemId?: number,
+): Promise<{ mensaje?: string; pedido?: Pedido; nuevo_stock?: number }> {
+  return apiClient<{ mensaje?: string; pedido?: Pedido; nuevo_stock?: number }>(
+    `${BASE}/${id}/estado`,
+    {
+      method: 'PUT',
+      body: itemId ? { estado, itemId } : { estado },
+    },
+  )
 }

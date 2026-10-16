@@ -141,6 +141,13 @@ export type PedidoEstado = 'Pendiente' | 'Aprobado' | 'Ingresado'
 export interface Pedido {
   id: number
   item_nombre: string
+  itemId?: number | null
+  item?: {
+    id: number
+    nombre: string
+    codigo_identificacion?: string
+    stock_actual: number
+  } | null
   cantidad: number
   sector?: string | null
   estado: PedidoEstado
@@ -152,6 +159,7 @@ export interface Pedido {
 
 export interface RegisterPedidoPayload {
   item_nombre: string
+  itemId?: number
   cantidad: number
   sector?: string
   /** Lo define el backend con el usuario autenticado. */
