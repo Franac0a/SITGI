@@ -3,6 +3,7 @@ import { Movimiento } from "../models/Movimiento.model.js";
 import { Item } from "../models/Item.model.js";
 import { sequelize } from "../config/db.js";
 import { detalleError } from "../helpers/error.helper.js";
+import { avisarSiStockBajo } from "../helpers/stockBajo.helper.js";
 import {
   TIPOS_MOVIMIENTO,
   TIPOS_QUE_SUMAN,
@@ -128,6 +129,7 @@ export const registrarMovimiento = async (req, res) => {
 
     item.stock_actual = stockNuevo;
     await item.save({ transaction: t });
+    await avisarSiStockBajo(item, t);
 
     await t.commit();
 

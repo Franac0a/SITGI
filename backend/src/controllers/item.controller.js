@@ -2,6 +2,7 @@ import { Item } from "../models/Item.model.js";
 import { Op, Sequelize } from "sequelize";
 
 import { detalleError } from "../helpers/error.helper.js";
+import { avisarSiStockBajo } from "../helpers/stockBajo.helper.js";
 export const obtenerItems = async (req, res) => {
   try {
     const { categoria, stock_bajo, ubicacion, busqueda } = req.query;
@@ -156,6 +157,7 @@ export const crearItem = async (req, res) => {
     };
 
     const nuevoItem = await Item.create(itemData);
+    await avisarSiStockBajo(nuevoItem);
     res.status(201).json({
       mensaje: "Ítem agregado al inventario con éxito.",
       item: nuevoItem,
@@ -253,6 +255,7 @@ export const actualizarItem = async (req, res) => {
     }
 
     await item.update(dataToUpdate);
+    await avisarSiStockBajo(item);
     res.status(200).json({ mensaje: "Ítem actualizado correctamente.", item });
   } catch (error) {
     console.error("Error al actualizar ítem:", error.message);

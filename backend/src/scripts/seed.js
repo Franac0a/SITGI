@@ -10,6 +10,7 @@ import {
   cargarMuestrasSiVacio,
   asegurarDirector,
 } from "../seed/cargar.js";
+import { revisarStockBajo } from "../helpers/stockBajo.helper.js";
 
 const main = async () => {
   await startDB();
@@ -31,6 +32,8 @@ const main = async () => {
   if (items) {
     const r = await cargarItems(items);
     console.log(`Inventario: ${r.nuevos} nuevos de ${r.total} en el seed.`);
+    const avisos = await revisarStockBajo();
+    if (avisos > 0) console.log(`Avisos de stock bajo creados: ${avisos}.`);
   } else {
     console.log("No hay seed/items.json, se omite el inventario.");
   }
