@@ -40,7 +40,15 @@ export const obtenerResumenMuestras = async (req, res) => {
       Muestra.count(),
     ]);
 
-    res.status(200).json({ total: totales, porTipo });
+    // MySQL devuelve los SUM como texto.
+    const total = totales.map((t) => ({
+      tipo: t.get("tipo"),
+      cantidad: Number(t.get("cantidad")) || 0,
+      positivos: Number(t.get("positivos")) || 0,
+      negativos: Number(t.get("negativos")) || 0,
+    }));
+
+    res.status(200).json({ total, porTipo });
   } catch (error) {
     console.error("Error al obtener resumen de muestras:", error.message);
     res.status(500).json({
