@@ -46,15 +46,9 @@ async function downloadCsv(
   fileName: string,
   errorMessage: string,
 ): Promise<void> {
-  const token = localStorage.getItem('sitgi_token')
-  const headers: Record<string, string> = { Accept: 'text/csv' }
-  if (token) {
-    headers.Authorization = `Bearer ${token}`
-  }
-
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     method: 'GET',
-    headers,
+    headers: { Accept: 'text/csv' },
     credentials: 'include',
   })
 

@@ -3,6 +3,7 @@ import type {
   AuthResponse,
   LoginRequest,
   RegisterRequest,
+  User,
 } from '@/types/auth.types'
 
 const AUTH_BASE = '/auth'
@@ -20,6 +21,10 @@ export const authService = {
       method: 'POST',
       body: payload,
     })
+  },
+
+  me(): Promise<{ usuario: User }> {
+    return apiClient<{ usuario: User }>(`${AUTH_BASE}/me`, { method: 'GET' })
   },
 
   logout(): Promise<{ mensaje?: string }> {

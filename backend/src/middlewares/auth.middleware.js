@@ -6,7 +6,8 @@ dotenv.config();
 
 export const verificarAuth = async (req, res, next) => {
   try {
-    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+    // Solo cookie httpOnly: el token nunca queda al alcance de JavaScript.
+    const token = req.cookies.token;
     if (!token) {
       return res
         .status(401)

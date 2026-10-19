@@ -27,13 +27,8 @@ export async function uploadDocumento(
   if (payload.descripcion) formData.append('descripcion', payload.descripcion)
   if (payload.archivo) formData.append('archivo', payload.archivo)
 
-  const token = localStorage.getItem('sitgi_token')
-  const headers: Record<string, string> = {}
-  if (token) headers.Authorization = `Bearer ${token}`
-
   const response = await fetch(`${API_BASE_URL}${BASE}`, {
     method: 'POST',
-    headers,
     credentials: 'include',
     body: formData,
   })

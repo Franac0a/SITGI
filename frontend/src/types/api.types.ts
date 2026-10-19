@@ -12,5 +12,4 @@ export interface ApiResponse<T> {
 export interface RequestOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
   body?: unknown
-  token?: string
 }

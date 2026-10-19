@@ -117,7 +117,6 @@ export const loginUsuario = async (req, res) => {
         rol: usuario.rol,
         estado: usuario.estado,
       },
-      token,
     });
   } catch (error) {
     console.error("Error en el login:", error);
@@ -126,6 +125,11 @@ export const loginUsuario = async (req, res) => {
       ...detalleError(error),
     });
   }
+};
+
+// El front lo usa al cargar para confirmar que la cookie sigue siendo válida.
+export const usuarioActual = (req, res) => {
+  res.status(200).json({ usuario: req.usuario });
 };
 
 export const logoutUsuario = (req, res) => {

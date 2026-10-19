@@ -41,7 +41,6 @@ async function parseResponse<T>(response: Response): Promise<T> {
         (response.status === 403 &&
           /token/i.test(errorPayload?.mensaje ?? '')))
     ) {
-      localStorage.removeItem('sitgi_token')
       localStorage.removeItem('sitgi_user')
       if (window.location.pathname !== '/login') {
         window.location.assign('/login')
@@ -69,7 +68,7 @@ export async function apiClient<T>(
   endpoint: string,
   options: RequestOptions = {},
 ): Promise<T> {
-  const { method = 'GET', body, token } = options
+  const { method = 'GET', body } = options
 
   const headers: HeadersInit = {
     Accept: 'application/json',
@@ -77,11 +76,6 @@ export async function apiClient<T>(
 
   if (body !== undefined) {
     headers['Content-Type'] = 'application/json'
-  }
-
-  const authToken = token || localStorage.getItem('sitgi_token')
-  if (authToken) {
-    headers.Authorization = `Bearer ${authToken}`
   }
 
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {

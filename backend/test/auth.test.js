@@ -14,9 +14,21 @@ test("login correcto deja el token en una cookie httpOnly", async () => {
   assert.equal(res.status, 200);
   assert.equal(res.body.usuario.rol, "Dirección");
   assert.equal(res.body.usuario.password, undefined);
+  assert.equal(res.body.token, undefined);
   const cookie = res.headers["set-cookie"][0];
   assert.match(cookie, /^token=/);
   assert.match(cookie, /HttpOnly/i);
+});
+
+test("/auth/me devuelve el usuario de la cookie y no acepta Bearer", async () => {
+  const cookie = await sesion("inventario");
+  const me = await request(app).get("/api/auth/me").set("Cookie", cookie);
+  assert.equal(me.status, 200);
+  assert.equal(me.body.usuario.rol, "Inventario");
+
+  const token = cookie.replace("token=", "");
+  const bearer = await request(app).get("/api/auth/me").set("Authorization", `Bearer ${token}`);
+  assert.equal(bearer.status, 401);
 });
 
 test("login con contraseña incorrecta o usuario inexistente da 401", async () => {

@@ -69,7 +69,7 @@ src/
 │
 ├── context/                             # Estado global compartido mediante React Context API.
 │   ├── auth-context.ts                  # Definición del contexto de autenticación y tipos del estado de sesión.
-│   ├── AuthProvider.tsx                 # Proveedor que gestiona el token JWT, usuario activo, login y logout.
+│   ├── AuthProvider.tsx                 # Proveedor del usuario activo, login y logout (la sesión va en cookie httpOnly).
 │   ├── useAuth.ts                       # Custom Hook para consumir el contexto de autenticación fácilmente.
 │   └── index.ts                         # Archivo barril para exportar el contexto, hook y proveedor.
 │
