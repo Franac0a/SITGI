@@ -15,7 +15,11 @@ function aFecha(v) {
     const dia = m[1].padStart(2, "0");
     const mes = m[2].padStart(2, "0");
     const anio = m[3].length === 2 ? `20${m[3]}` : m[3];
-    return `${anio}-${mes}-${dia}`;
+    const iso = `${anio}-${mes}-${dia}`;
+    // Descarta fechas imposibles del Excel (día 0, 31/02...) que MySQL rechaza.
+    const d = new Date(`${iso}T00:00:00Z`);
+    if (Number.isNaN(d.getTime()) || d.toISOString().slice(0, 10) !== iso) return null;
+    return iso;
   }
   return null;
 }

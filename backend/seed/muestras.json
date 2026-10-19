@@ -6819,7 +6819,7 @@
     "positivos": 0,
     "sospechosos": 0,
     "negativos": 119,
-    "fecha_resultado": "2026-07-00"
+    "fecha_resultado": null
   },
   {
     "tipo": "Brucelosis",
