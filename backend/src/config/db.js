@@ -10,6 +10,9 @@ export const sequelize = new Sequelize(
     host: process.env.DB_HOST,
     port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
     dialect: process.env.DB_DIALECT,
+    // Solo para SQLite (los tests usan ":memory:").
+    storage: process.env.DB_STORAGE,
+    logging: process.env.NODE_ENV === "test" ? false : console.log,
   },
 );
 
