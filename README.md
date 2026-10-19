@@ -77,6 +77,8 @@ npm run test:mysql    # contra el MySQL de Docker, en la base citproyecto_test
 ```
 Cubren login y sesión, permisos por rol, cada tipo de movimiento (stock insuficiente, ajuste, cambio de ubicación) y el ingreso único de pedidos. Los dos tests de concurrencia (egresos simultáneos e ingresos repetidos de un pedido) solo corren con `test:mysql`, porque SQLite no bloquea filas.
 
+GitHub Actions (`.github/workflows/ci.yml`) corre en cada push a `main` o a ramas `dev-*` y en cada pull request: los dos sets de tests del backend (con un MySQL 8 propio) y typecheck, lint y build del frontend.
+
 `test:mysql` borra y recrea las tablas de `citproyecto_test`, nunca de `citproyecto`. Docker crea esa base al levantar un volumen nuevo; si el volumen ya existía, se crea una sola vez con:
 ```bash
 docker exec -i sitgi-db mysql -uroot -proot_dev < docker/mysql/01-base-tests.sql
