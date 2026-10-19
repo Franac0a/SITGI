@@ -34,6 +34,17 @@ Después, `npm run dev` y `npm run seed` en `backend/` (el backend crea las tabl
 
 El puerto 3306 no puede estar usado por otro MySQL (por ejemplo XAMPP). Si hace falta, se cambia con la variable `DB_PUERTO` (ejemplo: `DB_PUERTO=3307 docker compose up -d`) y `DB_PORT` en el `.env`.
 
+**Todo con Docker (base, backend y frontend)**
+
+Con `backend/.env` creado (alcanza con copiar `.env.example` y completar `JWT_SECRET`):
+```bash
+docker compose --profile app up -d --build
+```
+- Frontend: http://localhost:8080
+- Backend: http://localhost:4000
+
+El backend corre el seed antes de arrancar, así que en el primer arranque crea el director y carga los datos. Si `SEED_DIRECTOR_PASSWORD` está vacía, la contraseña generada se ve con `docker compose logs backend`. Para apagar: `docker compose --profile app down`. Sin `--profile app` solo se levanta la base, como en el desarrollo con `npm run dev`; no conviene usar los dos a la vez porque comparten el puerto 4000.
+
 **Base de datos ya existente (migraciones)**
 
 `sequelize.sync()` crea tablas nuevas pero no modifica las existentes. Si la base ya existía antes de los últimos cambios, el backend se detiene con un mensaje que indica qué migración falta. Se ejecutan una sola vez, en orden, en phpMyAdmin (base `citproyecto` → pestaña SQL):
@@ -91,7 +102,7 @@ Los usuarios que se registran quedan en estado *pendiente* hasta que la Direcci�
 - **Muestras**: registro de diagnóstico.
 - **Proyectos**: proyectos de investigación.
 - **Reportes**: inventario y movimientos filtrados, exportación CSV y rotación de stock.
-- **Notificaciones**: avisos de stock bajo.
+- **Notificaciones**: avisos de stock bajo, que se generan al registrar un movimiento que deja el ítem en su stock mínimo o por debajo.
 
 ## Roles
 
