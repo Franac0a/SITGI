@@ -13,6 +13,7 @@ services:
       - "${DB_PUERTO:-3306}:3306"
     volumes:
       - sitgi-datos:/var/lib/mysql
+      - ./docker/mysql:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot_dev"]
       interval: 5s

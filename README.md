@@ -57,6 +57,22 @@ Si cambian los Excel, se regeneran los JSON con:
 npm run seed:export -- "<ruta>/inventario cit formosa.xlsx" "<ruta>/DIAGNOSTICO 2026- CIT.xlsx"
 ```
 
+**Tests**
+
+```bash
+cd backend
+npm test              # SQLite en memoria, no necesita Docker
+npm run test:mysql    # contra el MySQL de Docker, en la base citproyecto_test
+```
+Cubren login y sesión, permisos por rol, cada tipo de movimiento (stock insuficiente, ajuste, cambio de ubicación) y el ingreso único de pedidos. Los dos tests de concurrencia (egresos simultáneos e ingresos repetidos de un pedido) solo corren con `test:mysql`, porque SQLite no bloquea filas.
+
+`test:mysql` borra y recrea las tablas de `citproyecto_test`, nunca de `citproyecto`. Docker crea esa base al levantar un volumen nuevo; si el volumen ya existía, se crea una sola vez con:
+```bash
+docker exec -i sitgi-db mysql -uroot -proot_dev < docker/mysql/01-base-tests.sql
+# en PowerShell:
+Get-Content docker/mysql/01-base-tests.sql | docker exec -i sitgi-db mysql -uroot -proot_dev
+```
+
 **Roles:**
 - *Dirección*: todo, más aprobación de usuarios y roles.
 - *Administración* e *Inventario*: alta/edición de ítems, todos los tipos de movimiento, residuos, documentos y sectores.

@@ -8,7 +8,9 @@
     "seed:admin": "node src/scripts/crearDirector.js",
     "seed": "node src/scripts/seed.js",
     "seed:export": "node src/scripts/exportarSeed.js",
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "node --import ./test/entorno.js --test --test-concurrency=1 \"test/**/*.test.js\"",
+    "test:mysql": "node --import ./test/entorno-mysql.js --test --test-concurrency=1 \"test/**/*.test.js\""
   },
   "keywords": [],
   "author": "",
@@ -27,5 +29,9 @@
     "mysql2": "^3.23.2",
     "sequelize": "^6.37.8",
     "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "sqlite3": "^5.1.7",
+    "supertest": "^7.1.4"
   }
 }
