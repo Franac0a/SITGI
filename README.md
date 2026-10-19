@@ -9,7 +9,7 @@ Requisitos: Node.js 20+ y un MySQL accesible.
 cd backend
 npm install
 cp .env.example .env      # completar JWT_SECRET (largo y aleatorio) y, si hace falta, DB_* y FRONTEND_URLS
-npm run seed:admin        # crea el usuario Dirección inicial (director@citformosa.gob.ar / Admin123!)
+npm run seed              # crea el usuario Dirección inicial y carga los datos del CIT
 npm run dev               # http://localhost:4000
 ```
 El servidor **no arranca si no puede conectarse a la base**: revisá `DB_HOST`, `DB_USER`, `DB_PASSWORD` y `DB_NAME`.
@@ -50,7 +50,7 @@ Los datos del CIT (inventario y muestras) viajan con el repositorio en `backend/
 cd backend
 npm run seed
 ```
-Crea el usuario Dirección inicial y carga el inventario y las muestras. Se puede ejecutar más de una vez sin duplicar datos: los ítems que ya existen no se tocan y las muestras solo se cargan si la tabla está vacía.
+Crea el usuario Dirección inicial y carga el inventario y las muestras. El usuario es `SEED_DIRECTOR_EMAIL` y la contraseña la que se ponga en `SEED_DIRECTOR_PASSWORD` (en `backend/.env`); si se deja vacía, el seed genera una y la muestra una sola vez por consola. Si el director ya existe no se modifica; `npm run seed:admin` lo reactiva con rol Dirección. Se puede ejecutar más de una vez sin duplicar datos: los ítems que ya existen no se tocan y las muestras solo se cargan si la tabla está vacía.
 
 Si cambian los Excel, se regeneran los JSON con:
 ```bash
@@ -103,7 +103,7 @@ Los usuarios que se registran quedan en estado *pendiente* hasta que la Direcci�
 
 ## Seguridad
 
-- Contraseñas con bcrypt y sesión por JWT (cookie y encabezado Bearer).
+- Contraseñas con bcrypt y sesión por JWT en una cookie httpOnly: el token no se guarda en el navegador ni lo ve JavaScript.
 - `helmet` y límite de intentos en login y registro.
 - El responsable de cada movimiento sale del usuario autenticado.
 - En producción no se devuelve el detalle interno de los errores.

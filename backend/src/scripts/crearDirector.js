@@ -1,38 +1,25 @@
-import dotenv from "dotenv";
+// Crea el usuario Dirección inicial, o lo reactiva si ya existe.
 import { startDB, sequelize } from "../config/db.js";
-import { UserModel } from "../models/User.model.js";
-import { encriptarContraseña } from "../helpers/bcrypt.helper.js";
-
-dotenv.config();
+import { asegurarDirector } from "../seed/cargar.js";
 
 const inicializarDirector = async () => {
   try {
     await startDB();
     await sequelize.sync();
 
-    const emailDirector = "director@citformosa.gob.ar";
-    const existe = await UserModel.findOne({ where: { email: emailDirector } });
-
-    if (existe) {
-      existe.estado = "activo";
-      existe.rol = "Dirección";
-      await existe.save();
-      console.log(`El usuario ${emailDirector} ya existe y fue actualizado a estado 'activo' y rol 'Dirección'.`);
+    const director = await asegurarDirector();
+    if (director.creado) {
+      console.log(`Usuario Dirección creado: ${director.email}`);
+      if (director.passwordGenerada) {
+        console.log(
+          `Contraseña generada (anotala, no se vuelve a mostrar): ${director.passwordGenerada}`,
+        );
+      }
     } else {
-      const passwordHash = await encriptarContraseña("Admin123!");
-      await UserModel.create({
-        dni: "11223344",
-        nombre: "Director CIT Formosa",
-        email: emailDirector,
-        password: passwordHash,
-        rol: "Dirección",
-        estado: "activo",
-      });
-      console.log("Usuario Director inicial creado con éxito.");
-      console.log("-----------------------------------------");
-      console.log("Email: director@citformosa.gob.ar");
-      console.log("Password: Admin123!");
-      console.log("-----------------------------------------");
+      director.usuario.estado = "activo";
+      director.usuario.rol = "Dirección";
+      await director.usuario.save();
+      console.log(`El usuario ${director.email} ya existía: quedó activo y con rol Dirección.`);
     }
 
     process.exit(0);

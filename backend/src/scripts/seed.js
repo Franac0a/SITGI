@@ -21,6 +21,11 @@ const main = async () => {
       ? `Usuario Dirección creado: ${director.email}`
       : `Usuario Dirección ya existía: ${director.email}`,
   );
+  if (director.passwordGenerada) {
+    console.log(
+      `Contraseña generada (anotala, no se vuelve a mostrar): ${director.passwordGenerada}`,
+    );
+  }
 
   const items = leerJsonSeed("items.json");
   if (items) {
