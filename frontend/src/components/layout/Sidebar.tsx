@@ -114,7 +114,7 @@ const NAV_GROUPS: NavGroup[] = [
         label: 'Usuarios y roles',
         path: '/admin/usuarios',
         icon: ShieldCheck,
-        roles: ['Dirección', 'Administración'],
+        roles: ['Dirección'],
       },
     ],
   },

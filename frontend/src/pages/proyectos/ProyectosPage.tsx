@@ -7,7 +7,7 @@ import { Alert } from '@/components/ui/alert'
 import { EmptyState } from '@/components/ui/empty-state'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAuth } from '@/context'
-import { canManageUsers } from '@/utils/rbac'
+import { canManageProjects } from '@/utils/rbac'
 import { formatApiError } from '@/utils/errors'
 import {
   getProyectos,
@@ -38,7 +38,7 @@ function estadoBadge(estado: ProyectoEstado): string {
 
 export function ProyectosPage() {
   const { user } = useAuth()
-  const canManage = canManageUsers(user?.rol)
+  const canManage = canManageProjects(user?.rol)
 
   const [proyectos, setProyectos] = useState<Proyecto[]>([])
   const [loading, setLoading] = useState(true)

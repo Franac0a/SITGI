@@ -47,13 +47,12 @@ export function canCreateInventory(role?: string | null): boolean {
   )
 }
 
+/** Aprobación de usuarios y roles: solo Dirección, igual que el backend. */
 export function canManageUsers(role?: string | null): boolean {
-  if (!role) return false
-  const normalized = role.toLowerCase().trim()
-  return (
-    normalized === 'dirección' ||
-    normalized === 'direccion' ||
-    normalized === 'administración' ||
-    normalized === 'administracion'
-  )
+  return normalizar(role) === 'direccion'
+}
+
+export function canManageProjects(role?: string | null): boolean {
+  const r = normalizar(role)
+  return r === 'direccion' || r === 'administracion'
 }
