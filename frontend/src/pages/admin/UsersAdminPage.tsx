@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { DashboardLayout } from '@/components/layout/DashboardLayout'
+import { MainLayout } from '@/components/layout/MainLayout'
 import { Alert } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { NativeSelect as Select } from '@/components/ui/native-select'
@@ -138,7 +138,7 @@ export function UsersAdminPage() {
     })
 
   return (
-    <DashboardLayout>
+    <MainLayout>
       <div className="space-y-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-gray-200 pb-5">
           <div>
@@ -456,6 +456,6 @@ export function UsersAdminPage() {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    </MainLayout>
   )
 }
