@@ -51,6 +51,7 @@ El backend corre el seed antes de arrancar, así que en el primer arranque crea 
 
 1. `backend/migrations/001_etapa1_documento.sql`: sector en movimientos, tipos de movimiento y roles nuevos.
 2. `backend/migrations/002_pedidos_item.sql`: vincula los pedidos con los ítems del inventario.
+3. `backend/migrations/003_notificaciones_por_usuario.sql`: cada usuario marca sus propias notificaciones como leídas.
 
 Una base nueva y vacía no necesita ninguna. Con Docker, la forma más simple es `docker compose down -v`, volver a levantar y correr `npm run seed`.
 
@@ -97,14 +98,15 @@ Los usuarios que se registran quedan en estado *pendiente* hasta que la Direcci�
 
 ## Módulos
 
-- **Inventario**: ítems por categoría, stock mínimo, ubicación y condición de almacenamiento.
+- **Inventario**: ítems por categoría, stock mínimo, ubicación y condición de almacenamiento. Al editar un ítem no se cambia el stock: eso solo se hace con un movimiento, para que quede en la trazabilidad.
 - **Movimientos**: ingreso, reposición, egreso, reparación, baja, ajuste y cambio de ubicación, con historial y filtros.
+- **Sectores**: laboratorios, heladeras, droguero, estantes y depósitos. Movimientos, pedidos y residuos solo aceptan sectores cargados acá; al renombrar uno se actualizan sus registros y no se puede eliminar si está en uso.
 - **Pedidos y residuos**: solicitudes de reposición, que al marcarse como ingresadas suman el stock y registran el movimiento, y registro de residuos.
-- **Documentos**: MSDS, SOP y COA asociados a los ítems.
+- **Documentos**: MSDS, SOP, COA y protocolos del CIT.
 - **Muestras**: registro de diagnóstico.
 - **Proyectos**: proyectos de investigación.
-- **Reportes**: inventario y movimientos filtrados, exportación CSV y rotación de stock.
-- **Notificaciones**: avisos de stock bajo, que se generan al registrar un movimiento que deja el ítem en su stock mínimo o por debajo.
+- **Reportes**: inventario y movimientos filtrados, exportación CSV, alta rotación y consumo por sector.
+- **Notificaciones**: avisos de stock bajo, que se generan al registrar un movimiento que deja el ítem en su stock mínimo o por debajo. El aviso sigue vigente hasta que se repone el stock, y cada usuario marca los suyos como leídos.
 
 ## Roles
 

@@ -22,7 +22,9 @@ export const Notificacion = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    leida: {
+    // true cuando el stock del ítem se repuso y el aviso ya no está vigente.
+    // Lo que lee cada usuario se guarda aparte, en NotificacionLeida.
+    resuelta: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,

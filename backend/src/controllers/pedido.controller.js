@@ -3,7 +3,7 @@ import { Item } from "../models/Item.model.js";
 import { Movimiento } from "../models/Movimiento.model.js";
 import { sequelize } from "../config/db.js";
 import { detalleError } from "../helpers/error.helper.js";
-import { avisarSiStockBajo } from "../helpers/stockBajo.helper.js";
+import { revisarAvisoStockBajo } from "../helpers/stockBajo.helper.js";
 import {
   limpiarSector,
   sectorNoExiste,
@@ -158,7 +158,7 @@ export const actualizarEstadoPedido = async (req, res) => {
     const cantidad = Number(pedido.cantidad);
     item.stock_actual = Number(item.stock_actual) + cantidad;
     await item.save({ transaction: t });
-    await avisarSiStockBajo(item, t);
+    await revisarAvisoStockBajo(item, t);
 
     const movimiento = await Movimiento.create(
       {

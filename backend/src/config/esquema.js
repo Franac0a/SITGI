@@ -11,6 +11,7 @@ export const verificarEsquema = async () => {
   const movimientos = await qi.describeTable("movimientos");
   const usuarios = await qi.describeTable("usuarios");
   const pedidos = await qi.describeTable("pedidos");
+  const notificaciones = await qi.describeTable("notificaciones");
   const enumDe = (col) => String(col?.type ?? "").toLowerCase();
 
   const faltantes = [];
@@ -32,6 +33,11 @@ export const verificarEsquema = async () => {
   if (!pedidos.itemId) {
     faltantes.push("columna pedidos.itemId");
     migraciones.push("002_pedidos_item.sql");
+  }
+
+  if (!notificaciones.resuelta) {
+    faltantes.push("columna notificaciones.resuelta");
+    migraciones.push("003_notificaciones_por_usuario.sql");
   }
 
   if (faltantes.length > 0) {

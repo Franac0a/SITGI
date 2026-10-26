@@ -25,6 +25,7 @@ import "./models/Residuo.model.js";
 import "./models/Documento.model.js";
 import "./models/Muestra.model.js";
 import "./models/Notificacion.model.js";
+import "./models/NotificacionLeida.model.js";
 import "./models/Proyecto.model.js";
 
 dotenv.config();

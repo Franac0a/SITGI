@@ -6,15 +6,24 @@ const estaBajo = (item) =>
   Number(item.stock_minimo) > 0 &&
   Number(item.stock_actual) <= Number(item.stock_minimo);
 
-// Crea el aviso de stock bajo si corresponde y el ítem no tiene uno sin leer.
-export const avisarSiStockBajo = async (item, transaction) => {
-  if (!estaBajo(item)) return null;
+// Se llama cada vez que cambia el stock o el mínimo de un ítem.
+// Un aviso de stock bajo sigue vigente hasta que el stock vuelve a superar el
+// mínimo: mientras tanto no se repite, aunque haya más egresos.
+export const revisarAvisoStockBajo = async (item, transaction) => {
+  if (!estaBajo(item)) {
+    // El stock se repuso: el aviso que hubiera deja de estar vigente.
+    await Notificacion.update(
+      { resuelta: true },
+      { where: { itemId: item.id, resuelta: false }, transaction },
+    );
+    return null;
+  }
 
-  const existe = await Notificacion.findOne({
-    where: { itemId: item.id, leida: false },
+  const vigente = await Notificacion.findOne({
+    where: { itemId: item.id, resuelta: false },
     transaction,
   });
-  if (existe) return null;
+  if (vigente) return null;
 
   return Notificacion.create(
     {
@@ -37,7 +46,7 @@ export const revisarStockBajo = async () => {
   });
   let creadas = 0;
   for (const item of items) {
-    if (await avisarSiStockBajo(item)) creadas++;
+    if (await revisarAvisoStockBajo(item)) creadas++;
   }
   return creadas;
 };
