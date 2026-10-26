@@ -27,11 +27,11 @@
     "jsonwebtoken": "^9.0.3",
     "multer": "^2.4.0",
     "mysql2": "^3.23.2",
-    "sequelize": "^6.37.8",
-    "xlsx": "^0.18.5"
+    "sequelize": "^6.37.8"
   },
   "devDependencies": {
     "sqlite3": "^5.1.7",
-    "supertest": "^7.1.4"
+    "supertest": "^7.1.4",
+    "xlsx": "^0.18.5"
   }
 }
