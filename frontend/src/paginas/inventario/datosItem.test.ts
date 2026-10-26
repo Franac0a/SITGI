@@ -61,6 +61,12 @@ describe('otrosDatosTecnicos', () => {
     expect(otrosDatosTecnicos(item)).toEqual([])
   })
 
+  it('saca las comillas con las que vienen algunos valores del Excel', () => {
+    expect(otrosDatosTecnicos(crearItem({ detalles_tecnicos: { letra: '"A"' } }))).toEqual([
+      { titulo: 'Letra (droguero)', valor: 'A' },
+    ])
+  })
+
   it('un dato desconocido se muestra con su nombre original', () => {
     expect(otrosDatosTecnicos(crearItem({ detalles_tecnicos: { color: 'azul' } }))).toEqual([
       { titulo: 'color', valor: 'azul' },

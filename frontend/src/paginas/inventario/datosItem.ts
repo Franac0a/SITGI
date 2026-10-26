@@ -28,7 +28,12 @@ const YA_MOSTRADOS = ['codigoCas', 'fechaVencimiento', 'numeroLote', 'observacio
 export function otrosDatosTecnicos(item: Item): { titulo: string; valor: string }[] {
   return Object.entries(item.detalles_tecnicos ?? {})
     .filter(([clave, valor]) => !YA_MOSTRADOS.includes(clave) && valor)
-    .map(([clave, valor]) => ({ titulo: NOMBRES_DATOS[clave] ?? clave, valor: String(valor) }))
+    .map(([clave, valor]) => ({ titulo: NOMBRES_DATOS[clave] ?? clave, valor: sinComillas(String(valor)) }))
+}
+
+// En el Excel algunos valores vienen entre comillas, como la letra del droguero ("A").
+function sinComillas(texto: string): string {
+  return texto.replace(/^"(.*)"$/, '$1')
 }
 
 export type EstadoStock = 'agotado' | 'bajo' | 'disponible'
