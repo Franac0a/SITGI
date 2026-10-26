@@ -1,15 +1,16 @@
 import { BrowserRouter } from 'react-router-dom'
-import { AuthProvider, NotificationProvider } from '@/context'
-import { AppRoutes } from '@/routes/AppRoutes'
+import { ProveedorAvisos } from '@/contexto/ProveedorAvisos'
+import { ProveedorSesion } from '@/contexto/ProveedorSesion'
+import { Rutas } from '@/Rutas'
 
 export default function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <NotificationProvider>
-          <AppRoutes />
-        </NotificationProvider>
-      </AuthProvider>
+      <ProveedorSesion>
+        <ProveedorAvisos>
+          <Rutas />
+        </ProveedorAvisos>
+      </ProveedorSesion>
     </BrowserRouter>
   )
 }
