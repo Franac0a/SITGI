@@ -9,9 +9,15 @@ import { Insignia, type Color } from '@/componentes/ui/Insignia'
 import { Mensaje } from '@/componentes/ui/Mensaje'
 import { Selector } from '@/componentes/ui/Selector'
 import { obtenerItems } from '@/servicios/items'
-import { exportarInventario, exportarMovimientos, obtenerAlertas, obtenerRotacion } from '@/servicios/reportes'
+import {
+  exportarInventario,
+  exportarMovimientos,
+  obtenerAlertas,
+  obtenerConsumoPorSector,
+  obtenerRotacion,
+} from '@/servicios/reportes'
 import { obtenerSectores } from '@/servicios/sectores'
-import type { Alerta, FilaRotacion, FiltrosReporte, Sector, TipoAlerta } from '@/tipos'
+import type { Alerta, ConsumoSector, FilaRotacion, FiltrosReporte, Sector, TipoAlerta } from '@/tipos'
 import { mensajeDeError } from '@/utilidades/errores'
 
 const ALERTAS: Record<TipoAlerta, { texto: string; color: Color }> = {
@@ -39,6 +45,8 @@ function detalleDeAlerta(alerta: Alerta): string {
 export default function PaginaReportes() {
   const [alertas, setAlertas] = useState<Alerta[]>([])
   const [rotacion, setRotacion] = useState<FilaRotacion[]>([])
+  const [consumoPorSector, setConsumoPorSector] = useState<ConsumoSector[]>([])
+  // Período (en días) de la alta rotación y del consumo por sector.
   const [dias, setDias] = useState(30)
   const [categorias, setCategorias] = useState<string[]>([])
   const [sectores, setSectores] = useState<Sector[]>([])
@@ -55,14 +63,16 @@ export default function PaginaReportes() {
       setCargando(true)
       setError('')
       try {
-        const [listaAlertas, filasRotacion, items, listaSectores] = await Promise.all([
+        const [listaAlertas, filasRotacion, consumos, items, listaSectores] = await Promise.all([
           obtenerAlertas(),
           obtenerRotacion(dias),
+          obtenerConsumoPorSector(dias),
           obtenerItems().catch(() => []),
           obtenerSectores().catch(() => []),
         ])
         setAlertas(listaAlertas)
         setRotacion(filasRotacion)
+        setConsumoPorSector(consumos)
         setSectores(listaSectores)
         // Categorías sin repetir y ordenadas, para el filtro.
         setCategorias([...new Set(items.map((item) => item.categoria))].sort())
@@ -224,6 +234,43 @@ export default function PaginaReportes() {
                       <td className="px-4 py-3 text-center font-mono">
                         {fila.dias_cobertura === null ? '—' : `${fila.dias_cobertura} días`}
                       </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </section>
+
+        <section className="bg-white border border-gray-200 rounded-xl p-5 shadow-2xs space-y-3">
+          <div>
+            <h2 className="text-base font-bold text-gray-900">Consumo por sector</h2>
+            <p className="text-xs text-gray-600 mt-0.5">
+              Consumos (egresos, bajas y reparaciones) de los últimos {dias} días, según el sector donde se
+              registraron. El período es el mismo elegido en Alta rotación.
+            </p>
+          </div>
+
+          {consumoPorSector.length === 0 ? (
+            <p className="text-sm text-gray-500">Todavía no hay consumos registrados en este período.</p>
+          ) : (
+            <div className="overflow-hidden rounded-lg border border-gray-200">
+              <table className="min-w-full divide-y divide-gray-200 text-left text-xs">
+                <thead className="bg-gray-50 font-bold uppercase tracking-wider text-gray-600">
+                  <tr>
+                    <th className="px-4 py-3">Sector</th>
+                    <th className="px-4 py-3 text-center">Consumos</th>
+                    <th className="px-4 py-3 text-center">Elementos distintos</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 text-gray-900">
+                  {consumoPorSector.map((fila) => (
+                    <tr key={fila.sector ?? 'sin-sector'}>
+                      <td className="px-4 py-3 font-bold">
+                        {fila.sector ?? <span className="font-normal text-gray-500">Sin sector</span>}
+                      </td>
+                      <td className="px-4 py-3 text-center font-mono">{fila.consumos}</td>
+                      <td className="px-4 py-3 text-center font-mono">{fila.elementos}</td>
                     </tr>
                   ))}
                 </tbody>

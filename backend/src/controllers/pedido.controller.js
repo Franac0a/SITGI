@@ -4,6 +4,11 @@ import { Movimiento } from "../models/Movimiento.model.js";
 import { sequelize } from "../config/db.js";
 import { detalleError } from "../helpers/error.helper.js";
 import { avisarSiStockBajo } from "../helpers/stockBajo.helper.js";
+import {
+  limpiarSector,
+  sectorNoExiste,
+  MENSAJE_SECTOR_INEXISTENTE,
+} from "../helpers/sector.helper.js";
 
 const ESTADOS_PEDIDO = ["Pendiente", "Aprobado", "Ingresado"];
 
@@ -65,11 +70,16 @@ export const crearPedido = async (req, res) => {
         .json({ mensaje: "La cantidad debe ser un número mayor a 0." });
     }
 
+    const sectorFinal = limpiarSector(sector);
+    if (await sectorNoExiste(sectorFinal)) {
+      return res.status(400).json({ mensaje: MENSAJE_SECTOR_INEXISTENTE });
+    }
+
     const pedido = await Pedido.create({
       item_nombre: nombre,
       itemId: item ? item.id : null,
       cantidad,
-      sector: sector || null,
+      sector: sectorFinal,
       responsable,
       observaciones: observaciones || null,
     });

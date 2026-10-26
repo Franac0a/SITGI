@@ -79,10 +79,12 @@ export default function PaginaSectores() {
     }
   }
 
-  async function borrar(id: number) {
+  // Si el sector tiene registros asociados, el backend no lo deja borrar y avisa por qué.
+  async function borrar(sector: Sector) {
+    if (!window.confirm(`¿Eliminar el sector "${sector.nombre}"?`)) return
     setError('')
     try {
-      await eliminarSector(id)
+      await eliminarSector(sector.id)
       await cargarSectores()
     } catch (e) {
       setError(mensajeDeError(e))
@@ -141,7 +143,7 @@ export default function PaginaSectores() {
           </form>
         )}
 
-        {error && <Mensaje tipo="error" titulo="Error al cargar sectores" texto={error} />}
+        {error && <Mensaje tipo="error" titulo="No se pudo completar la acción" texto={error} />}
 
         {cargando ? (
           <CargandoTabla />
@@ -173,7 +175,7 @@ export default function PaginaSectores() {
                       <td className="px-5 py-4 text-right">
                         <button
                           type="button"
-                          onClick={() => borrar(sector.id)}
+                          onClick={() => borrar(sector)}
                           className="text-red-600 font-medium hover:text-red-700 hover:underline"
                         >
                           Eliminar

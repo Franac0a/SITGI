@@ -7,10 +7,12 @@ import { CargandoTabla } from '@/componentes/ui/Esqueleto'
 import { EstadoVacio } from '@/componentes/ui/EstadoVacio'
 import { Insignia, type Color } from '@/componentes/ui/Insignia'
 import { Mensaje } from '@/componentes/ui/Mensaje'
+import { Selector } from '@/componentes/ui/Selector'
 import { useSesion } from '@/contexto/useSesion'
 import { obtenerItems } from '@/servicios/items'
 import { cambiarEstadoPedido, crearPedido, obtenerPedidos } from '@/servicios/pedidos'
-import type { EstadoPedido, Item, Pedido } from '@/tipos'
+import { obtenerSectores } from '@/servicios/sectores'
+import type { EstadoPedido, Item, Pedido, Sector } from '@/tipos'
 import { mensajeDeError } from '@/utilidades/errores'
 import { puedeGestionarInventario } from '@/utilidades/permisos'
 
@@ -31,6 +33,7 @@ export default function PaginaPedidos() {
 
   const [pedidos, setPedidos] = useState<Pedido[]>([])
   const [items, setItems] = useState<Item[]>([])
+  const [sectores, setSectores] = useState<Sector[]>([])
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState('')
   const [aviso, setAviso] = useState('')
@@ -63,6 +66,9 @@ export default function PaginaPedidos() {
 
   useEffect(() => {
     cargarPedidos()
+    obtenerSectores()
+      .then(setSectores)
+      .catch(() => setSectores([]))
   }, [])
 
   // La lista de ítems solo hace falta para quien gestiona los pedidos.
@@ -100,7 +106,7 @@ export default function PaginaPedidos() {
         item_nombre: nombreInsumo.trim(),
         itemId: itemId ? Number(itemId) : undefined,
         cantidad: Number(cantidad),
-        sector: sector.trim() || undefined,
+        sector: sector || undefined,
         observaciones: observaciones.trim() || undefined,
       })
       setExitoFormulario('Pedido registrado con éxito.')
@@ -193,10 +199,11 @@ export default function PaginaPedidos() {
                 onChange={(e) => setCantidad(e.target.value)}
                 disabled={guardando}
               />
-              <CampoTexto
+              <Selector
                 name="sector"
                 etiqueta="Sector (opcional)"
-                placeholder="Ej. Laboratorio de Microbiología"
+                textoVacio="Sin sector"
+                opciones={sectores.map((s) => ({ valor: s.nombre, texto: s.nombre }))}
                 value={sector}
                 onChange={(e) => setSector(e.target.value)}
                 disabled={guardando}

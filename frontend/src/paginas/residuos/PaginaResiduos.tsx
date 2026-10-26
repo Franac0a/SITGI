@@ -10,7 +10,8 @@ import { Mensaje } from '@/componentes/ui/Mensaje'
 import { Selector } from '@/componentes/ui/Selector'
 import { useSesion } from '@/contexto/useSesion'
 import { crearResiduo, marcarResiduoRetirado, obtenerResiduos } from '@/servicios/residuos'
-import type { Opcion, Residuo, TipoResiduo } from '@/tipos'
+import { obtenerSectores } from '@/servicios/sectores'
+import type { Opcion, Residuo, Sector, TipoResiduo } from '@/tipos'
 import { mensajeDeError } from '@/utilidades/errores'
 import { puedeGestionarInventario } from '@/utilidades/permisos'
 
@@ -27,6 +28,7 @@ export default function PaginaResiduos() {
   const puedeGestionar = puedeGestionarInventario(usuario?.rol)
 
   const [residuos, setResiduos] = useState<Residuo[]>([])
+  const [sectores, setSectores] = useState<Sector[]>([])
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState('')
 
@@ -54,6 +56,9 @@ export default function PaginaResiduos() {
 
   useEffect(() => {
     cargarResiduos()
+    obtenerSectores()
+      .then(setSectores)
+      .catch(() => setSectores([]))
   }, [])
 
   async function enviar(evento: FormEvent) {
@@ -70,7 +75,7 @@ export default function PaginaResiduos() {
       await crearResiduo({
         tipo,
         descripcion: descripcion.trim(),
-        sector: sector.trim() || undefined,
+        sector: sector || undefined,
         retiro_programado: retiroProgramado || undefined,
         observaciones: observaciones.trim() || undefined,
       })
@@ -134,10 +139,11 @@ export default function PaginaResiduos() {
                   disabled={guardando}
                 />
               </div>
-              <CampoTexto
+              <Selector
                 name="sector"
                 etiqueta="Sector (opcional)"
-                placeholder="Ej. Biología Molecular"
+                textoVacio="Sin sector"
+                opciones={sectores.map((s) => ({ valor: s.nombre, texto: s.nombre }))}
                 value={sector}
                 onChange={(e) => setSector(e.target.value)}
                 disabled={guardando}

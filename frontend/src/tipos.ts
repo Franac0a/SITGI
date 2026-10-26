@@ -263,6 +263,14 @@ export interface FilaRotacion {
   dias_cobertura: number | null
 }
 
+// Consumos (egresos, bajas y reparaciones) de un sector en el período.
+// sector es null para los consumos que se registraron sin sector.
+export interface ConsumoSector {
+  sector: string | null
+  consumos: number
+  elementos: number
+}
+
 export interface FiltrosReporte {
   categoria?: string
   sector?: string

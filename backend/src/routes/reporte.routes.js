@@ -5,6 +5,7 @@ import {
   exportarMovimientosCsv,
   obtenerRotacion,
   obtenerResumen,
+  obtenerConsumoPorSector,
 } from "../controllers/reporte.controller.js";
 import { verificarAuth } from "../middlewares/auth.middleware.js";
 
@@ -17,5 +18,6 @@ router.get("/resumen", obtenerResumen);
 router.get("/export", exportarInventarioCsv);
 router.get("/movimientos/export", exportarMovimientosCsv);
 router.get("/rotacion", obtenerRotacion);
+router.get("/consumo-sector", obtenerConsumoPorSector);
 
 export default router;

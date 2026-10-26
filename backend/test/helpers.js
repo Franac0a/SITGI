@@ -4,6 +4,7 @@ import app from "../src/app.js";
 import { sequelize } from "../src/config/db.js";
 import { UserModel } from "../src/models/User.model.js";
 import { Item } from "../src/models/Item.model.js";
+import { Sector } from "../src/models/Sector.model.js";
 import { encriptarContraseña } from "../src/helpers/bcrypt.helper.js";
 
 export { request, app };
@@ -28,8 +29,12 @@ export const emailDe = (clave) => `${clave}@test.local`;
 export const sinConcurrencia =
   sequelize.getDialect() === "sqlite" && "requiere MySQL (npm run test:mysql)";
 
+// Sectores que usan los tests (solo se aceptan sectores cargados en la tabla).
+export const SECTORES = ["Laboratorio 1", "Lab 2", "Bioquímica", "Microbiología"];
+
 export const prepararBase = async () => {
   await sequelize.sync({ force: true });
+  await Sector.bulkCreate(SECTORES.map((nombre) => ({ nombre })));
   const hash = await encriptarContraseña(CLAVE);
   let dni = 1000;
   for (const [clave, rol] of Object.entries(USUARIOS)) {

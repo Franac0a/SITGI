@@ -1,5 +1,5 @@
 import { armarConsulta, pedirApi, URL_API } from '@/servicios/api'
-import type { Alerta, FilaRotacion, FiltrosReporte, Resumen } from '@/tipos'
+import type { Alerta, ConsumoSector, FilaRotacion, FiltrosReporte, Resumen } from '@/tipos'
 
 export async function obtenerAlertas(): Promise<Alerta[]> {
   const respuesta = await pedirApi<{ alertas: Alerta[] }>('/reportes/alertas')
@@ -14,6 +14,12 @@ export function obtenerResumen(): Promise<Resumen> {
 export async function obtenerRotacion(dias: number): Promise<FilaRotacion[]> {
   const respuesta = await pedirApi<{ rotacion: FilaRotacion[] }>(`/reportes/rotacion?dias=${dias}`)
   return respuesta.rotacion
+}
+
+// Cuántos consumos registró cada sector en los últimos "dias".
+export async function obtenerConsumoPorSector(dias: number): Promise<ConsumoSector[]> {
+  const respuesta = await pedirApi<{ sectores: ConsumoSector[] }>(`/reportes/consumo-sector?dias=${dias}`)
+  return respuesta.sectores
 }
 
 // Descarga un CSV del backend y lo guarda como archivo en la computadora.

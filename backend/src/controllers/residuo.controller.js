@@ -1,6 +1,12 @@
 import { Residuo } from "../models/Residuo.model.js";
 
 import { detalleError } from "../helpers/error.helper.js";
+import {
+  limpiarSector,
+  sectorNoExiste,
+  MENSAJE_SECTOR_INEXISTENTE,
+} from "../helpers/sector.helper.js";
+
 const TIPOS_RESIDUO = ["Patológico", "Químico", "Tóxico", "Biológico", "Otro"];
 const ESTADOS_RESIDUO = ["Pendiente", "Retirado"];
 
@@ -43,10 +49,15 @@ export const crearResiduo = async (req, res) => {
         .json({ mensaje: "La descripción del residuo es obligatoria." });
     }
 
+    const sectorFinal = limpiarSector(sector);
+    if (await sectorNoExiste(sectorFinal)) {
+      return res.status(400).json({ mensaje: MENSAJE_SECTOR_INEXISTENTE });
+    }
+
     const residuo = await Residuo.create({
       tipo: tipo || "Otro",
       descripcion,
-      sector: sector || null,
+      sector: sectorFinal,
       responsable,
       retiro_programado: retiro_programado || null,
       observaciones: observaciones || null,
@@ -90,9 +101,15 @@ export const actualizarResiduo = async (req, res) => {
       });
     }
 
+    if (sector !== undefined) {
+      const sectorFinal = limpiarSector(sector);
+      if (await sectorNoExiste(sectorFinal)) {
+        return res.status(400).json({ mensaje: MENSAJE_SECTOR_INEXISTENTE });
+      }
+      residuo.sector = sectorFinal;
+    }
     if (tipo !== undefined) residuo.tipo = tipo;
     if (descripcion !== undefined) residuo.descripcion = descripcion;
-    if (sector !== undefined) residuo.sector = sector;
     if (retiro_programado !== undefined)
       residuo.retiro_programado = retiro_programado;
     if (estado !== undefined) residuo.estado = estado;

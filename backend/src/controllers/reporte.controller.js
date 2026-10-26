@@ -239,18 +239,23 @@ export const exportarMovimientosCsv = async (req, res) => {
   }
 };
 
+// Período de los reportes de consumo: los últimos "dias" días (entre 1 y 365, por defecto 30).
+// Devuelve la cantidad de días y la fecha de inicio en formato AAAA-MM-DD.
+const periodoDeConsumo = (diasPedidos) => {
+  const dias = Math.min(Math.max(parseInt(diasPedidos, 10) || 30, 1), 365);
+  const desde = new Date();
+  desde.setDate(desde.getDate() - dias);
+  return { dias, desdeStr: desde.toISOString().slice(0, 10) };
+};
+
 /**
  * Alta rotación: elementos con más consumo (egresos, bajas, reparaciones)
  * en los últimos N días (por defecto 30). Parámetros: dias, limite.
  */
 export const obtenerRotacion = async (req, res) => {
   try {
-    const dias = Math.min(Math.max(parseInt(req.query.dias, 10) || 30, 1), 365);
+    const { dias, desdeStr } = periodoDeConsumo(req.query.dias);
     const limite = Math.min(Math.max(parseInt(req.query.limite, 10) || 10, 1), 50);
-
-    const desde = new Date();
-    desde.setDate(desde.getDate() - dias);
-    const desdeStr = desde.toISOString().slice(0, 10);
 
     const filas = await Movimiento.findAll({
       attributes: [
@@ -296,6 +301,47 @@ export const obtenerRotacion = async (req, res) => {
     console.error("Error al calcular rotación:", error.message);
     res.status(500).json({
       mensaje: "Error al calcular la rotación.",
+      ...detalleError(error),
+    });
+  }
+};
+
+/**
+ * Consumo por sector: cuántos consumos (egresos, bajas, reparaciones) registró
+ * cada sector en los últimos N días y de cuántos elementos distintos.
+ * No se suman cantidades porque cada ítem tiene su propia unidad (mL, g, cajas...).
+ */
+export const obtenerConsumoPorSector = async (req, res) => {
+  try {
+    const { dias, desdeStr } = periodoDeConsumo(req.query.dias);
+
+    const filas = await Movimiento.findAll({
+      attributes: [
+        "sector",
+        [Sequelize.fn("COUNT", Sequelize.col("id")), "consumos"],
+        [Sequelize.fn("COUNT", Sequelize.fn("DISTINCT", Sequelize.col("itemId"))), "elementos"],
+      ],
+      where: {
+        tipo_movimiento: { [Op.in]: TIPOS_QUE_RESTAN },
+        fecha_movimiento: { [Op.gte]: desdeStr },
+      },
+      group: ["sector"],
+      order: [[Sequelize.fn("COUNT", Sequelize.col("id")), "DESC"]],
+      raw: true,
+    });
+
+    // MySQL devuelve los COUNT como texto.
+    const sectores = filas.map((fila) => ({
+      sector: fila.sector,
+      consumos: Number(fila.consumos),
+      elementos: Number(fila.elementos),
+    }));
+
+    res.status(200).json({ dias, desde: desdeStr, sectores });
+  } catch (error) {
+    console.error("Error al calcular el consumo por sector:", error.message);
+    res.status(500).json({
+      mensaje: "Error al calcular el consumo por sector.",
       ...detalleError(error),
     });
   }

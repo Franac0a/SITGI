@@ -5,6 +5,11 @@ import { sequelize } from "../config/db.js";
 import { detalleError } from "../helpers/error.helper.js";
 import { avisarSiStockBajo } from "../helpers/stockBajo.helper.js";
 import {
+  limpiarSector,
+  sectorNoExiste,
+  MENSAJE_SECTOR_INEXISTENTE,
+} from "../helpers/sector.helper.js";
+import {
   TIPOS_MOVIMIENTO,
   TIPOS_QUE_SUMAN,
   TIPOS_QUE_RESTAN,
@@ -62,7 +67,10 @@ export const registrarMovimiento = async (req, res) => {
     });
   }
 
-  const sectorFinal = String(sector ?? "").trim() || null;
+  const sectorFinal = limpiarSector(sector);
+  if (await sectorNoExiste(sectorFinal)) {
+    return res.status(400).json({ mensaje: MENSAJE_SECTOR_INEXISTENTE });
+  }
 
   // El responsable sale del usuario autenticado, no de lo que mande el cliente.
   const responsable = req.usuario.nombre;
