@@ -1,5 +1,5 @@
 import { armarConsulta, pedirApi, URL_API } from '@/servicios/api'
-import type { Alerta, ConsumoSector, FilaRotacion, FiltrosReporte, Resumen } from '@/tipos'
+import type { Alerta, ConsumoSector, FilaRotacion, FiltrosMovimientos, FiltrosReporte, Resumen } from '@/tipos'
 
 export async function obtenerAlertas(): Promise<Alerta[]> {
   const respuesta = await pedirApi<{ alertas: Alerta[] }>('/reportes/alertas')
@@ -49,7 +49,8 @@ export function exportarInventario(filtros: FiltrosReporte) {
   return descargarCsv(`/reportes/export${consulta}`, 'inventario.csv', 'No se pudo exportar el inventario.')
 }
 
-export function exportarMovimientos(filtros: FiltrosReporte) {
+// Acepta los filtros de Reportes o los de la pantalla de Movimientos (ítem, tipo, usuario...).
+export function exportarMovimientos(filtros: FiltrosReporte | FiltrosMovimientos) {
   return descargarCsv(
     `/reportes/movimientos/export${armarConsulta(filtros)}`,
     'movimientos.csv',

@@ -12,6 +12,7 @@ import { usePaginacion } from '@/componentes/ui/usePaginacion'
 import { useSesion } from '@/contexto/useSesion'
 import { obtenerItems } from '@/servicios/items'
 import { obtenerMovimientos } from '@/servicios/movimientos'
+import { exportarMovimientos } from '@/servicios/reportes'
 import { obtenerSectores } from '@/servicios/sectores'
 import type { FiltrosMovimientos as Filtros, Item, Movimiento, Sector, TipoMovimiento } from '@/tipos'
 import { mensajeDeError } from '@/utilidades/errores'
@@ -42,6 +43,20 @@ export default function PaginaMovimientos() {
   const paginacion = usePaginacion(movimientos)
   // Se suma 1 cada vez que se registra un movimiento, para que se vuelva a cargar la lista.
   const [recargas, setRecargas] = useState(0)
+  const [exportando, setExportando] = useState(false)
+
+  // Descarga un CSV con los mismos filtros de la lista (por ejemplo, un solo insumo).
+  async function exportar() {
+    setExportando(true)
+    setError('')
+    try {
+      await exportarMovimientos(filtros)
+    } catch (e) {
+      setError(mensajeDeError(e))
+    } finally {
+      setExportando(false)
+    }
+  }
 
   // Se carga al entrar, al cambiar un filtro y después de registrar un movimiento.
   useEffect(() => {
@@ -101,11 +116,14 @@ export default function PaginaMovimientos() {
 
         <FiltrosMovimientos
           filtros={filtros}
+          items={items}
           sectores={sectores}
           alCambiar={(nuevos) => {
             setFiltros(nuevos)
             paginacion.volverAlInicio()
           }}
+          alExportar={exportar}
+          exportando={exportando}
         />
 
         {error && <Mensaje tipo="error" titulo="Error al cargar movimientos" texto={error} />}

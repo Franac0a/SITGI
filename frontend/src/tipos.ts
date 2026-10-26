@@ -111,6 +111,7 @@ export interface DatosMovimiento {
 }
 
 export interface FiltrosMovimientos {
+  itemId?: string
   sector?: string
   tipo?: string
   responsable?: string
