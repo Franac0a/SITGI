@@ -45,6 +45,15 @@ function cumpleFiltroEstado(item: Item, filtro: string): boolean {
   return estado === filtro
 }
 
+// Valor del filtro para ver los ítems a los que les falta cargar la condición de almacenamiento.
+const SIN_CONDICION = 'sinCondicion'
+
+function cumpleFiltroCondicion(item: Item, filtro: string): boolean {
+  if (!filtro) return true
+  if (filtro === SIN_CONDICION) return !item.condicion_almacenamiento
+  return item.condicion_almacenamiento === filtro
+}
+
 // Devuelve true si el texto buscado aparece en el nombre, código, CAS, ubicación o categoría.
 function coincideConBusqueda(item: Item, busqueda: string): boolean {
   const texto = busqueda.toLowerCase().trim()
@@ -67,6 +76,7 @@ export default function PaginaInventario() {
   const [busqueda, setBusqueda] = useState('')
   const [categoria, setCategoria] = useState('')
   const [estado, setEstado] = useState(parametros.get('estado') ?? '')
+  const [condicion, setCondicion] = useState('')
   // Ítem que se está viendo en la ventana de detalle (null = ventana cerrada).
   const [itemDetalle, setItemDetalle] = useState<Item | null>(null)
 
@@ -106,13 +116,16 @@ export default function PaginaInventario() {
     (item) =>
       coincideConBusqueda(item, busqueda) &&
       (!categoria || item.categoria === categoria) &&
-      cumpleFiltroEstado(item, estado),
+      cumpleFiltroEstado(item, estado) &&
+      cumpleFiltroCondicion(item, condicion),
   )
   const paginacion = usePaginacion(itemsFiltrados)
 
   // Categorías sin repetir y ordenadas, para el selector.
   const categorias = [...new Set(items.map((item) => item.categoria))].sort()
-  const hayFiltros = busqueda !== '' || categoria !== '' || estado !== ''
+  // Condiciones de almacenamiento que tienen cargadas los ítems, sin repetir.
+  const condiciones = [...new Set(items.map((item) => item.condicion_almacenamiento ?? ''))].filter(Boolean).sort()
+  const hayFiltros = busqueda !== '' || categoria !== '' || estado !== '' || condicion !== ''
 
   // Cada vez que cambia un filtro se vuelve a la primera página.
   function filtrar(cambiar: () => void) {
@@ -140,7 +153,7 @@ export default function PaginaInventario() {
           </div>
         </EncabezadoPagina>
 
-        <div className="p-4 rounded-xl border border-gray-200 bg-gray-50 flex flex-col md:flex-row md:items-center gap-3">
+        <div className="p-4 rounded-xl border border-gray-200 bg-gray-50 flex flex-col md:flex-row md:flex-wrap md:items-center gap-3">
           <div className="w-full md:w-72">
             <input
               type="text"
@@ -172,6 +185,20 @@ export default function PaginaInventario() {
               className="py-2 text-xs bg-white"
             />
           </div>
+          <div className="w-full md:w-56">
+            <Selector
+              id="filtro-condicion"
+              aria-label="Filtrar por condición de almacenamiento"
+              textoVacio="Todas las condiciones"
+              opciones={[
+                ...condiciones.map((c) => ({ valor: c, texto: c })),
+                { valor: SIN_CONDICION, texto: 'Sin condición cargada' },
+              ]}
+              value={condicion}
+              onChange={(e) => filtrar(() => setCondicion(e.target.value))}
+              className="py-2 text-xs bg-white"
+            />
+          </div>
           {hayFiltros && (
             <button
               type="button"
@@ -180,6 +207,7 @@ export default function PaginaInventario() {
                   setBusqueda('')
                   setCategoria('')
                   setEstado('')
+                  setCondicion('')
                 })
               }
               className="text-xs font-semibold text-cit-petroleo hover:underline"
