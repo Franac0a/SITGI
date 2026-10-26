@@ -276,6 +276,8 @@ export interface ConsumoSector {
 }
 
 export interface FiltrosReporte {
+  // El ítem solo se usa en el CSV de movimientos.
+  itemId?: string
   categoria?: string
   sector?: string
   desde?: string

@@ -17,7 +17,7 @@ import {
   obtenerRotacion,
 } from '@/servicios/reportes'
 import { obtenerSectores } from '@/servicios/sectores'
-import type { Alerta, ConsumoSector, FilaRotacion, FiltrosReporte, Sector, TipoAlerta } from '@/tipos'
+import type { Alerta, ConsumoSector, FilaRotacion, FiltrosReporte, Item, Sector, TipoAlerta } from '@/tipos'
 import { mensajeDeError } from '@/utilidades/errores'
 import { formatearFecha } from '@/utilidades/fechas'
 
@@ -49,6 +49,7 @@ export default function PaginaReportes() {
   const [consumoPorSector, setConsumoPorSector] = useState<ConsumoSector[]>([])
   // Período (en días) de la alta rotación y del consumo por sector.
   const [dias, setDias] = useState(30)
+  const [items, setItems] = useState<Item[]>([])
   const [categorias, setCategorias] = useState<string[]>([])
   const [sectores, setSectores] = useState<Sector[]>([])
   const [filtros, setFiltros] = useState<FiltrosReporte>({})
@@ -64,7 +65,7 @@ export default function PaginaReportes() {
       setCargando(true)
       setError('')
       try {
-        const [listaAlertas, filasRotacion, consumos, items, listaSectores] = await Promise.all([
+        const [listaAlertas, filasRotacion, consumos, listaItems, listaSectores] = await Promise.all([
           obtenerAlertas(),
           obtenerRotacion(dias),
           obtenerConsumoPorSector(dias),
@@ -75,8 +76,9 @@ export default function PaginaReportes() {
         setRotacion(filasRotacion)
         setConsumoPorSector(consumos)
         setSectores(listaSectores)
+        setItems(listaItems)
         // Categorías sin repetir y ordenadas, para el filtro.
-        setCategorias([...new Set(items.map((item) => item.categoria))].sort())
+        setCategorias([...new Set(listaItems.map((item) => item.categoria))].sort())
       } catch (e) {
         setError(mensajeDeError(e))
       } finally {
@@ -119,10 +121,23 @@ export default function PaginaReportes() {
           <div>
             <h2 className="text-base font-bold text-gray-900">Exportar informes</h2>
             <p className="text-xs text-gray-600 mt-0.5">
-              Filtrá por categoría, sector o período y descargá el CSV (se abre directo en Excel). El período se aplica
-              a los movimientos.
+              Filtrá por categoría, sector o período y descargá el CSV (se abre directo en Excel). El ítem y el período
+              se aplican solo a los movimientos.
             </p>
           </div>
+
+          <Selector
+            id="rep-item"
+            name="itemId"
+            etiqueta="Ítem / Reactivo (movimientos)"
+            textoVacio="Todos los ítems"
+            opciones={items.map((item) => ({
+              valor: String(item.id),
+              texto: item.codigo_identificacion ? `${item.nombre} (${item.codigo_identificacion})` : item.nombre,
+            }))}
+            value={filtros.itemId ?? ''}
+            onChange={cambiarFiltro}
+          />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-end">
             <Selector
