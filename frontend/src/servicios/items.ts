@@ -18,6 +18,11 @@ export function actualizarItem(id: string, datos: DatosItem) {
   return pedirApi(`/items/${id}`, 'PUT', datos)
 }
 
+// Cambia solo el stock mínimo. Si el ítem queda por debajo, el backend genera el aviso de stock bajo.
+export function cambiarStockMinimo(id: number, stockMinimo: number) {
+  return pedirApi(`/items/${id}`, 'PUT', { stock_minimo: stockMinimo })
+}
+
 export function eliminarItem(id: number) {
   return pedirApi(`/items/${id}`, 'DELETE')
 }

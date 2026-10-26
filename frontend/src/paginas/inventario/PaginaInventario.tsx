@@ -11,13 +11,14 @@ import { Paginacion } from '@/componentes/ui/Paginacion'
 import { Selector } from '@/componentes/ui/Selector'
 import { usePaginacion } from '@/componentes/ui/usePaginacion'
 import { useSesion } from '@/contexto/useSesion'
-import { eliminarItem, obtenerItems } from '@/servicios/items'
+import { cambiarStockMinimo, eliminarItem, obtenerItems } from '@/servicios/items'
 import type { Item, Opcion } from '@/tipos'
 import { mensajeDeError } from '@/utilidades/errores'
 import { formatearFecha } from '@/utilidades/fechas'
 import { puedeGestionarInventario, puedeRegistrarMovimientos } from '@/utilidades/permisos'
 import { codigoDe, estadoDeStock, type EstadoStock } from './datosItem'
 import { DetalleItem } from './DetalleItem'
+import { EditorMinimo } from './EditorMinimo'
 
 const PASTILLA_ESTADO: Record<EstadoStock, { texto: string; clases: string }> = {
   agotado: { texto: 'Agotado', clases: 'bg-red-100 text-red-700 border-red-200' },
@@ -26,15 +27,19 @@ const PASTILLA_ESTADO: Record<EstadoStock, { texto: string; clases: string }> = 
 }
 
 // "reponer" junta los bajos y los agotados: son los que hay que volver a pedir.
+// "sinMinimo" muestra los ítems a los que todavía no se les cargó el stock mínimo:
+// mientras el mínimo sea 0, ese ítem nunca genera un aviso de stock bajo.
 const FILTROS_ESTADO: Opcion[] = [
   { valor: 'disponible', texto: 'Disponible' },
   { valor: 'bajo', texto: 'Stock bajo' },
   { valor: 'agotado', texto: 'Agotado' },
   { valor: 'reponer', texto: 'Necesita reposición' },
+  { valor: 'sinMinimo', texto: 'Sin stock mínimo cargado' },
 ]
 
 function cumpleFiltroEstado(item: Item, filtro: string): boolean {
   if (!filtro) return true
+  if (filtro === 'sinMinimo') return item.stock_minimo <= 0
   const estado = estadoDeStock(item)
   if (filtro === 'reponer') return estado === 'bajo' || estado === 'agotado'
   return estado === filtro
@@ -80,6 +85,12 @@ export default function PaginaInventario() {
   useEffect(() => {
     cargarItems()
   }, [])
+
+  async function guardarMinimo(id: number, minimo: number) {
+    await cambiarStockMinimo(id, minimo)
+    // Se cambia solo ese ítem en la lista, sin recargar todo: así no se pierden la página ni los filtros.
+    setItems((anteriores) => anteriores.map((item) => (item.id === id ? { ...item, stock_minimo: minimo } : item)))
+  }
 
   async function borrar(item: Item) {
     if (!window.confirm(`¿Eliminar "${item.nombre}" del inventario?`)) return
@@ -232,9 +243,11 @@ export default function PaginaInventario() {
                         </td>
                         <td className="px-5 py-4 text-gray-700">{item.ubicacion || 'Laboratorio'}</td>
                         <td className="px-5 py-4 text-center">
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-800 border border-gray-200">
-                            {item.stock_actual} / Mín {item.stock_minimo} {item.unidad_medida}
-                          </span>
+                          <EditorMinimo
+                            item={item}
+                            puedeEditar={puedeGestionar}
+                            alGuardar={(minimo) => guardarMinimo(item.id, minimo)}
+                          />
                         </td>
                         <td className="px-5 py-4 text-center">
                           <span
