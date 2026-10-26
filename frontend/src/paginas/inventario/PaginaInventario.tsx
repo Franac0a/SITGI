@@ -7,6 +7,7 @@ import { CargandoTabla } from '@/componentes/ui/Esqueleto'
 import { EstadoVacio } from '@/componentes/ui/EstadoVacio'
 import { EtiquetaCategoria } from '@/componentes/ui/Insignia'
 import { Mensaje } from '@/componentes/ui/Mensaje'
+import { Paginacion } from '@/componentes/ui/Paginacion'
 import { useSesion } from '@/contexto/useSesion'
 import { eliminarItem, obtenerItems } from '@/servicios/items'
 import type { Item } from '@/tipos'
@@ -38,6 +39,8 @@ function EstadoStock({ item }: { item: Item }) {
   )
 }
 
+const ITEMS_POR_PAGINA = 20
+
 // Devuelve true si el texto buscado aparece en el nombre, código, CAS, ubicación o categoría.
 function coincideConBusqueda(item: Item, busqueda: string): boolean {
   const texto = busqueda.toLowerCase().trim()
@@ -55,6 +58,7 @@ export default function PaginaInventario() {
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState('')
   const [busqueda, setBusqueda] = useState('')
+  const [pagina, setPagina] = useState(1)
   // Ítem que se está viendo en la ventana de detalle (null = ventana cerrada).
   const [itemDetalle, setItemDetalle] = useState<Item | null>(null)
 
@@ -84,7 +88,25 @@ export default function PaginaInventario() {
     }
   }
 
+  function buscar(texto: string) {
+    setBusqueda(texto)
+    // Con una búsqueda nueva se vuelve a la primera página.
+    setPagina(1)
+  }
+
+  function irAPagina(numero: number) {
+    setPagina(numero)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   const itemsFiltrados = items.filter((item) => coincideConBusqueda(item, busqueda))
+
+  // Paginación: de toda la lista filtrada se muestran solo los ítems de la página actual.
+  const totalPaginas = Math.max(1, Math.ceil(itemsFiltrados.length / ITEMS_POR_PAGINA))
+  // Si se borra el último ítem de la última página, la página deja de existir: se usa la anterior.
+  const paginaActual = Math.min(pagina, totalPaginas)
+  const inicio = (paginaActual - 1) * ITEMS_POR_PAGINA
+  const itemsDeLaPagina = itemsFiltrados.slice(inicio, inicio + ITEMS_POR_PAGINA)
 
   return (
     <PlantillaPrincipal>
@@ -112,7 +134,7 @@ export default function PaginaInventario() {
               type="text"
               placeholder="Buscar por código, nombre o CAS..."
               value={busqueda}
-              onChange={(e) => setBusqueda(e.target.value)}
+              onChange={(e) => buscar(e.target.value)}
               className="w-full px-3 py-2 text-xs bg-white border border-gray-300 rounded-lg text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cit-turquesa focus:border-cit-turquesa font-sans"
             />
           </div>
@@ -152,7 +174,7 @@ export default function PaginaInventario() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 text-gray-900">
-                {itemsFiltrados.map((item) => (
+                {itemsDeLaPagina.map((item) => (
                   <tr key={item.id} className="hover:bg-gray-50/80 transition-colors">
                     <td className="px-5 py-4 font-mono font-bold text-gray-900">{codigoDe(item)}</td>
                     <td className="px-5 py-4 font-bold">
@@ -216,6 +238,13 @@ export default function PaginaInventario() {
                 ))}
               </tbody>
             </table>
+            <Paginacion
+              pagina={paginaActual}
+              totalPaginas={totalPaginas}
+              totalElementos={itemsFiltrados.length}
+              porPagina={ITEMS_POR_PAGINA}
+              alCambiar={irAPagina}
+            />
           </div>
         )}
       </div>
