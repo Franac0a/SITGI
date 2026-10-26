@@ -14,6 +14,7 @@ import { useSesion } from '@/contexto/useSesion'
 import { eliminarItem, obtenerItems } from '@/servicios/items'
 import type { Item, Opcion } from '@/tipos'
 import { mensajeDeError } from '@/utilidades/errores'
+import { formatearFecha } from '@/utilidades/fechas'
 import { puedeGestionarInventario, puedeRegistrarMovimientos } from '@/utilidades/permisos'
 import { codigoDe, estadoDeStock, type EstadoStock } from './datosItem'
 import { DetalleItem } from './DetalleItem'
@@ -198,91 +199,93 @@ export default function PaginaInventario() {
           />
         ) : (
           <div className="rounded-xl border border-gray-200 overflow-hidden shadow-2xs">
-            <table className="min-w-full divide-y divide-gray-200 text-left text-xs">
-              <thead className="bg-gray-50 font-bold uppercase tracking-wider text-gray-600">
-                <tr>
-                  <th className="px-5 py-3.5">Código / CAS</th>
-                  <th className="px-5 py-3.5">Nombre Químico / Insumo</th>
-                  <th className="px-5 py-3.5">Tipo / Categoría</th>
-                  <th className="px-5 py-3.5">Ubicación</th>
-                  <th className="px-5 py-3.5 text-center">Stock Actual</th>
-                  <th className="px-5 py-3.5 text-center">Estado</th>
-                  <th className="px-5 py-3.5">Vencimiento</th>
-                  <th className="px-5 py-3.5 text-right">Acciones</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 text-gray-900">
-                {paginacion.elementos.map((item) => {
-                  const pastilla = PASTILLA_ESTADO[estadoDeStock(item)]
-                  return (
-                    <tr key={item.id} className="hover:bg-gray-50/80 transition-colors">
-                      <td className="px-5 py-4 font-mono font-bold text-gray-900">{codigoDe(item)}</td>
-                      <td className="px-5 py-4 font-bold">
-                        {item.nombre}
-                        {item.codigoCas && (
-                          <span className="block text-[11px] text-gray-500 font-normal font-mono">
-                            CAS: {item.codigoCas}
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 text-left text-xs">
+                <thead className="bg-gray-50 font-bold uppercase tracking-wider text-gray-600">
+                  <tr>
+                    <th className="px-5 py-3.5">Código / CAS</th>
+                    <th className="px-5 py-3.5">Nombre Químico / Insumo</th>
+                    <th className="px-5 py-3.5">Tipo / Categoría</th>
+                    <th className="px-5 py-3.5">Ubicación</th>
+                    <th className="px-5 py-3.5 text-center">Stock Actual</th>
+                    <th className="px-5 py-3.5 text-center">Estado</th>
+                    <th className="px-5 py-3.5">Vencimiento</th>
+                    <th className="px-5 py-3.5 text-right">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 text-gray-900">
+                  {paginacion.elementos.map((item) => {
+                    const pastilla = PASTILLA_ESTADO[estadoDeStock(item)]
+                    return (
+                      <tr key={item.id} className="hover:bg-gray-50/80 transition-colors">
+                        <td className="px-5 py-4 font-mono font-bold text-gray-900">{codigoDe(item)}</td>
+                        <td className="px-5 py-4 font-bold">
+                          {item.nombre}
+                          {item.codigoCas && (
+                            <span className="block text-[11px] text-gray-500 font-normal font-mono">
+                              CAS: {item.codigoCas}
+                            </span>
+                          )}
+                        </td>
+                        <td className="px-5 py-4">
+                          <EtiquetaCategoria>{item.categoria}</EtiquetaCategoria>
+                        </td>
+                        <td className="px-5 py-4 text-gray-700">{item.ubicacion || 'Laboratorio'}</td>
+                        <td className="px-5 py-4 text-center">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-800 border border-gray-200">
+                            {item.stock_actual} / Mín {item.stock_minimo} {item.unidad_medida}
                           </span>
-                        )}
-                      </td>
-                      <td className="px-5 py-4">
-                        <EtiquetaCategoria>{item.categoria}</EtiquetaCategoria>
-                      </td>
-                      <td className="px-5 py-4 text-gray-700">{item.ubicacion || 'Laboratorio'}</td>
-                      <td className="px-5 py-4 text-center">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-800 border border-gray-200">
-                          {item.stock_actual} / Mín {item.stock_minimo} {item.unidad_medida}
-                        </span>
-                      </td>
-                      <td className="px-5 py-4 text-center">
-                        <span
-                          className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold border ${pastilla.clases}`}
-                        >
-                          {pastilla.texto}
-                        </span>
-                      </td>
-                      <td className="px-5 py-4 text-gray-700 font-mono">{item.fechaVencimiento || '—'}</td>
-                      <td className="px-5 py-4 text-right whitespace-nowrap">
-                        {puedeRetirar && (
+                        </td>
+                        <td className="px-5 py-4 text-center">
+                          <span
+                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold border ${pastilla.clases}`}
+                          >
+                            {pastilla.texto}
+                          </span>
+                        </td>
+                        <td className="px-5 py-4 text-gray-700 font-mono">{formatearFecha(item.fechaVencimiento)}</td>
+                        <td className="px-5 py-4 text-right whitespace-nowrap">
+                          {puedeRetirar && (
+                            <button
+                              type="button"
+                              onClick={() => navigate(`/movimientos?itemId=${item.id}&tipo=Egreso`)}
+                              className="text-cit-petroleo font-bold hover:text-cit-azul-fuerte hover:underline mr-3"
+                            >
+                              Retiro
+                            </button>
+                          )}
+                          {puedeGestionar && (
+                            <button
+                              type="button"
+                              onClick={() => navigate(`/inventario/editar/${item.id}`)}
+                              className="text-cit-petroleo font-bold hover:text-cit-azul-fuerte hover:underline mr-3"
+                            >
+                              Editar
+                            </button>
+                          )}
                           <button
                             type="button"
-                            onClick={() => navigate(`/movimientos?itemId=${item.id}&tipo=Egreso`)}
-                            className="text-cit-petroleo font-bold hover:text-cit-azul-fuerte hover:underline mr-3"
+                            onClick={() => setItemDetalle(item)}
+                            className={`text-gray-500 font-medium hover:text-cit-petroleo ${puedeGestionar ? 'mr-3' : ''}`}
                           >
-                            Retiro
+                            Detalles
                           </button>
-                        )}
-                        {puedeGestionar && (
-                          <button
-                            type="button"
-                            onClick={() => navigate(`/inventario/editar/${item.id}`)}
-                            className="text-cit-petroleo font-bold hover:text-cit-azul-fuerte hover:underline mr-3"
-                          >
-                            Editar
-                          </button>
-                        )}
-                        <button
-                          type="button"
-                          onClick={() => setItemDetalle(item)}
-                          className={`text-gray-500 font-medium hover:text-cit-petroleo ${puedeGestionar ? 'mr-3' : ''}`}
-                        >
-                          Detalles
-                        </button>
-                        {puedeGestionar && (
-                          <button
-                            type="button"
-                            onClick={() => borrar(item)}
-                            className="text-red-600 font-medium hover:text-red-700"
-                          >
-                            Eliminar
-                          </button>
-                        )}
-                      </td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
+                          {puedeGestionar && (
+                            <button
+                              type="button"
+                              onClick={() => borrar(item)}
+                              className="text-red-600 font-medium hover:text-red-700"
+                            >
+                              Eliminar
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
             <Paginacion
               pagina={paginacion.pagina}
               totalPaginas={paginacion.totalPaginas}

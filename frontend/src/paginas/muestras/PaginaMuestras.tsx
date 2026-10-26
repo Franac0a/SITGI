@@ -9,6 +9,7 @@ import { usePaginacion } from '@/componentes/ui/usePaginacion'
 import { obtenerMuestras } from '@/servicios/muestras'
 import type { Muestra, Opcion } from '@/tipos'
 import { mensajeDeError } from '@/utilidades/errores'
+import { formatearFecha } from '@/utilidades/fechas'
 
 const TIPOS: Opcion[] = [
   { valor: '', texto: 'Todas' },
@@ -73,43 +74,45 @@ export default function PaginaMuestras() {
             descripcion="Ejecutá `npm run seed` en el backend para cargar las muestras del CIT."
           />
         ) : (
-          <div className="rounded-xl border border-gray-200 overflow-hidden shadow-2xs overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200 text-left text-xs">
-              <thead className="bg-gray-50 font-bold uppercase tracking-wider text-gray-600">
-                <tr>
-                  <th className="px-5 py-3.5">Fecha</th>
-                  <th className="px-5 py-3.5">Ingreso</th>
-                  <th className="px-5 py-3.5">Propietario</th>
-                  <th className="px-5 py-3.5">Establecimiento</th>
-                  <th className="px-5 py-3.5">Especie</th>
-                  <th className="px-5 py-3.5 text-center">Muestras</th>
-                  <th className="px-5 py-3.5 text-center">Pos.</th>
-                  <th className="px-5 py-3.5 text-center">Sosp.</th>
-                  <th className="px-5 py-3.5 text-center">Neg.</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 text-gray-900">
-                {paginacion.elementos.map((muestra) => (
-                  <tr key={muestra.id} className="hover:bg-gray-50/80 transition-colors">
-                    <td className="px-5 py-4 font-mono whitespace-nowrap">{muestra.fecha_ingreso || '—'}</td>
-                    <td className="px-5 py-4 font-mono">{muestra.numero_ingreso || '—'}</td>
-                    <td className="px-5 py-4 font-bold">{muestra.propietario || '—'}</td>
-                    <td className="px-5 py-4 text-gray-700">{muestra.establecimiento || '—'}</td>
-                    <td className="px-5 py-4">{muestra.especie || '—'}</td>
-                    <td className="px-5 py-4 text-center font-mono">{muestra.cantidad_muestras}</td>
-                    <td className="px-5 py-4 text-center">
-                      <span className="font-bold text-red-600">{muestra.positivos}</span>
-                    </td>
-                    <td className="px-5 py-4 text-center">
-                      <span className="font-bold text-amber-600">{muestra.sospechosos}</span>
-                    </td>
-                    <td className="px-5 py-4 text-center">
-                      <span className="font-bold text-emerald-700">{muestra.negativos}</span>
-                    </td>
+          <div className="rounded-xl border border-gray-200 overflow-hidden shadow-2xs">
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 text-left text-xs">
+                <thead className="bg-gray-50 font-bold uppercase tracking-wider text-gray-600">
+                  <tr>
+                    <th className="px-5 py-3.5">Fecha</th>
+                    <th className="px-5 py-3.5">Ingreso</th>
+                    <th className="px-5 py-3.5">Propietario</th>
+                    <th className="px-5 py-3.5">Establecimiento</th>
+                    <th className="px-5 py-3.5">Especie</th>
+                    <th className="px-5 py-3.5 text-center">Muestras</th>
+                    <th className="px-5 py-3.5 text-center">Pos.</th>
+                    <th className="px-5 py-3.5 text-center">Sosp.</th>
+                    <th className="px-5 py-3.5 text-center">Neg.</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-gray-200 text-gray-900">
+                  {paginacion.elementos.map((muestra) => (
+                    <tr key={muestra.id} className="hover:bg-gray-50/80 transition-colors">
+                      <td className="px-5 py-4 font-mono whitespace-nowrap">{formatearFecha(muestra.fecha_ingreso)}</td>
+                      <td className="px-5 py-4 font-mono">{muestra.numero_ingreso || '—'}</td>
+                      <td className="px-5 py-4 font-bold">{muestra.propietario || '—'}</td>
+                      <td className="px-5 py-4 text-gray-700">{muestra.establecimiento || '—'}</td>
+                      <td className="px-5 py-4">{muestra.especie || '—'}</td>
+                      <td className="px-5 py-4 text-center font-mono">{muestra.cantidad_muestras}</td>
+                      <td className="px-5 py-4 text-center">
+                        <span className="font-bold text-red-600">{muestra.positivos}</span>
+                      </td>
+                      <td className="px-5 py-4 text-center">
+                        <span className="font-bold text-amber-600">{muestra.sospechosos}</span>
+                      </td>
+                      <td className="px-5 py-4 text-center">
+                        <span className="font-bold text-emerald-700">{muestra.negativos}</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
             <Paginacion
               pagina={paginacion.pagina}
               totalPaginas={paginacion.totalPaginas}

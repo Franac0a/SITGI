@@ -15,6 +15,7 @@ import { obtenerMovimientos } from '@/servicios/movimientos'
 import { obtenerSectores } from '@/servicios/sectores'
 import type { FiltrosMovimientos as Filtros, Item, Movimiento, Sector, TipoMovimiento } from '@/tipos'
 import { mensajeDeError } from '@/utilidades/errores'
+import { formatearFecha } from '@/utilidades/fechas'
 import { tiposDeMovimientoPermitidos } from '@/utilidades/permisos'
 import { FiltrosMovimientos } from './FiltrosMovimientos'
 import { FormularioMovimiento } from './FormularioMovimiento'
@@ -125,48 +126,50 @@ export default function PaginaMovimientos() {
           />
         ) : (
           <div className="rounded-xl border border-gray-200 overflow-hidden shadow-2xs">
-            <table className="min-w-full divide-y divide-gray-200 text-left text-xs">
-              <thead className="bg-gray-50 font-bold uppercase tracking-wider text-gray-600">
-                <tr>
-                  <th className="px-5 py-3.5">Fecha</th>
-                  <th className="px-5 py-3.5">Tipo</th>
-                  <th className="px-5 py-3.5">Ítem / Reactivo</th>
-                  <th className="px-5 py-3.5 text-center">Cantidad</th>
-                  <th className="px-5 py-3.5">Sector</th>
-                  <th className="px-5 py-3.5">Responsable</th>
-                  <th className="px-5 py-3.5">Origen / Destino</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 text-gray-900">
-                {paginacion.elementos.map((movimiento) => (
-                  <tr key={movimiento.id} className="hover:bg-gray-50/80 transition-colors">
-                    <td className="px-5 py-4 font-mono whitespace-nowrap">{movimiento.fecha_movimiento}</td>
-                    <td className="px-5 py-4">
-                      <Insignia color={COLOR_TIPO[movimiento.tipo_movimiento]}>{movimiento.tipo_movimiento}</Insignia>
-                    </td>
-                    <td className="px-5 py-4 font-bold">
-                      {movimiento.Item?.nombre || `Ítem #${movimiento.itemId}`}
-                      {movimiento.Item?.codigo_identificacion && (
-                        <span className="block text-[11px] text-gray-500 font-normal font-mono">
-                          {movimiento.Item.codigo_identificacion}
-                        </span>
-                      )}
-                    </td>
-                    <td className="px-5 py-4 text-center font-mono">
-                      {/* En un cambio de ubicación la cantidad no importa */}
-                      <span className="font-bold text-cit-petroleo">
-                        {movimiento.tipo_movimiento === 'Cambio de ubicación'
-                          ? '—'
-                          : `${movimiento.cantidad} ${movimiento.Item?.unidad_medida ?? ''}`}
-                      </span>
-                    </td>
-                    <td className="px-5 py-4">{movimiento.sector || '—'}</td>
-                    <td className="px-5 py-4">{movimiento.responsable}</td>
-                    <td className="px-5 py-4 text-gray-700">{movimiento.origen_destino || '—'}</td>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 text-left text-xs">
+                <thead className="bg-gray-50 font-bold uppercase tracking-wider text-gray-600">
+                  <tr>
+                    <th className="px-5 py-3.5">Fecha</th>
+                    <th className="px-5 py-3.5">Tipo</th>
+                    <th className="px-5 py-3.5">Ítem / Reactivo</th>
+                    <th className="px-5 py-3.5 text-center">Cantidad</th>
+                    <th className="px-5 py-3.5">Sector</th>
+                    <th className="px-5 py-3.5">Responsable</th>
+                    <th className="px-5 py-3.5">Origen / Destino</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-gray-200 text-gray-900">
+                  {paginacion.elementos.map((movimiento) => (
+                    <tr key={movimiento.id} className="hover:bg-gray-50/80 transition-colors">
+                      <td className="px-5 py-4 font-mono whitespace-nowrap">{formatearFecha(movimiento.fecha_movimiento)}</td>
+                      <td className="px-5 py-4">
+                        <Insignia color={COLOR_TIPO[movimiento.tipo_movimiento]}>{movimiento.tipo_movimiento}</Insignia>
+                      </td>
+                      <td className="px-5 py-4 font-bold">
+                        {movimiento.Item?.nombre || `Ítem #${movimiento.itemId}`}
+                        {movimiento.Item?.codigo_identificacion && (
+                          <span className="block text-[11px] text-gray-500 font-normal font-mono">
+                            {movimiento.Item.codigo_identificacion}
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-5 py-4 text-center font-mono">
+                        {/* En un cambio de ubicación la cantidad no importa */}
+                        <span className="font-bold text-cit-petroleo">
+                          {movimiento.tipo_movimiento === 'Cambio de ubicación'
+                            ? '—'
+                            : `${movimiento.cantidad} ${movimiento.Item?.unidad_medida ?? ''}`}
+                        </span>
+                      </td>
+                      <td className="px-5 py-4">{movimiento.sector || '—'}</td>
+                      <td className="px-5 py-4">{movimiento.responsable}</td>
+                      <td className="px-5 py-4 text-gray-700">{movimiento.origen_destino || '—'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
             <Paginacion
               pagina={paginacion.pagina}
               totalPaginas={paginacion.totalPaginas}

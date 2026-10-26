@@ -243,83 +243,85 @@ export default function PaginaPedidos() {
           <EstadoVacio titulo="No hay pedidos registrados" descripcion="Aún no se han solicitado insumos ni reposiciones." />
         ) : (
           <div className="rounded-xl border border-gray-200 overflow-hidden shadow-2xs">
-            <table className="min-w-full divide-y divide-gray-200 text-left text-xs">
-              <thead className="bg-gray-50 font-bold uppercase tracking-wider text-gray-600">
-                <tr>
-                  <th className="px-5 py-3.5">Insumo</th>
-                  <th className="px-5 py-3.5 text-center">Cantidad</th>
-                  <th className="px-5 py-3.5">Sector</th>
-                  <th className="px-5 py-3.5">Responsable</th>
-                  <th className="px-5 py-3.5 text-center">Estado</th>
-                  {puedeGestionar && <th className="px-5 py-3.5 text-right">Acciones</th>}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 text-gray-900">
-                {pedidos.map((pedido) => (
-                  <tr key={pedido.id} className="hover:bg-gray-50/80 transition-colors">
-                    <td className="px-5 py-4 font-bold">
-                      {pedido.item_nombre}
-                      {pedido.item && (
-                        <span className="block text-[11px] text-gray-500 font-normal">
-                          Inventario: {pedido.item.codigo_identificacion ?? pedido.item.nombre} · stock{' '}
-                          {pedido.item.stock_actual}
-                        </span>
-                      )}
-                      {pedido.observaciones && (
-                        <span className="block text-[11px] text-gray-500 font-normal">{pedido.observaciones}</span>
-                      )}
-                    </td>
-                    <td className="px-5 py-4 text-center font-mono">{pedido.cantidad}</td>
-                    <td className="px-5 py-4 text-gray-700">{pedido.sector || '—'}</td>
-                    <td className="px-5 py-4">{pedido.responsable}</td>
-                    <td className="px-5 py-4 text-center">
-                      <Insignia color={COLOR_ESTADO[pedido.estado]}>{pedido.estado}</Insignia>
-                    </td>
-                    {puedeGestionar && (
-                      <td className="px-5 py-4 text-right whitespace-nowrap">
-                        {pedido.estado === 'Pendiente' && (
-                          <button
-                            type="button"
-                            onClick={() => cambiarEstado(pedido, 'Aprobado')}
-                            className="text-cit-petroleo font-bold hover:text-cit-azul-fuerte hover:underline"
-                          >
-                            Aprobar
-                          </button>
-                        )}
-                        {pedido.estado === 'Aprobado' && (
-                          <span className="inline-flex items-center gap-2">
-                            {/* Si el pedido no está vinculado a un ítem, hay que elegir a cuál suma el stock */}
-                            {!pedido.itemId && (
-                              <select
-                                aria-label="Ítem al que ingresa el pedido"
-                                value={itemParaIngreso[pedido.id] ?? ''}
-                                onChange={(e) => setItemParaIngreso({ ...itemParaIngreso, [pedido.id]: e.target.value })}
-                                className="max-w-48 rounded-md border border-gray-300 bg-white px-2 py-1 text-xs"
-                              >
-                                <option value="">Elegir ítem...</option>
-                                {items.map((item) => (
-                                  <option key={item.id} value={String(item.id)}>
-                                    {textoDelItem(item)}
-                                  </option>
-                                ))}
-                              </select>
-                            )}
-                            <button
-                              type="button"
-                              disabled={!pedido.itemId && !itemParaIngreso[pedido.id]}
-                              onClick={() => cambiarEstado(pedido, 'Ingresado')}
-                              className="text-emerald-700 font-bold hover:text-emerald-900 hover:underline disabled:opacity-40 disabled:no-underline"
-                            >
-                              Ingresar al stock
-                            </button>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 text-left text-xs">
+                <thead className="bg-gray-50 font-bold uppercase tracking-wider text-gray-600">
+                  <tr>
+                    <th className="px-5 py-3.5">Insumo</th>
+                    <th className="px-5 py-3.5 text-center">Cantidad</th>
+                    <th className="px-5 py-3.5">Sector</th>
+                    <th className="px-5 py-3.5">Responsable</th>
+                    <th className="px-5 py-3.5 text-center">Estado</th>
+                    {puedeGestionar && <th className="px-5 py-3.5 text-right">Acciones</th>}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 text-gray-900">
+                  {pedidos.map((pedido) => (
+                    <tr key={pedido.id} className="hover:bg-gray-50/80 transition-colors">
+                      <td className="px-5 py-4 font-bold">
+                        {pedido.item_nombre}
+                        {pedido.item && (
+                          <span className="block text-[11px] text-gray-500 font-normal">
+                            Inventario: {pedido.item.codigo_identificacion ?? pedido.item.nombre} · stock{' '}
+                            {pedido.item.stock_actual}
                           </span>
                         )}
+                        {pedido.observaciones && (
+                          <span className="block text-[11px] text-gray-500 font-normal">{pedido.observaciones}</span>
+                        )}
                       </td>
-                    )}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                      <td className="px-5 py-4 text-center font-mono">{pedido.cantidad}</td>
+                      <td className="px-5 py-4 text-gray-700">{pedido.sector || '—'}</td>
+                      <td className="px-5 py-4">{pedido.responsable}</td>
+                      <td className="px-5 py-4 text-center">
+                        <Insignia color={COLOR_ESTADO[pedido.estado]}>{pedido.estado}</Insignia>
+                      </td>
+                      {puedeGestionar && (
+                        <td className="px-5 py-4 text-right whitespace-nowrap">
+                          {pedido.estado === 'Pendiente' && (
+                            <button
+                              type="button"
+                              onClick={() => cambiarEstado(pedido, 'Aprobado')}
+                              className="text-cit-petroleo font-bold hover:text-cit-azul-fuerte hover:underline"
+                            >
+                              Aprobar
+                            </button>
+                          )}
+                          {pedido.estado === 'Aprobado' && (
+                            <span className="inline-flex items-center gap-2">
+                              {/* Si el pedido no está vinculado a un ítem, hay que elegir a cuál suma el stock */}
+                              {!pedido.itemId && (
+                                <select
+                                  aria-label="Ítem al que ingresa el pedido"
+                                  value={itemParaIngreso[pedido.id] ?? ''}
+                                  onChange={(e) => setItemParaIngreso({ ...itemParaIngreso, [pedido.id]: e.target.value })}
+                                  className="max-w-48 rounded-md border border-gray-300 bg-white px-2 py-1 text-xs"
+                                >
+                                  <option value="">Elegir ítem...</option>
+                                  {items.map((item) => (
+                                    <option key={item.id} value={String(item.id)}>
+                                      {textoDelItem(item)}
+                                    </option>
+                                  ))}
+                                </select>
+                              )}
+                              <button
+                                type="button"
+                                disabled={!pedido.itemId && !itemParaIngreso[pedido.id]}
+                                onClick={() => cambiarEstado(pedido, 'Ingresado')}
+                                className="text-emerald-700 font-bold hover:text-emerald-900 hover:underline disabled:opacity-40 disabled:no-underline"
+                              >
+                                Ingresar al stock
+                              </button>
+                            </span>
+                          )}
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>

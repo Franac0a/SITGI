@@ -154,38 +154,40 @@ export default function PaginaSectores() {
           />
         ) : (
           <div className="rounded-xl border border-gray-200 overflow-hidden shadow-2xs">
-            <table className="min-w-full divide-y divide-gray-200 text-left text-xs">
-              <thead className="bg-gray-50 font-bold uppercase tracking-wider text-gray-600">
-                <tr>
-                  <th className="px-5 py-3.5">Nombre</th>
-                  <th className="px-5 py-3.5">Tipo</th>
-                  <th className="px-5 py-3.5">Descripción</th>
-                  {puedeGestionar && <th className="px-5 py-3.5 text-right">Acciones</th>}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 text-gray-900">
-                {sectores.map((sector) => (
-                  <tr key={sector.id} className="hover:bg-gray-50/80 transition-colors">
-                    <td className="px-5 py-4 font-bold">{sector.nombre}</td>
-                    <td className="px-5 py-4">
-                      <EtiquetaCategoria>{sector.tipo}</EtiquetaCategoria>
-                    </td>
-                    <td className="px-5 py-4 text-gray-700">{sector.descripcion || '—'}</td>
-                    {puedeGestionar && (
-                      <td className="px-5 py-4 text-right">
-                        <button
-                          type="button"
-                          onClick={() => borrar(sector)}
-                          className="text-red-600 font-medium hover:text-red-700 hover:underline"
-                        >
-                          Eliminar
-                        </button>
-                      </td>
-                    )}
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 text-left text-xs">
+                <thead className="bg-gray-50 font-bold uppercase tracking-wider text-gray-600">
+                  <tr>
+                    <th className="px-5 py-3.5">Nombre</th>
+                    <th className="px-5 py-3.5">Tipo</th>
+                    <th className="px-5 py-3.5">Descripción</th>
+                    {puedeGestionar && <th className="px-5 py-3.5 text-right">Acciones</th>}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-gray-200 text-gray-900">
+                  {sectores.map((sector) => (
+                    <tr key={sector.id} className="hover:bg-gray-50/80 transition-colors">
+                      <td className="px-5 py-4 font-bold">{sector.nombre}</td>
+                      <td className="px-5 py-4">
+                        <EtiquetaCategoria>{sector.tipo}</EtiquetaCategoria>
+                      </td>
+                      <td className="px-5 py-4 text-gray-700">{sector.descripcion || '—'}</td>
+                      {puedeGestionar && (
+                        <td className="px-5 py-4 text-right">
+                          <button
+                            type="button"
+                            onClick={() => borrar(sector)}
+                            className="text-red-600 font-medium hover:text-red-700 hover:underline"
+                          >
+                            Eliminar
+                          </button>
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>

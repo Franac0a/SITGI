@@ -8,7 +8,7 @@ Interfaz del Sistema Integral de Inventario, Stock y Trazabilidad Científica (S
 - **Vite** para el servidor de desarrollo y la compilación
 - **Tailwind CSS 4** para los estilos (los colores del CIT están en `src/index.css`)
 - **React Router** para las páginas
-- **Oxlint** para revisar el código
+- **Oxlint** para revisar el código y **Vitest** para los tests
 
 Otras librerías: `lucide-react` (íconos), `qrcode.react` (código QR de cada ítem) y
 `@radix-ui/react-dialog` (el menú lateral).
@@ -27,7 +27,12 @@ Otros comandos:
 npm run build      # compila para producción
 npm run typecheck  # revisa los tipos de TypeScript
 npm run lint       # revisa el código con oxlint
+npm test           # corre los tests con Vitest
 ```
+
+Los tests (`*.test.ts`) están al lado del archivo que prueban y cubren la lógica sin pantalla:
+permisos por rol, validaciones del login y el registro, formato de fechas, paginación,
+estado del stock y armado de las consultas a la API.
 
 ## Estructura de `src/`
 

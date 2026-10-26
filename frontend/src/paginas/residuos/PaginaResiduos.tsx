@@ -13,6 +13,7 @@ import { crearResiduo, marcarResiduoRetirado, obtenerResiduos } from '@/servicio
 import { obtenerSectores } from '@/servicios/sectores'
 import type { Opcion, Residuo, Sector, TipoResiduo } from '@/tipos'
 import { mensajeDeError } from '@/utilidades/errores'
+import { formatearFecha } from '@/utilidades/fechas'
 import { puedeGestionarInventario } from '@/utilidades/permisos'
 
 const TIPOS_RESIDUO: Opcion[] = [
@@ -191,53 +192,55 @@ export default function PaginaResiduos() {
           />
         ) : (
           <div className="rounded-xl border border-gray-200 overflow-hidden shadow-2xs">
-            <table className="min-w-full divide-y divide-gray-200 text-left text-xs">
-              <thead className="bg-gray-50 font-bold uppercase tracking-wider text-gray-600">
-                <tr>
-                  <th className="px-5 py-3.5">Tipo</th>
-                  <th className="px-5 py-3.5">Descripción</th>
-                  <th className="px-5 py-3.5">Sector</th>
-                  <th className="px-5 py-3.5">Responsable</th>
-                  <th className="px-5 py-3.5">Retiro programado</th>
-                  <th className="px-5 py-3.5 text-center">Estado</th>
-                  {puedeGestionar && <th className="px-5 py-3.5 text-right">Acciones</th>}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 text-gray-900">
-                {residuos.map((residuo) => (
-                  <tr key={residuo.id} className="hover:bg-gray-50/80 transition-colors">
-                    <td className="px-5 py-4">
-                      <EtiquetaCategoria>{residuo.tipo}</EtiquetaCategoria>
-                    </td>
-                    <td className="px-5 py-4 font-bold">
-                      {residuo.descripcion}
-                      {residuo.observaciones && (
-                        <span className="block text-[11px] text-gray-500 font-normal">{residuo.observaciones}</span>
-                      )}
-                    </td>
-                    <td className="px-5 py-4 text-gray-700">{residuo.sector || '—'}</td>
-                    <td className="px-5 py-4">{residuo.responsable}</td>
-                    <td className="px-5 py-4 font-mono text-gray-700">{residuo.retiro_programado || '—'}</td>
-                    <td className="px-5 py-4 text-center">
-                      <Insignia color={residuo.estado === 'Retirado' ? 'verde' : 'ambar'}>{residuo.estado}</Insignia>
-                    </td>
-                    {puedeGestionar && (
-                      <td className="px-5 py-4 text-right">
-                        {residuo.estado === 'Pendiente' && (
-                          <button
-                            type="button"
-                            onClick={() => marcarRetirado(residuo.id)}
-                            className="text-emerald-700 font-bold hover:text-emerald-900 hover:underline"
-                          >
-                            Marcar Retirado
-                          </button>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 text-left text-xs">
+                <thead className="bg-gray-50 font-bold uppercase tracking-wider text-gray-600">
+                  <tr>
+                    <th className="px-5 py-3.5">Tipo</th>
+                    <th className="px-5 py-3.5">Descripción</th>
+                    <th className="px-5 py-3.5">Sector</th>
+                    <th className="px-5 py-3.5">Responsable</th>
+                    <th className="px-5 py-3.5">Retiro programado</th>
+                    <th className="px-5 py-3.5 text-center">Estado</th>
+                    {puedeGestionar && <th className="px-5 py-3.5 text-right">Acciones</th>}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 text-gray-900">
+                  {residuos.map((residuo) => (
+                    <tr key={residuo.id} className="hover:bg-gray-50/80 transition-colors">
+                      <td className="px-5 py-4">
+                        <EtiquetaCategoria>{residuo.tipo}</EtiquetaCategoria>
+                      </td>
+                      <td className="px-5 py-4 font-bold">
+                        {residuo.descripcion}
+                        {residuo.observaciones && (
+                          <span className="block text-[11px] text-gray-500 font-normal">{residuo.observaciones}</span>
                         )}
                       </td>
-                    )}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                      <td className="px-5 py-4 text-gray-700">{residuo.sector || '—'}</td>
+                      <td className="px-5 py-4">{residuo.responsable}</td>
+                      <td className="px-5 py-4 font-mono text-gray-700">{formatearFecha(residuo.retiro_programado)}</td>
+                      <td className="px-5 py-4 text-center">
+                        <Insignia color={residuo.estado === 'Retirado' ? 'verde' : 'ambar'}>{residuo.estado}</Insignia>
+                      </td>
+                      {puedeGestionar && (
+                        <td className="px-5 py-4 text-right">
+                          {residuo.estado === 'Pendiente' && (
+                            <button
+                              type="button"
+                              onClick={() => marcarRetirado(residuo.id)}
+                              className="text-emerald-700 font-bold hover:text-emerald-900 hover:underline"
+                            >
+                              Marcar Retirado
+                            </button>
+                          )}
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>

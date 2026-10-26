@@ -19,6 +19,7 @@ import {
 import { obtenerSectores } from '@/servicios/sectores'
 import type { Alerta, ConsumoSector, FilaRotacion, FiltrosReporte, Sector, TipoAlerta } from '@/tipos'
 import { mensajeDeError } from '@/utilidades/errores'
+import { formatearFecha } from '@/utilidades/fechas'
 
 const ALERTAS: Record<TipoAlerta, { texto: string; color: Color }> = {
   agotado: { texto: 'Agotado', color: 'rojo' },
@@ -39,7 +40,7 @@ function detalleDeAlerta(alerta: Alerta): string {
   if (alerta.tipo === 'agotado' || alerta.tipo === 'stock_bajo') {
     return `Stock actual: ${item.stock_actual} (mínimo ${item.stock_minimo})`
   }
-  return `Vencimiento: ${item.detalles_tecnicos.fechaVencimiento || '—'}`
+  return `Vencimiento: ${formatearFecha(item.detalles_tecnicos.fechaVencimiento)}`
 }
 
 export default function PaginaReportes() {
@@ -205,39 +206,41 @@ export default function PaginaReportes() {
             <p className="text-sm text-gray-500">Todavía no hay consumos registrados en este período.</p>
           ) : (
             <div className="overflow-hidden rounded-lg border border-gray-200">
-              <table className="min-w-full divide-y divide-gray-200 text-left text-xs">
-                <thead className="bg-gray-50 font-bold uppercase tracking-wider text-gray-600">
-                  <tr>
-                    <th className="px-4 py-3">Elemento</th>
-                    <th className="px-4 py-3 text-center">Consumo</th>
-                    <th className="px-4 py-3 text-center">Movimientos</th>
-                    <th className="px-4 py-3 text-center">Stock actual</th>
-                    <th className="px-4 py-3 text-center">Cobertura estimada</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 text-gray-900">
-                  {rotacion.map((fila) => (
-                    <tr key={fila.itemId}>
-                      <td className="px-4 py-3 font-bold">
-                        {fila.nombre}
-                        {fila.codigo_identificacion && (
-                          <span className="block text-[11px] text-gray-500 font-normal font-mono">
-                            {fila.codigo_identificacion}
-                          </span>
-                        )}
-                      </td>
-                      <td className="px-4 py-3 text-center font-mono">
-                        {fila.consumo} {fila.unidad_medida ?? ''}
-                      </td>
-                      <td className="px-4 py-3 text-center font-mono">{fila.movimientos}</td>
-                      <td className="px-4 py-3 text-center font-mono">{fila.stock_actual}</td>
-                      <td className="px-4 py-3 text-center font-mono">
-                        {fila.dias_cobertura === null ? '—' : `${fila.dias_cobertura} días`}
-                      </td>
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200 text-left text-xs">
+                  <thead className="bg-gray-50 font-bold uppercase tracking-wider text-gray-600">
+                    <tr>
+                      <th className="px-4 py-3">Elemento</th>
+                      <th className="px-4 py-3 text-center">Consumo</th>
+                      <th className="px-4 py-3 text-center">Movimientos</th>
+                      <th className="px-4 py-3 text-center">Stock actual</th>
+                      <th className="px-4 py-3 text-center">Cobertura estimada</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200 text-gray-900">
+                    {rotacion.map((fila) => (
+                      <tr key={fila.itemId}>
+                        <td className="px-4 py-3 font-bold">
+                          {fila.nombre}
+                          {fila.codigo_identificacion && (
+                            <span className="block text-[11px] text-gray-500 font-normal font-mono">
+                              {fila.codigo_identificacion}
+                            </span>
+                          )}
+                        </td>
+                        <td className="px-4 py-3 text-center font-mono">
+                          {fila.consumo} {fila.unidad_medida ?? ''}
+                        </td>
+                        <td className="px-4 py-3 text-center font-mono">{fila.movimientos}</td>
+                        <td className="px-4 py-3 text-center font-mono">{fila.stock_actual}</td>
+                        <td className="px-4 py-3 text-center font-mono">
+                          {fila.dias_cobertura === null ? '—' : `${fila.dias_cobertura} días`}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
         </section>
@@ -255,26 +258,28 @@ export default function PaginaReportes() {
             <p className="text-sm text-gray-500">Todavía no hay consumos registrados en este período.</p>
           ) : (
             <div className="overflow-hidden rounded-lg border border-gray-200">
-              <table className="min-w-full divide-y divide-gray-200 text-left text-xs">
-                <thead className="bg-gray-50 font-bold uppercase tracking-wider text-gray-600">
-                  <tr>
-                    <th className="px-4 py-3">Sector</th>
-                    <th className="px-4 py-3 text-center">Consumos</th>
-                    <th className="px-4 py-3 text-center">Elementos distintos</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 text-gray-900">
-                  {consumoPorSector.map((fila) => (
-                    <tr key={fila.sector ?? 'sin-sector'}>
-                      <td className="px-4 py-3 font-bold">
-                        {fila.sector ?? <span className="font-normal text-gray-500">Sin sector</span>}
-                      </td>
-                      <td className="px-4 py-3 text-center font-mono">{fila.consumos}</td>
-                      <td className="px-4 py-3 text-center font-mono">{fila.elementos}</td>
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200 text-left text-xs">
+                  <thead className="bg-gray-50 font-bold uppercase tracking-wider text-gray-600">
+                    <tr>
+                      <th className="px-4 py-3">Sector</th>
+                      <th className="px-4 py-3 text-center">Consumos</th>
+                      <th className="px-4 py-3 text-center">Elementos distintos</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200 text-gray-900">
+                    {consumoPorSector.map((fila) => (
+                      <tr key={fila.sector ?? 'sin-sector'}>
+                        <td className="px-4 py-3 font-bold">
+                          {fila.sector ?? <span className="font-normal text-gray-500">Sin sector</span>}
+                        </td>
+                        <td className="px-4 py-3 text-center font-mono">{fila.consumos}</td>
+                        <td className="px-4 py-3 text-center font-mono">{fila.elementos}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
         </section>
