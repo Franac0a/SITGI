@@ -185,13 +185,13 @@ export const actualizarItem = async (req, res) => {
       return res.status(404).json({ mensaje: "Ítem no encontrado." });
     }
 
+    // El stock no se edita acá: solo cambia con un movimiento (ingreso, egreso,
+    // ajuste, etc.), así cada cambio queda registrado en la trazabilidad.
     const {
       nombre,
       tipo,
       categoria,
       marca,
-      cantidadInicial,
-      stock_actual,
       stockMinimo,
       stock_minimo,
       unidadMedida,
@@ -213,11 +213,6 @@ export const actualizarItem = async (req, res) => {
       dataToUpdate.categoria = categoria || tipo;
     }
     if (marca !== undefined) dataToUpdate.marca = marca;
-    if (stock_actual !== undefined) {
-      dataToUpdate.stock_actual = Number(stock_actual);
-    } else if (cantidadInicial !== undefined) {
-      dataToUpdate.stock_actual = Number(cantidadInicial);
-    }
     if (stock_minimo !== undefined) {
       dataToUpdate.stock_minimo = Number(stock_minimo);
     } else if (stockMinimo !== undefined) {

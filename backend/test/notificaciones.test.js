@@ -65,12 +65,12 @@ test("después de marcarlo leído, un nuevo egreso vuelve a avisar", async () =>
   assert.equal(nueva.body.total, 1);
 });
 
-test("editar el stock de un ítem por debajo del mínimo también avisa", async () => {
+test("subir el stock mínimo de un ítem por encima de su stock también avisa", async () => {
   const item = await crearItem({ stock_actual: 10, stock_minimo: 3 });
   const res = await request(app)
     .put(`/api/items/${item.id}`)
     .set("Cookie", cookie)
-    .send({ stock_actual: 1 });
+    .send({ stock_minimo: 12 });
   assert.equal(res.status, 200);
   assert.equal(await avisosDe(item.id), 1);
 });
