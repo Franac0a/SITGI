@@ -7,6 +7,8 @@ import { CargandoTabla } from '@/componentes/ui/Esqueleto'
 import { EstadoVacio } from '@/componentes/ui/EstadoVacio'
 import { Insignia } from '@/componentes/ui/Insignia'
 import { Mensaje } from '@/componentes/ui/Mensaje'
+import { Paginacion } from '@/componentes/ui/Paginacion'
+import { usePaginacion } from '@/componentes/ui/usePaginacion'
 import { useSesion } from '@/contexto/useSesion'
 import { obtenerItems } from '@/servicios/items'
 import { obtenerMovimientos } from '@/servicios/movimientos'
@@ -23,7 +25,8 @@ export default function PaginaMovimientos() {
   const tiposPermitidos = tiposDeMovimientoPermitidos(usuario?.rol)
   const puedeRegistrar = tiposPermitidos.length > 0
 
-  // Desde el inventario se llega con ?itemId=...&tipo=Egreso para precargar el formulario.
+  // Desde el inventario se llega con ?itemId=...&tipo=Egreso (Retiro) o &tipo=Ajuste
+  // (editar ítem): en ese caso el formulario se abre ya completado.
   const [parametros] = useSearchParams()
   const tipoDeLaUrl = parametros.get('tipo') as TipoMovimiento
   const tipoInicial = tiposPermitidos.includes(tipoDeLaUrl) ? tipoDeLaUrl : (tiposPermitidos[0] ?? 'Egreso')
@@ -34,7 +37,8 @@ export default function PaginaMovimientos() {
   const [filtros, setFiltros] = useState<Filtros>({})
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState('')
-  const [mostrarFormulario, setMostrarFormulario] = useState(false)
+  const [mostrarFormulario, setMostrarFormulario] = useState(parametros.has('itemId'))
+  const paginacion = usePaginacion(movimientos)
   // Se suma 1 cada vez que se registra un movimiento, para que se vuelva a cargar la lista.
   const [recargas, setRecargas] = useState(0)
 
@@ -94,7 +98,14 @@ export default function PaginaMovimientos() {
           />
         )}
 
-        <FiltrosMovimientos filtros={filtros} sectores={sectores} alCambiar={setFiltros} />
+        <FiltrosMovimientos
+          filtros={filtros}
+          sectores={sectores}
+          alCambiar={(nuevos) => {
+            setFiltros(nuevos)
+            paginacion.volverAlInicio()
+          }}
+        />
 
         {error && <Mensaje tipo="error" titulo="Error al cargar movimientos" texto={error} />}
 
@@ -127,7 +138,7 @@ export default function PaginaMovimientos() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 text-gray-900">
-                {movimientos.map((movimiento) => (
+                {paginacion.elementos.map((movimiento) => (
                   <tr key={movimiento.id} className="hover:bg-gray-50/80 transition-colors">
                     <td className="px-5 py-4 font-mono whitespace-nowrap">{movimiento.fecha_movimiento}</td>
                     <td className="px-5 py-4">
@@ -156,6 +167,13 @@ export default function PaginaMovimientos() {
                 ))}
               </tbody>
             </table>
+            <Paginacion
+              pagina={paginacion.pagina}
+              totalPaginas={paginacion.totalPaginas}
+              totalElementos={movimientos.length}
+              porPagina={paginacion.porPagina}
+              alCambiar={paginacion.cambiarPagina}
+            />
           </div>
         )}
       </div>

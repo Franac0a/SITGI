@@ -54,7 +54,8 @@ export interface Item {
 export interface DatosItem {
   nombre: string
   categoria: string
-  stock_actual: number
+  // Solo al crear. Después el stock cambia únicamente con movimientos.
+  stock_actual?: number
   unidad_medida: string
   ubicacion: string
   stock_minimo?: number

@@ -13,7 +13,7 @@ export default function PaginaNuevoItem() {
   async function guardar(datos: DatosItem) {
     await crearItem(datos)
 
-    const stockBajo = datos.stock_minimo !== undefined && datos.stock_actual <= datos.stock_minimo
+    const stockBajo = datos.stock_minimo !== undefined && (datos.stock_actual ?? 0) <= datos.stock_minimo
     if (stockBajo) {
       agregarAviso(
         'Elemento registrado (Stock Bajo)',

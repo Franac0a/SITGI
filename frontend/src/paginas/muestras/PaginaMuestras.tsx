@@ -4,6 +4,8 @@ import { EncabezadoPagina } from '@/componentes/ui/EncabezadoPagina'
 import { CargandoTabla } from '@/componentes/ui/Esqueleto'
 import { EstadoVacio } from '@/componentes/ui/EstadoVacio'
 import { Mensaje } from '@/componentes/ui/Mensaje'
+import { Paginacion } from '@/componentes/ui/Paginacion'
+import { usePaginacion } from '@/componentes/ui/usePaginacion'
 import { obtenerMuestras } from '@/servicios/muestras'
 import type { Muestra, Opcion } from '@/tipos'
 import { mensajeDeError } from '@/utilidades/errores'
@@ -20,6 +22,7 @@ export default function PaginaMuestras() {
   const [muestras, setMuestras] = useState<Muestra[]>([])
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState('')
+  const paginacion = usePaginacion(muestras)
 
   // Se vuelve a pedir la lista cada vez que se elige otro tipo.
   useEffect(() => {
@@ -45,7 +48,10 @@ export default function PaginaMuestras() {
             <button
               key={opcion.valor}
               type="button"
-              onClick={() => setTipo(opcion.valor)}
+              onClick={() => {
+                setTipo(opcion.valor)
+                paginacion.volverAlInicio()
+              }}
               className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
                 tipo === opcion.valor
                   ? 'bg-cit-petroleo text-white shadow-sm'
@@ -83,7 +89,7 @@ export default function PaginaMuestras() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 text-gray-900">
-                {muestras.map((muestra) => (
+                {paginacion.elementos.map((muestra) => (
                   <tr key={muestra.id} className="hover:bg-gray-50/80 transition-colors">
                     <td className="px-5 py-4 font-mono whitespace-nowrap">{muestra.fecha_ingreso || '—'}</td>
                     <td className="px-5 py-4 font-mono">{muestra.numero_ingreso || '—'}</td>
@@ -104,6 +110,13 @@ export default function PaginaMuestras() {
                 ))}
               </tbody>
             </table>
+            <Paginacion
+              pagina={paginacion.pagina}
+              totalPaginas={paginacion.totalPaginas}
+              totalElementos={muestras.length}
+              porPagina={paginacion.porPagina}
+              alCambiar={paginacion.cambiarPagina}
+            />
           </div>
         )}
       </div>

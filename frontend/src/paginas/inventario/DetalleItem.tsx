@@ -3,7 +3,7 @@ import { QRCodeSVG } from 'qrcode.react'
 import { EtiquetaSeccion } from '@/componentes/ui/EncabezadoPagina'
 import { obtenerHistorial } from '@/servicios/movimientos'
 import type { Item, Movimiento } from '@/tipos'
-import { codigoDe } from './codigoItem'
+import { codigoDe } from './datosItem'
 
 function Dato({ titulo, children, mono = false }: { titulo: string; children: ReactNode; mono?: boolean }) {
   return (

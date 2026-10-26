@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { PlantillaPrincipal } from '@/componentes/plantilla/PlantillaPrincipal'
 import { EncabezadoPagina } from '@/componentes/ui/EncabezadoPagina'
 import { Esqueleto } from '@/componentes/ui/Esqueleto'
@@ -8,13 +9,33 @@ import { obtenerResumen } from '@/servicios/reportes'
 import type { Resumen } from '@/tipos'
 import { mensajeDeError } from '@/utilidades/errores'
 
-function Tarjeta({ titulo, valor, color = 'text-cit-petroleo' }: { titulo: string; valor: number; color?: string }) {
-  return (
-    <div className="p-5 rounded-xl border border-gray-200 bg-white shadow-2xs">
+interface PropsTarjeta {
+  titulo: string
+  valor: number
+  color?: string
+  // Si se pasa, la tarjeta es un enlace a esa ruta.
+  enlace?: string
+}
+
+function Tarjeta({ titulo, valor, color = 'text-cit-petroleo', enlace }: PropsTarjeta) {
+  const contenido = (
+    <>
       <p className="text-xs font-bold uppercase tracking-wider text-gray-500">{titulo}</p>
       <p className={`text-3xl font-bold mt-2 ${color}`}>{valor}</p>
-    </div>
+    </>
   )
+
+  if (enlace) {
+    return (
+      <Link
+        to={enlace}
+        className="block p-5 rounded-xl border border-gray-200 bg-white shadow-2xs hover:border-cit-petroleo transition-colors"
+      >
+        {contenido}
+      </Link>
+    )
+  }
+  return <div className="p-5 rounded-xl border border-gray-200 bg-white shadow-2xs">{contenido}</div>
 }
 
 export default function PaginaInicio() {
@@ -59,7 +80,13 @@ export default function PaginaInicio() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <Tarjeta titulo="Ítems en inventario" valor={resumen.totalItems} />
               <Tarjeta titulo="Stock total" valor={resumen.totalStock} />
-              <Tarjeta titulo="Con stock bajo" valor={resumen.bajoStock} color="text-amber-600" />
+              {/* Lleva al inventario mostrando solo lo que hay que reponer (stock bajo o agotado). */}
+              <Tarjeta
+                titulo="Con stock bajo"
+                valor={resumen.bajoStock}
+                color="text-amber-600"
+                enlace="/inventario?estado=reponer"
+              />
               <Tarjeta titulo="Categorías" valor={resumen.porCategoria.length} />
             </div>
 

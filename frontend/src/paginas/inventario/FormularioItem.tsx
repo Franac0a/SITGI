@@ -1,4 +1,5 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react'
+import { Link } from 'react-router-dom'
 import { Boton } from '@/componentes/ui/Boton'
 import { CampoTexto } from '@/componentes/ui/CampoTexto'
 import { EtiquetaSeccion } from '@/componentes/ui/EncabezadoPagina'
@@ -74,13 +75,16 @@ function valoresIniciales(item?: Item) {
 type Valores = ReturnType<typeof valoresIniciales>
 type Errores = Partial<Record<keyof Valores, string>>
 
-function validar(valores: Valores): Errores {
+function validar(valores: Valores, esEdicion: boolean): Errores {
   const errores: Errores = {}
 
   if (!valores.nombre.trim()) errores.nombre = 'El nombre del elemento es obligatorio.'
   if (!valores.categoria) errores.categoria = 'Debe seleccionar un tipo de elemento.'
 
-  if (valores.cantidad === '' || isNaN(Number(valores.cantidad)) || Number(valores.cantidad) < 0) {
+  // Al editar no se pide la cantidad: el stock no se modifica desde este formulario.
+  const cantidadInvalida =
+    valores.cantidad === '' || isNaN(Number(valores.cantidad)) || Number(valores.cantidad) < 0
+  if (!esEdicion && cantidadInvalida) {
     errores.cantidad = 'Ingrese una cantidad inicial válida mayor o igual a 0.'
   }
   if (!valores.unidad.trim()) errores.unidad = 'Debe seleccionar la unidad de medida.'
@@ -103,12 +107,12 @@ function validar(valores: Valores): Errores {
 }
 
 // Pasa los valores del formulario al formato que espera el backend.
-// Los campos opcionales vacíos no se mandan.
-function armarDatos(valores: Valores): DatosItem {
+// Los campos opcionales vacíos no se mandan, y al editar tampoco se manda el stock.
+function armarDatos(valores: Valores, esEdicion: boolean): DatosItem {
   return {
     nombre: valores.nombre.trim(),
     categoria: valores.categoria,
-    stock_actual: Number(valores.cantidad),
+    stock_actual: esEdicion ? undefined : Number(valores.cantidad),
     unidad_medida: valores.unidad.trim(),
     ubicacion: valores.ubicacion.trim(),
     stock_minimo: valores.stockMinimo !== '' ? Number(valores.stockMinimo) : undefined,
@@ -139,6 +143,7 @@ interface PropsFormularioItem {
 }
 
 export function FormularioItem({ item, alGuardar, alCancelar }: PropsFormularioItem) {
+  const esEdicion = item !== undefined
   const [valores, setValores] = useState(() => valoresIniciales(item))
   const [errores, setErrores] = useState<Errores>({})
   const [guardando, setGuardando] = useState(false)
@@ -167,13 +172,13 @@ export function FormularioItem({ item, alGuardar, alCancelar }: PropsFormularioI
     evento.preventDefault()
     setErrorServidor('')
 
-    const erroresEncontrados = validar(valores)
+    const erroresEncontrados = validar(valores, esEdicion)
     setErrores(erroresEncontrados)
     if (Object.keys(erroresEncontrados).length > 0) return
 
     setGuardando(true)
     try {
-      await alGuardar(armarDatos(valores))
+      await alGuardar(armarDatos(valores, esEdicion))
     } catch (e) {
       setErrorServidor(mensajeDeError(e))
     } finally {
@@ -249,23 +254,45 @@ export function FormularioItem({ item, alGuardar, alCancelar }: PropsFormularioI
       <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-xs space-y-6">
         <TituloSeccion
           etiqueta="Stock y Ubicación"
-          titulo="Existencias Iniciales y Destino"
-          descripcion="Defina la cantidad disponible de ingreso, la unidad de medida y el laboratorio asignado."
+          titulo={esEdicion ? 'Existencias y Destino' : 'Existencias Iniciales y Destino'}
+          descripcion={
+            esEdicion
+              ? 'El stock se modifica registrando un movimiento, para que el cambio quede en la trazabilidad.'
+              : 'Defina la cantidad disponible de ingreso, la unidad de medida y el laboratorio asignado.'
+          }
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          <CampoTexto
-            name="cantidad"
-            type="number"
-            min="0"
-            step="any"
-            etiqueta="Cantidad Inicial *"
-            placeholder="0.00"
-            value={valores.cantidad}
-            onChange={cambiarCampo}
-            error={errores.cantidad}
-            disabled={guardando}
-          />
+          {esEdicion ? (
+            // Al editar, el stock solo se muestra. Para cambiarlo se registra un ajuste.
+            <div className="flex flex-col gap-1.5">
+              <span className="text-sm font-medium text-gray-800">Stock actual</span>
+              <div className="flex h-10 items-center justify-between rounded-lg border border-gray-200 bg-gray-100 px-3.5 text-sm text-gray-900">
+                <span className="font-semibold">
+                  {item.stock_actual} {item.unidad_medida}
+                </span>
+                <Link
+                  to={`/movimientos?itemId=${item.id}&tipo=Ajuste`}
+                  className="text-xs font-semibold text-cit-petroleo hover:text-cit-azul-fuerte hover:underline"
+                >
+                  Registrar ajuste
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <CampoTexto
+              name="cantidad"
+              type="number"
+              min="0"
+              step="any"
+              etiqueta="Cantidad Inicial *"
+              placeholder="0.00"
+              value={valores.cantidad}
+              onChange={cambiarCampo}
+              error={errores.cantidad}
+              disabled={guardando}
+            />
+          )}
 
           <Selector
             name="unidad"
