@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { Item } from '@/tipos'
-import { codigoDe, estadoDeStock } from './datosItem'
+import { codigoDe, estadoDeStock, otrosDatosTecnicos } from './datosItem'
 
 // Ítem de prueba con valores comunes; cada test cambia solo lo que necesita.
 function crearItem(datos: Partial<Item> = {}): Item {
@@ -43,5 +43,27 @@ describe('codigoDe', () => {
   it('usa el código cargado o arma uno con el id', () => {
     expect(codigoDe(crearItem())).toBe('CIT-DRO-0007')
     expect(codigoDe(crearItem({ codigo_identificacion: null }))).toBe('CIT-7')
+  })
+})
+
+describe('otrosDatosTecnicos', () => {
+  it('muestra los datos del Excel con nombres legibles', () => {
+    const item = crearItem({ detalles_tecnicos: { letra: 'A', nSerie: 'X-123', proveedor: 'Biopur' } })
+    expect(otrosDatosTecnicos(item)).toEqual([
+      { titulo: 'Letra (droguero)', valor: 'A' },
+      { titulo: 'N° de serie', valor: 'X-123' },
+      { titulo: 'Proveedor', valor: 'Biopur' },
+    ])
+  })
+
+  it('no repite los que el detalle ya muestra ni los vacíos', () => {
+    const item = crearItem({ detalles_tecnicos: { codigoCas: '64-17-5', numeroLote: 'L1', modelo: '' } })
+    expect(otrosDatosTecnicos(item)).toEqual([])
+  })
+
+  it('un dato desconocido se muestra con su nombre original', () => {
+    expect(otrosDatosTecnicos(crearItem({ detalles_tecnicos: { color: 'azul' } }))).toEqual([
+      { titulo: 'color', valor: 'azul' },
+    ])
   })
 })

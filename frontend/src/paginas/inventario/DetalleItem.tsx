@@ -5,7 +5,7 @@ import { EtiquetaSeccion } from '@/componentes/ui/EncabezadoPagina'
 import { obtenerHistorial } from '@/servicios/movimientos'
 import type { Item, Movimiento } from '@/tipos'
 import { formatearFecha } from '@/utilidades/fechas'
-import { codigoDe } from './datosItem'
+import { codigoDe, otrosDatosTecnicos } from './datosItem'
 
 function Dato({ titulo, children, mono = false }: { titulo: string; children: ReactNode; mono?: boolean }) {
   return (
@@ -79,6 +79,11 @@ export function DetalleItem({ item, alCerrar }: PropsDetalleItem) {
             <Dato titulo="Marca / Fabricante">{item.marca || '—'}</Dato>
             <Dato titulo="Número de Lote">{item.numeroLote || '—'}</Dato>
             <Dato titulo="Vencimiento">{formatearFecha(item.fechaVencimiento)}</Dato>
+            {otrosDatosTecnicos(item).map((dato) => (
+              <Dato key={dato.titulo} titulo={dato.titulo}>
+                {dato.valor}
+              </Dato>
+            ))}
           </dl>
 
           {item.observaciones && (

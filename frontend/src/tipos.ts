@@ -24,11 +24,14 @@ export interface Usuario {
 
 // ---------- Inventario ----------
 
+// Datos que cambian según el tipo de ítem. Los que vienen del Excel del CIT pueden
+// traer otros, como la letra del droguero o el número de serie de un equipo.
 export interface DetallesTecnicos {
   codigoCas?: string
   fechaVencimiento?: string
   numeroLote?: string
   observaciones?: string
+  [clave: string]: string | undefined
 }
 
 export interface Item {
