@@ -103,7 +103,7 @@ Los usuarios que se registran quedan en estado *pendiente* hasta que la Direcci�
 - **Sectores**: laboratorios, heladeras, droguero, estantes y depósitos. Movimientos, pedidos y residuos solo aceptan sectores cargados acá; al renombrar uno se actualizan sus registros y no se puede eliminar si está en uso.
 - **Pedidos y residuos**: solicitudes de reposición, que al marcarse como ingresadas suman el stock y registran el movimiento, y registro de residuos.
 - **Documentos**: MSDS, SOP, COA y protocolos del CIT.
-- **Muestras**: registro de diagnóstico.
+- **Muestras**: ingreso de muestras de Brucelosis, Campilobacteriosis y Anemia Infecciosa Equina, y carga del resultado (positivos, sospechosos, negativos) cuando está listo. Las registran Dirección, Administración, Inventario, Investigador y Técnico/Becario.
 - **Proyectos**: proyectos de investigación.
 - **Reportes**: inventario y movimientos filtrados, exportación CSV, alta rotación y consumo por sector.
 - **Notificaciones**: avisos de stock bajo, que se generan al registrar un movimiento que deja el ítem en su stock mínimo o por debajo. El aviso sigue vigente hasta que se repone el stock, y cada usuario marca los suyos como leídos.
