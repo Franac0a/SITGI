@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { PlantillaPrincipal } from '@/componentes/plantilla/PlantillaPrincipal'
 import { Boton } from '@/componentes/ui/Boton'
 import { Mensaje } from '@/componentes/ui/Mensaje'
-import { actualizarUsuario, obtenerUsuarios } from '@/servicios/usuarios'
+import { useSesion } from '@/contexto/useSesion'
+import { actualizarUsuario, obtenerUsuarios, restablecerPassword } from '@/servicios/usuarios'
 import type { EstadoUsuario, Rol, Usuario } from '@/tipos'
 import { mensajeDeError } from '@/utilidades/errores'
 import { FilaUsuario } from './FilaUsuario'
@@ -44,6 +45,7 @@ const TEXTO_SIN_USUARIOS: Record<EstadoUsuario, string> = {
 }
 
 export default function PaginaUsuarios() {
+  const sesion = useSesion()
   const [usuarios, setUsuarios] = useState<Usuario[]>([])
   const [pestana, setPestana] = useState<EstadoUsuario>('pendiente')
   const [busqueda, setBusqueda] = useState('')
@@ -87,6 +89,12 @@ export default function PaginaUsuarios() {
     } finally {
       setProcesandoId(null)
     }
+  }
+
+  // Si falla, el error lo muestra el campo de la fila (por eso se deja pasar).
+  async function cambiarPassword(usuario: Usuario, nueva: string) {
+    const respuesta = await restablecerPassword(usuario.id, nueva)
+    setMensaje({ tipo: 'exito', texto: `${respuesta.mensaje} Pasale la contraseña nueva al usuario.` })
   }
 
   async function guardarRol(usuario: Usuario) {
@@ -231,6 +239,8 @@ export default function PaginaUsuarios() {
                       alElegirRol={(rol) => setRolesElegidos({ ...rolesElegidos, [usuario.id]: rol })}
                       alCambiarEstado={(estado) => cambiarEstado(usuario, estado)}
                       alGuardarRol={() => guardarRol(usuario)}
+                      esUnoMismo={usuario.id === sesion.usuario?.id}
+                      alRestablecerPassword={(nueva) => cambiarPassword(usuario, nueva)}
                     />
                   ))}
                 </tbody>

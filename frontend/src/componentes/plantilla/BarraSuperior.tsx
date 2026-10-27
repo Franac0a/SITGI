@@ -183,21 +183,27 @@ export function BarraSuperior({ alTocarMenu }: { alTocarMenu: () => void }) {
 
         <div className="h-6 w-px bg-gray-200" aria-hidden="true" />
 
-        <div className="text-right hidden sm:block">
-          <p className="text-xs font-bold text-gray-900 leading-tight truncate max-w-44">
-            {usuario?.nombre || 'Usuario'}
-          </p>
-          <span className="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-cit-petroleo/10 text-cit-petroleo border border-cit-petroleo/20 mt-0.5 uppercase tracking-tight">
-            {usuario?.rol || 'Personal Científico'}
-          </span>
-        </div>
+        {/* Nombre, rol e inicial: llevan a "Mi cuenta" para ver los datos y cambiar la contraseña */}
+        <Link
+          to="/mi-cuenta"
+          title="Mi cuenta"
+          className="flex items-center gap-3 sm:gap-4 rounded-lg hover:opacity-80 transition-opacity"
+        >
+          <div className="text-right hidden sm:block">
+            <p className="text-xs font-bold text-gray-900 leading-tight truncate max-w-44">
+              {usuario?.nombre || 'Usuario'}
+            </p>
+            <span className="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-cit-petroleo/10 text-cit-petroleo border border-cit-petroleo/20 mt-0.5 uppercase tracking-tight">
+              {usuario?.rol || 'Personal Científico'}
+            </span>
+          </div>
 
-        {/* Círculo con la inicial del usuario */}
-        <span className="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-full ring-2 ring-cit-petroleo/20">
-          <span className="flex h-full w-full items-center justify-center rounded-full bg-cit-petroleo text-white font-bold text-xs select-none">
-            {inicial}
+          <span className="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-full ring-2 ring-cit-petroleo/20">
+            <span className="flex h-full w-full items-center justify-center rounded-full bg-cit-petroleo text-white font-bold text-xs select-none">
+              {inicial}
+            </span>
           </span>
-        </span>
+        </Link>
 
         <Boton
           type="button"

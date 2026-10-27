@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { validarLogin, validarRegistro, type DatosRegistro } from './validaciones'
+import { validarCambioPassword, validarLogin, validarRegistro, type DatosRegistro } from './validaciones'
 
 describe('validarLogin', () => {
   it('pide email y contraseña', () => {
@@ -52,5 +52,33 @@ describe('validarRegistro', () => {
     const errores = validarRegistro({ ...valido, dni: '', confirmarPassword: 'Otra1234' })
     expect(errores.dni).toBe('El DNI es obligatorio.')
     expect(errores.confirmarPassword).toBeUndefined()
+  })
+})
+
+describe('validarCambioPassword', () => {
+  const valido = { actual: 'Vieja1234', nueva: 'Nueva1234', confirmarNueva: 'Nueva1234' }
+
+  it('con todo bien no hay errores', () => {
+    expect(validarCambioPassword(valido)).toEqual({})
+  })
+
+  it('pide los tres campos y una nueva de 8 caracteres o más', () => {
+    expect(validarCambioPassword({ actual: '', nueva: 'corta', confirmarNueva: '' })).toEqual({
+      actual: 'Ingresá tu contraseña actual.',
+      nueva: 'La contraseña debe tener al menos 8 caracteres.',
+      confirmarNueva: 'Confirmá la contraseña nueva.',
+    })
+  })
+
+  it('avisa si la confirmación no coincide', () => {
+    expect(validarCambioPassword({ ...valido, confirmarNueva: 'Otra12345' }).confirmarNueva).toBe(
+      'Las contraseñas no coinciden.',
+    )
+  })
+
+  it('no deja poner la misma contraseña que ya tenía', () => {
+    expect(validarCambioPassword({ actual: 'Igual1234', nueva: 'Igual1234', confirmarNueva: 'Igual1234' }).nueva).toBe(
+      'La contraseña nueva tiene que ser distinta de la actual.',
+    )
   })
 })

@@ -22,6 +22,7 @@ const PaginaProyectos = lazy(() => import('@/paginas/proyectos/PaginaProyectos')
 const PaginaDocumentos = lazy(() => import('@/paginas/documentos/PaginaDocumentos'))
 const PaginaReportes = lazy(() => import('@/paginas/reportes/PaginaReportes'))
 const PaginaUsuarios = lazy(() => import('@/paginas/usuarios/PaginaUsuarios'))
+const PaginaMiCuenta = lazy(() => import('@/paginas/cuenta/PaginaMiCuenta'))
 
 function Cargando() {
   return <div className="flex min-h-screen items-center justify-center text-sm text-gray-500">Cargando...</div>
@@ -66,6 +67,7 @@ export function Rutas() {
           <Route path="/proyectos" element={<PaginaProyectos />} />
           <Route path="/documentos" element={<PaginaDocumentos />} />
           <Route path="/reportes" element={<PaginaReportes />} />
+          <Route path="/mi-cuenta" element={<PaginaMiCuenta />} />
         </Route>
 
         {/* Solo la Dirección; al resto lo manda al dashboard */}

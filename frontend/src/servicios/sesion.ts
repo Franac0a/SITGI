@@ -21,6 +21,11 @@ export async function obtenerUsuarioActual(): Promise<Usuario> {
   return respuesta.usuario
 }
 
+// Cambia la contraseña del usuario logueado. El backend verifica la actual.
+export function cambiarMiPassword(actual: string, nueva: string) {
+  return pedirApi<{ mensaje: string }>('/auth/password', 'PUT', { actual, nueva })
+}
+
 export function cerrarSesion() {
   return pedirApi('/auth/logout', 'POST')
 }

@@ -1,6 +1,7 @@
 import { Selector } from '@/componentes/ui/Selector'
 import type { EstadoUsuario, Rol, Usuario } from '@/tipos'
 import { ROLES } from '@/utilidades/permisos'
+import { RestablecerPassword } from './RestablecerPassword'
 
 // Pastilla de color con el estado de la cuenta.
 function PastillaEstado({ estado }: { estado: EstadoUsuario }) {
@@ -36,6 +37,9 @@ interface PropsFilaUsuario {
   alElegirRol: (rol: Rol) => void
   alCambiarEstado: (estado: EstadoUsuario) => void
   alGuardarRol: () => void
+  // La Dirección no restablece su propia contraseña desde acá: la cambia en "Mi cuenta".
+  esUnoMismo: boolean
+  alRestablecerPassword: (nueva: string) => Promise<void>
 }
 
 export function FilaUsuario({
@@ -45,6 +49,8 @@ export function FilaUsuario({
   alElegirRol,
   alCambiarEstado,
   alGuardarRol,
+  esUnoMismo,
+  alRestablecerPassword,
 }: PropsFilaUsuario) {
   const rolCambiado = rolElegido !== usuario.rol
   // A los rechazados no se les cambia el rol: se muestra como texto.
@@ -144,6 +150,10 @@ export function FilaUsuario({
           >
             Reactivar Cuenta
           </button>
+        )}
+
+        {!procesando && !esUnoMismo && (
+          <RestablecerPassword nombre={usuario.nombre} alGuardar={alRestablecerPassword} />
         )}
       </td>
     </tr>

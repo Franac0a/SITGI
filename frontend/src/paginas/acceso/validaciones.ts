@@ -1,4 +1,4 @@
-// Validaciones de los formularios de login y registro.
+// Validaciones de los formularios de login, registro y cambio de contraseña.
 // Cada función devuelve un objeto con un mensaje por cada campo que tiene un error.
 
 const PATRON_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -61,6 +61,37 @@ export function validarRegistro(datos: DatosRegistro): Errores {
   // Que coincidan se revisa al final, cuando el resto de los campos ya está bien.
   if (Object.keys(errores).length === 0 && datos.password !== datos.confirmarPassword) {
     errores.confirmarPassword = 'Las contraseñas no coinciden.'
+  }
+
+  return errores
+}
+
+export interface DatosCambioPassword {
+  actual: string
+  nueva: string
+  confirmarNueva: string
+}
+
+export function validarCambioPassword(datos: DatosCambioPassword): Errores {
+  const errores: Errores = {}
+
+  if (!datos.actual) errores.actual = 'Ingresá tu contraseña actual.'
+
+  if (!datos.nueva) {
+    errores.nueva = 'La contraseña nueva es obligatoria.'
+  } else if (datos.nueva.length < 8) {
+    errores.nueva = 'La contraseña debe tener al menos 8 caracteres.'
+  }
+
+  if (!datos.confirmarNueva) errores.confirmarNueva = 'Confirmá la contraseña nueva.'
+
+  // Estas dos se revisan al final, cuando los campos ya están completos.
+  if (Object.keys(errores).length === 0) {
+    if (datos.nueva !== datos.confirmarNueva) {
+      errores.confirmarNueva = 'Las contraseñas no coinciden.'
+    } else if (datos.nueva === datos.actual) {
+      errores.nueva = 'La contraseña nueva tiene que ser distinta de la actual.'
+    }
   }
 
   return errores
