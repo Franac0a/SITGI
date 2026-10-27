@@ -46,6 +46,12 @@ export function puedeGestionarUsuarios(rol?: string): boolean {
   return rol === 'Dirección'
 }
 
+// Registrar muestras y cargar resultados: quienes trabajan en el laboratorio
+// (gestión, investigadores y técnicos/becarios). Responsable de área solo consulta.
+export function puedeRegistrarMuestras(rol?: string): boolean {
+  return puedeGestionarInventario(rol) || ROLES_SOLO_EGRESO.includes(rol ?? '')
+}
+
 export function puedeGestionarProyectos(rol?: string): boolean {
   return rol === 'Dirección' || rol === 'Administración'
 }

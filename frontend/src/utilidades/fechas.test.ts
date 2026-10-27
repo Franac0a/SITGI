@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { formatearFecha } from './fechas'
+import { fechaDeHoy, formatearFecha } from './fechas'
 
 describe('formatearFecha', () => {
   it('pasa AAAA-MM-DD a DD/MM/AAAA', () => {
@@ -19,5 +19,13 @@ describe('formatearFecha', () => {
 
   it('un texto con otro formato se muestra tal cual', () => {
     expect(formatearFecha('marzo 2026')).toBe('marzo 2026')
+  })
+})
+
+describe('fechaDeHoy', () => {
+  it('devuelve el día de hoy en formato AAAA-MM-DD', () => {
+    const hoy = new Date()
+    expect(fechaDeHoy()).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+    expect(formatearFecha(fechaDeHoy())).toBe(hoy.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' }))
   })
 })

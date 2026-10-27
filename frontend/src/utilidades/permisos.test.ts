@@ -4,6 +4,7 @@ import {
   puedeGestionarProyectos,
   puedeGestionarUsuarios,
   puedeRegistrarMovimientos,
+  puedeRegistrarMuestras,
   rutaInicial,
   tiposDeMovimientoPermitidos,
   TIPOS_MOVIMIENTO,
@@ -37,6 +38,13 @@ describe('permisos por rol', () => {
     expect(puedeGestionarUsuarios('Administración')).toBe(false)
     expect(puedeGestionarProyectos('Administración')).toBe(true)
     expect(puedeGestionarProyectos('Inventario')).toBe(false)
+  })
+
+  it('registran muestras gestión, investigadores y técnicos; Responsable de área no', () => {
+    expect(puedeRegistrarMuestras('Inventario')).toBe(true)
+    expect(puedeRegistrarMuestras('Técnico/Becario')).toBe(true)
+    expect(puedeRegistrarMuestras('Investigador')).toBe(true)
+    expect(puedeRegistrarMuestras('Responsable de área')).toBe(false)
   })
 
   it('después del login Dirección va a usuarios y el resto al dashboard', () => {

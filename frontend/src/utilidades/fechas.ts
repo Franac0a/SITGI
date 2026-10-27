@@ -8,3 +8,12 @@ export function formatearFecha(fecha?: string | null): string {
   const [, anio, mes, dia] = partes
   return `${dia}/${mes}/${anio}`
 }
+
+// Fecha de hoy como "2026-10-26", el formato de los <input type="date">.
+// Se arma con la hora local para que no cambie de día por la zona horaria.
+export function fechaDeHoy(): string {
+  const hoy = new Date()
+  const mes = String(hoy.getMonth() + 1).padStart(2, '0')
+  const dia = String(hoy.getDate()).padStart(2, '0')
+  return `${hoy.getFullYear()}-${mes}-${dia}`
+}

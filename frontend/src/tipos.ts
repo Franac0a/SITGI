@@ -184,6 +184,7 @@ export interface DatosResiduo {
 
 export interface Muestra {
   id: number
+  tipo: string
   fecha_ingreso: string | null
   numero_ingreso: string | null
   propietario: string | null
@@ -193,6 +194,31 @@ export interface Muestra {
   positivos: number
   sospechosos: number
   negativos: number
+  // Mientras no tenga fecha de resultado, el diagnóstico está pendiente.
+  fecha_resultado: string | null
+}
+
+// Lo que se manda al registrar el ingreso de una muestra.
+export interface DatosMuestra {
+  tipo: string
+  fecha_ingreso: string
+  cantidad_muestras: number
+  numero_ingreso?: string
+  numero_protocolo?: string
+  propietario?: string
+  renspa?: string
+  veterinario?: string
+  establecimiento?: string
+  ubicacion?: string
+  departamento?: string
+  especie?: string
+}
+
+export interface ResultadoMuestra {
+  positivos: number
+  sospechosos: number
+  negativos: number
+  fecha_resultado: string
 }
 
 // ---------- Proyectos ----------
