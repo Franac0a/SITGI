@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   obtenerUsuarios,
   gestionarEstadoUsuario,
+  restablecerPassword,
 } from "../controllers/user.controller.js";
 import {
   verificarAuth,
@@ -16,5 +17,6 @@ router.use(soloDireccion);
 router.get("/", obtenerUsuarios);
 
 router.put("/:id/estado", gestionarEstadoUsuario);
+router.put("/:id/password", restablecerPassword);
 
 export default router;

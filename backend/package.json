@@ -8,6 +8,7 @@
     "seed:admin": "node src/scripts/crearDirector.js",
     "seed": "node src/scripts/seed.js",
     "seed:export": "node src/scripts/exportarSeed.js",
+    "clave": "node src/scripts/cambiarClave.js",
     "start": "node app.js",
     "test": "node --import ./test/entorno.js --test --test-concurrency=1 \"test/**/*.test.js\"",
     "test:mysql": "node --import ./test/entorno-mysql.js --test --test-concurrency=1 \"test/**/*.test.js\""

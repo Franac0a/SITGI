@@ -1,5 +1,10 @@
 import { UserModel } from "../models/User.model.js";
 import { ROLES } from "../utils/permisos.js";
+import {
+  encriptarContraseña,
+  passwordCorta,
+  MENSAJE_PASSWORD_CORTA,
+} from "../helpers/bcrypt.helper.js";
 
 import { detalleError } from "../helpers/error.helper.js";
 const ESTADOS_USUARIO = ["pendiente", "activo", "rechazado"];
@@ -72,6 +77,42 @@ export const gestionarEstadoUsuario = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       error: "Error al actualizar el estado del usuario.",
+      ...detalleError(error),
+    });
+  }
+};
+
+// La Dirección le pone una contraseña nueva a otro usuario (por ejemplo, si se la olvidó).
+// Para la propia se usa "cambiar contraseña", que pide la actual.
+export const restablecerPassword = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nueva } = req.body;
+
+    if (passwordCorta(nueva)) {
+      return res.status(400).json({ mensaje: MENSAJE_PASSWORD_CORTA });
+    }
+
+    const usuario = await UserModel.findByPk(id);
+    if (!usuario) {
+      return res.status(404).json({ mensaje: "Usuario no encontrado." });
+    }
+    if (usuario.id === req.usuario.id) {
+      return res.status(400).json({
+        mensaje: "Para tu propia contraseña usá la opción Mi cuenta.",
+      });
+    }
+
+    usuario.password = await encriptarContraseña(nueva);
+    await usuario.save();
+
+    res.status(200).json({
+      mensaje: `Se restableció la contraseña de ${usuario.nombre}.`,
+    });
+  } catch (error) {
+    console.error("Error al restablecer la contraseña:", error);
+    res.status(500).json({
+      mensaje: "Error al restablecer la contraseña.",
       ...detalleError(error),
     });
   }
